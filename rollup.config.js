@@ -39,17 +39,21 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+    typescript({ sourceMap: !production }),
 		svelte({
-			preprocess: sveltePreprocess({ sourceMap: !production }),
-			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production
-			}
-		}),
+			preprocess: sveltePreprocess({ 
+        sourceMap: !production,
+        postcss: {
+          plugins: [require('autoprefixer')()]
+        }
+    }),
+		// enable run-time checks when not in production
+		dev: !production
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
-		css({ output: 'bundle.css' }),
-
+		css: css => {
+      css.write('public/bundle.css')
+    }
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
