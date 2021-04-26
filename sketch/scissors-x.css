@@ -1,0 +1,72 @@
+*
+*::after
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  color: #f6ece3;
+  background: #2c2e31;
+}
+
+.container {
+  margin: -15rem auto;
+  text-align: center;
+  position: relative;
+  width: 100vw;
+}
+.scissors {
+  font-family: STIXGeneral;
+  font-size: 50rem;
+  opacity: 0.2;
+  transform: rotate(12deg);
+  display: inline-block;
+}
+.logo-name {
+  font-family: "Infini";
+  font-weight: 900;
+  position: absolute;
+  font-size: 8rem;
+  line-height: 11rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  letter-spacing: 1.9rem;
+  margin: auto;
+  border-bottom: 15px dashed rgba(246,236,227,0.2);
+  padding: 1rem 20rem 2rem;
+  text-transform: uppercase;
+}
+.intro {
+  margin: -20rem auto;
+  width: 95rem;;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-family: "Menoe Grotesque Pro";
+  font-weight: 400;
+  letter-spacing: 0.04rem;
+}
+#site-main::after {
+  background: url(./images/noise.jpg);
+  content: "";
+  height: 100%;
+  left: 0px;
+  opacity: 0.02;
+  pointer-events: none;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 201;
+}

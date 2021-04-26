@@ -1,0 +1,85 @@
+*
+*::after
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-size: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: #f6ece3;
+  background: #2c2e31;
+}
+
+.container {
+  margin: auto;
+  text-align: center;
+  position: relative;
+  width: 100vw;
+  /* height: 100vh; */
+}
+
+.scissors {
+  position: absolute;
+  left: 50%;
+  top: 30rem;
+  transform: rotate(12deg) translate(-50%, -50%);
+  font-family: STIXGeneral;
+  font-size: 50rem;
+  opacity: 0.2;
+  line-height: 0;
+}
+
+.logo-name {
+  font-family: "Infini";
+  font-weight: 900;
+  font-size: 8rem;
+  line-height: 1.4;
+  text-align: center;
+  letter-spacing: 1.9rem;
+  margin: auto;
+  max-width: 95rem;
+  width: 88%;
+  border-bottom: 15px dashed rgba(246,236,227,0.2);
+  text-transform: uppercase;
+  padding: 12rem 0 2rem 0;
+  display: inline-block;
+}
+
+.intro {
+  margin: 7rem auto;
+  max-width: 95rem;
+  width: 88%;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-family: "Menoe Grotesque Pro";
+  font-weight: 400;
+  letter-spacing: 0.04rem;
+  text-align: justify;
+}
+
+#site-main::after {
+  background: url(./images/noise.jpg);
+  content: "";
+  height: 100%;
+  left: 0px;
+  opacity: 0.02;
+  pointer-events: none;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 201;
+}
+
+.noselect {
+  -webkit-user-select: none;
+  user-select: none;
+}
