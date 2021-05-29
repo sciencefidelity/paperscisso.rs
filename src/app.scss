@@ -22,3 +22,21 @@ body {
 a {
   color: #f6ece3;
 }
+
+#site-main::after {
+  background: url(./images/noise.jpg);
+  content: "";
+  height: 100%;
+  left: 0px;
+  opacity: 0.02;
+  pointer-events: none;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 201;
+}
+
+.noselect {
+  -webkit-user-select: none;
+  user-select: none;
+}
