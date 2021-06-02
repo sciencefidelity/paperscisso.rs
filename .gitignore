@@ -1,6 +1,13 @@
+# mac
 .DS_Store
-.nova/
+.nova
+*.bak
+
+# node
 node_modules
-/.svelte
-/build
-/functions
+*.log
+
+# svelte
+.svelte
+build
+functions
