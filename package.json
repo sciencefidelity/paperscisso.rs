@@ -1,24 +1,30 @@
 {
-  "name": "paperscissors",
+  "name": "paperscisso.rs",
   "private": true,
   "version": "0.1.0",
   "description": "",
   "main": "package.json",
   "author": "Matt Cook <sciencefidelity@hotmail.com>",
   "license": "UNLICENSED",
+  "repository": "git+https://github.com/sciencefidelity/paperscisso.rs.git",
+  "homepage": "https://mattcook.dev",
   "scripts": {
-    "dev": "svelte-kit dev --host",
+    "dev": "svelte-kit dev --host 0.0.0.0",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint": "eslint"
   },
   "devDependencies": {
+    "@sveltejs/adapter-netlify": "^1.0.0-next.0",
+    "@sveltejs/adapter-static": "^1.0.0-next.0",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.4.1",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.22.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
     "sass": "^1.34.0",
     "svelte": "^3.34.0",
     "svelte-preprocess": "^4.0.0",

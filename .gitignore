@@ -1,6 +1,5 @@
 # mac
 .DS_Store
-.nova
 *.bak
 
 # node
@@ -8,6 +7,6 @@ node_modules
 *.log
 
 # svelte
-.svelte
+.svelte-kit
 build
 functions

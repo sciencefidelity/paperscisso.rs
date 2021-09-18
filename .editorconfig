@@ -15,7 +15,7 @@ indent_style = space
 indent_size = 2
 
 # TypeScript, JavaScript
-[*.{ts,js}]
+[*.{ts,js,cjs}]
 indent_style = space
 indent_size = 2
 
