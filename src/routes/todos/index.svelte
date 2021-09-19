@@ -1,47 +1,47 @@
 <script context="module" lang="ts">
-  import { enhance } from '../../lib/form';
-  import type { Load } from '@sveltejs/kit';
+  import { enhance } from "../../lib/form"
+  import type { Load } from "@sveltejs/kit"
 
   // see https://kit.svelte.dev/docs#loading
   export const load: Load = async ({ fetch }) => {
-    const res = await fetch('/todos.json');
+    const res = await fetch("/todos.json")
 
     if (res.ok) {
-      const todos = await res.json();
+      const todos = await res.json()
 
       return {
         props: { todos }
-      };
+      }
     }
 
-    const { message } = await res.json();
+    const { message } = await res.json()
 
     return {
       error: new Error(message)
-    };
-  };
+    }
+  }
 </script>
 
 <script lang="ts">
-  import { scale } from 'svelte/transition';
-  import { flip } from 'svelte/animate';
+  import { scale } from "svelte/transition"
+  import { flip } from "svelte/animate"
 
   type Todo = {
-    uid: string;
-    created_at: Date;
-    text: string;
-    done: boolean;
-  };
+    uid: string
+    created_at: Date
+    text: string
+    done: boolean
+  }
 
-  export let todos: Todo[];
+  export let todos: Todo[]
 
   async function patch(res: Response) {
-    const todo = await res.json();
+    const todo = await res.json()
 
-    todos = todos.map((t) => {
-      if (t.uid === todo.uid) return todo;
-      return t;
-    });
+    todos = todos.map(t => {
+      if (t.uid === todo.uid) return todo
+      return t
+    })
   }
 </script>
 
@@ -58,10 +58,10 @@
     method="post"
     use:enhance={{
       result: async (res, form) => {
-        const created = await res.json();
-        todos = [...todos, created];
+        const created = await res.json()
+        todos = [...todos, created]
 
-        form.reset();
+        form.reset()
       }
     }}
   >
@@ -79,14 +79,17 @@
         action="/todos/{todo.uid}.json?_method=patch"
         method="post"
         use:enhance={{
-          pending: (data) => {
-            todo.done = !!data.get('done');
+          pending: data => {
+            todo.done = !!data.get("done")
           },
           result: patch
         }}
       >
-        <input type="hidden" name="done" value={todo.done ? '' : 'true'} />
-        <button class="toggle" aria-label="Mark todo as {todo.done ? 'not done' : 'done'}" />
+        <input type="hidden" name="done" value={todo.done ? "" : "true"} />
+        <button
+          class="toggle"
+          aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
+        />
       </form>
 
       <form
@@ -106,7 +109,7 @@
         method="post"
         use:enhance={{
           result: () => {
-            todos = todos.filter((t) => t.uid !== todo.uid);
+            todos = todos.filter(t => t.uid !== todo.uid)
           }
         }}
       >

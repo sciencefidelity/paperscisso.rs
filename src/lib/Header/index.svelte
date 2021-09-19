@@ -1,5 +1,4 @@
 <script lang="ts">
-
 </script>
 
 <header>
@@ -10,7 +9,6 @@
 </header>
 
 <style lang="scss">
-
   .header {
     &__container {
       margin: auto;
@@ -38,11 +36,10 @@
       margin: auto;
       max-width: 95rem;
       width: 88%;
-      border-bottom: 15px dashed rgba(246,236,227,0.2);
+      border-bottom: 15px dashed rgba(246, 236, 227, 0.2);
       text-transform: uppercase;
       padding: 12rem 0 2rem 0;
       display: inline-block;
     }
   }
-
 </style>
