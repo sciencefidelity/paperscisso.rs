@@ -1,12 +1,17 @@
-# mac
 .DS_Store
 *.bak
-
-# node
+*.local
+.env
+.env.*
+!.env.template
 node_modules
 *.log
-
-# svelte
+dist
 .svelte-kit
 build
 functions
+package
+*.css
+*.css.map
+.vercel
+.output

@@ -3,7 +3,7 @@
     "moduleResolution": "node",
     "module": "es2020",
     "lib": ["es2020", "DOM"],
-    "target": "es2019",
+    "target": "es2020",
     "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "resolveJsonModule": true,
@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"]
