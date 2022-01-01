@@ -8,23 +8,24 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 charset = utf-8
-
-# Vue
-[*.svelte]
 indent_style = space
+
+# html
+[*.html]
+indent_size = 2
+
+# Svelte
+[*.svelte]
 indent_size = 2
 
 # TypeScript, JavaScript
 [*.{ts,js,cjs}]
-indent_style = space
 indent_size = 2
 
 # scss
 [*.scss]
-indent_style = space
 indent_size = 2
 
 # json
 [*.json]
-indent_style = space
 indent_size = 2
