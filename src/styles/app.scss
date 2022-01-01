@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "Infini";
+  src: url("../fonts/infini-bold-latin.woff2") format("woff2");
+  font-weight: 500 900;
+}
+
+@font-face {
+  font-family: "Infini";
+  src: url("../fonts/infini-italic-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Infini";
+  src: url("../fonts/infini-regular-latin.woff2") format("woff2");
+  font-weight: 100 400;
+}
+
+@font-face {
+  font-family: "Menoe Grotesque Pro";
+  src: url("../fonts/menoe_grotesque_pro_italic-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Menoe Grotesque Pro";
+  src: url("../fonts/menoe_grotesque_pro-latin.woff2") format("woff2");
+  font-weight: 100 900;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

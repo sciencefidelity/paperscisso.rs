@@ -20,7 +20,7 @@
       position: absolute;
       top: 30rem;
       left: 50%;
-      font-family: STIXGeneral;
+      font-family: STIXGeneral, serif;
       font-size: 50rem;
       line-height: 0;
       opacity: 0.2;
@@ -32,7 +32,7 @@
       max-width: 95rem;
       padding: 12rem 0 2rem;
       margin: auto;
-      font-family: 'Infini';
+      font-family: Infini, serif;
       font-size: 8rem;
       font-weight: 900;
       line-height: 1.4;

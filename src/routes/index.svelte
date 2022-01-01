@@ -31,7 +31,7 @@
     width: 88%;
     max-width: 95rem;
     margin: 7rem auto;
-    font-family: 'Menoe Grotesque Pro';
+    font-family: 'Menoe Grotesque Pro', sans-serif;
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.5;
