@@ -13,6 +13,7 @@
   </p>
 </footer>
 
+<!-- prettier-ignore -->
 <style lang="scss">
   main {
     box-sizing: border-box;

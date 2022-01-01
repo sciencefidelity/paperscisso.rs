@@ -26,6 +26,7 @@
   </div>
 </main>
 
+<!-- prettier-ignore -->
 <style lang="scss">
   .intro {
     width: 88%;

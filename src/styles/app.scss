@@ -1,33 +1,33 @@
 @font-face {
-  font-family: "Infini";
-  src: url("../fonts/infini-bold-latin.woff2") format("woff2");
+  font-family: Infini;
   font-weight: 500 900;
+  src: url('../fonts/infini-bold-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "Infini";
-  src: url("../fonts/infini-italic-latin.woff2") format("woff2");
-  font-weight: 100 900;
+  font-family: Infini;
   font-style: italic;
+  font-weight: 100 900;
+  src: url('../fonts/infini-italic-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "Infini";
-  src: url("../fonts/infini-regular-latin.woff2") format("woff2");
+  font-family: Infini;
   font-weight: 100 400;
+  src: url('../fonts/infini-regular-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "Menoe Grotesque Pro";
-  src: url("../fonts/menoe_grotesque_pro_italic-latin.woff2") format("woff2");
-  font-weight: 100 900;
+  font-family: 'Menoe Grotesque Pro';
   font-style: italic;
+  font-weight: 100 900;
+  src: url('../fonts/menoe_grotesque_pro_italic-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "Menoe Grotesque Pro";
-  src: url("../fonts/menoe_grotesque_pro-latin.woff2") format("woff2");
+  font-family: 'Menoe Grotesque Pro';
   font-weight: 100 900;
+  src: url('../fonts/menoe_grotesque_pro-latin.woff2') format('woff2');
 }
 
 * {
@@ -40,7 +40,7 @@
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   font-size: 62.5%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,28 +49,27 @@ html {
 body {
   padding: 0;
   margin: 0;
-  color: #f6ece3;
-  background: #2c2e31;
+  color: hsl(28, 51%, 93%);
+  background: hsl(216, 5%, 18%);
 }
 
 a {
-  color: #f6ece3;
+  color: hsl(28, 51%, 93%);
 }
 
 #site-main::after {
-  background: url(./images/noise.jpg);
-  content: "";
-  height: 100%;
-  left: 0px;
-  opacity: 0.02;
-  pointer-events: none;
   position: absolute;
-  top: 0px;
-  width: 100%;
+  top: 0;
+  left: 0;
   z-index: 201;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  content: '';
+  background: url('./images/noise.jpg');
+  opacity: 0.02;
 }
 
 .noselect {
-  -webkit-user-select: none;
   user-select: none;
 }
