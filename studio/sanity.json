@@ -7,11 +7,14 @@
     "@sanity/base",
     "@sanity/default-layout",
     "@sanity/default-login",
-    "@sanity/desk-tool"
+    "@sanity/desk-tool",
+    "@sanity/document-internationalization"
   ],
   "env": {
     "development": {
-      "plugins": ["@sanity/vision"]
+      "plugins": [
+        "@sanity/vision"
+      ]
     }
   },
   "parts": [
@@ -21,7 +24,7 @@
     },
     {
       "name": "part:@sanity/desk-tool/structure",
-      "path": "./customizations/deskStructure.tsx"
+      "path": "./deskStructure.tsx"
     },
     {
       "implements": "part:@sanity/base/theme/variables/override-style",

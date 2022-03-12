@@ -1,8 +1,8 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 
-export default () =>
-  S.list()
+export default () => {
+  return S.list()
     .title('Content')
     .items(
       [
@@ -33,3 +33,4 @@ export default () =>
           ))
       ]
     )
+}

@@ -960,7 +960,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.2.0", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.2.0", "@babel/runtime@^7.8.4":
   version "7.17.2"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
   integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
@@ -999,6 +999,11 @@
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
+
+"@cprecioso/country-flag-emoji@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@cprecioso/country-flag-emoji/-/country-flag-emoji-1.0.0.tgz#a1db5009f587e123f823ca152286284b0fa73065"
+  integrity sha512-AFpV9SxC9O+3Dw8Bj/aDDCO6KtqGXQ0FEd02gbpV1Vb2IohG5CVvMQgpiZdjMURVozOIgiAbZ5BUI+0sGPDnvA==
 
 "@emotion/is-prop-valid@^0.8.2", "@emotion/is-prop-valid@^0.8.8":
   version "0.8.8"
@@ -1395,6 +1400,20 @@
   integrity sha512-cDMjQplTXs7xjQwX+LVwZ0hGxeVokGahN/EWoj+NltVPjmRrImiNuw8mRGTfzsv4CmSxdLZB5Rq9/jw4yn98zA==
   dependencies:
     diff-match-patch "^1.0.4"
+
+"@sanity/document-internationalization@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@sanity/document-internationalization/-/document-internationalization-0.1.0.tgz#4afb4235531f213e7ddc652c4589a823e85f10bb"
+  integrity sha512-cojBVokmfXdmDA7jD558+/AbSKO5qtdTaYN/t3o4vUMy4eOoXzlRgdH0V+ff2oRX4njC95L52npzy0VIqDAgaw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@cprecioso/country-flag-emoji" "^1.0.0"
+    just-omit "^2.0.1"
+    just-safe-get "^4.0.1"
+    just-split "^3.0.1"
+    pinst "^2.1.6"
+    react-easy-emoji "^1.6.1"
+    regenerator-runtime "^0.13.7"
 
 "@sanity/eslint-config-studio@^2.0.0":
   version "2.0.0"
@@ -4868,6 +4887,11 @@ from2@^2.1.0, from2@^2.1.1:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
+fromentries@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/fromentries/-/fromentries-1.3.2.tgz#e4bca6808816bf8f93b52750f1127f5a6fd86e3a"
+  integrity sha512-cHEpEQHUg0f8XdtZCc2ZAhrHzKzT0MrFUTcvx+hfxYu7rGMDc5SKoXFh+n4YigxsHXRzc6OrCshdR1bWH6HHyg==
+
 fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
@@ -6072,6 +6096,21 @@ jsprim@^1.2.2:
   dependencies:
     array-includes "^3.1.3"
     object.assign "^4.1.2"
+
+just-omit@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/just-omit/-/just-omit-2.0.1.tgz#25d5967424cc69a2ef4faa315ede1d5b7be3168c"
+  integrity sha512-gmMf9DSGjx+PJFr7P7zcZk4hpKvb/iLTmXjArvtvr2zg8JvcXyAjPtJItX4Lx8BCUk3UAtJiacu4no9h9mv6mg==
+
+just-safe-get@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/just-safe-get/-/just-safe-get-4.0.1.tgz#b89db1d82e1df27723a4c679ba913474cfaa3cb6"
+  integrity sha512-Yet2Cf1s0h8Jh0A1CMBkR/C4nIN+pCJ4vN7aNk0Eo3d/QhnpWWPEMaxlIxAiH4bUdRCfdJonFabClf21Ls5NMA==
+
+just-split@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/just-split/-/just-split-3.0.1.tgz#e9e9475afc70c72078eea5da08632e1425928467"
+  integrity sha512-KAB4lfodDbN5CkOKMni21qzjqPYvUMYxehl+Dw+onqqNZ+r7NWcY5RHOi0Nj36fEoWXNktDngXDEcUlRYjZLUA==
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -7334,6 +7373,13 @@ pify@^4.0.1:
   resolved "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinst@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/pinst/-/pinst-2.1.6.tgz#8d968b8ec1dac5dddcfc976c735592dbec58b42c"
+  integrity sha512-B4dYmf6nEXg1NpDSB+orYWvKa5Kfmz5KzWC29U59dpVM4S/+xp0ak/JMEsw04UQTNNKps7klu0BUalr343Gt9g==
+  dependencies:
+    fromentries "^1.3.2"
+
 pirates@^4.0.0, pirates@^4.0.5:
   version "4.0.5"
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
@@ -8369,6 +8415,13 @@ react-dom@^17.0:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-easy-emoji@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.npmjs.org/react-easy-emoji/-/react-easy-emoji-1.6.1.tgz#72a3b6ef1e327d937a865c3795d400d0a178b706"
+  integrity sha512-VCGm1tAAdOCNVh6j+M1KoWZn4FIXcqdnf0rXINo0Sgo7eF2sat/JhITKFl8PmbpfIYqYLOobpFDVpst4ddJUlw==
+  dependencies:
+    string-replace-to-array "^2.1.0"
+
 react-fast-compare@^3.0.1, react-fast-compare@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
@@ -8686,7 +8739,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4:
+regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
   version "0.13.9"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
@@ -9431,6 +9484,11 @@ strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   integrity sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
+
+string-replace-to-array@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/string-replace-to-array/-/string-replace-to-array-2.1.0.tgz#44571dbd33a3e23de31db948b5b84f1b7913fb39"
+  integrity sha512-xG2w4fE5FsTXS4AFxoF3uctByqTIFBX8lFRNcPcIznTVCMXbYvbatkPVLpAo13tfuWtzbWEV6u5bjoE9bOv87w==
 
 string-width@^1.0.1:
   version "1.0.2"

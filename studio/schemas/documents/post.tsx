@@ -20,6 +20,10 @@ export default {
       </g>
     </svg>
   ),
+  i18n: true,
+  initialValue: {
+    __i18n_lang: 'en_GB',
+  },
   fields: [
     {
       name: 'title',
