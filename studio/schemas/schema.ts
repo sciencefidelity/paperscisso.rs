@@ -7,6 +7,7 @@ import portableText from './objects/portableText'
 // documements
 import author from './documents/author'
 import post from './documents/post'
+import settings from './documents/settings'
 
 // taxonomy
 import tag from './taxonomy/tag'
@@ -20,6 +21,7 @@ export default createSchema({
     // documements
     post,
     author,
+    settings,
 
     // taxonomy
     tag
