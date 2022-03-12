@@ -21,7 +21,11 @@
     },
     {
       "name": "part:@sanity/desk-tool/structure",
-      "path": "./deskStructure.tsx"
+      "path": "./customizations/deskStructure.tsx"
+    },
+    {
+      "implements": "part:@sanity/base/theme/variables/override-style",
+      "path": "./customizations/theme.css"
     }
   ]
 }
