@@ -7,8 +7,10 @@
   "author": "Matt Cook <sciencefidelity@hotmail.com>",
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "sanity start",
     "start": "sanity start",
-    "build": "sanity build"
+    "build": "sanity build",
+    "format": "prettier --write '**/*.{ts,js,tsx,jsx,json,md,yml}'"
   },
   "keywords": [
     "sanity"

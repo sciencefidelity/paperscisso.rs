@@ -3,10 +3,6 @@
   "project": {
     "name": "Scissors"
   },
-  "api": {
-    "projectId": "o7wvdtby",
-    "dataset": "production"
-  },
   "plugins": [
     "@sanity/base",
     "@sanity/default-layout",
