@@ -11,7 +11,5 @@ dist
 build
 functions
 package
-*.css
-*.css.map
 .vercel
 .output
