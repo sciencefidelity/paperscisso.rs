@@ -1,5 +1,21 @@
 {
-    "idStructure": "delimiter",
-    "referenceBehavior": "strong",
-    "languages": ["en"]
+  "base": "en-GB",
+  "languages": [
+    {
+      "title": "English (GB)",
+      "id": "en-GB"
+    },
+    {
+      "title": "Welsh",
+      "id": "cy-GB"
+    }
+  ],
+  "idStructure": "delimiter",
+  "referenceBehavior": "strong",
+  "withTranslationsMaintenance": false,
+  "fieldNames": {
+    "lang": "__i18n_lang",
+    "references": "__i18n_refs",
+    "baseReference": "__i18n_base"
+  }
 }
