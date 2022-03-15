@@ -1,4 +1,4 @@
-import { i18n } from '../../../../languages'
+import { i18n } from '../../languages'
 
 export default {
   name: 'localizedText',
@@ -8,13 +8,11 @@ export default {
     {
       title: 'Translations',
       name: 'translations',
-      options: {collapsible: true, collapsed: false}
     }
   ],
   fields: i18n.languages.map(lang => ({
     name: lang.id,
     title: lang.title,
-    type: 'text',
-    fieldset: lang.isDefault ? null : 'translations'
+    type: 'text'
   }))
 }

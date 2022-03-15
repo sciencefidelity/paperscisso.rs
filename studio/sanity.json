@@ -8,7 +8,8 @@
     "@sanity/default-layout",
     "@sanity/default-login",
     "@sanity/desk-tool",
-    "@sanity/document-internationalization"
+    "@sanity/document-internationalization",
+    "@sanity/language-filter"
   ],
   "env": {
     "development": {
@@ -21,6 +22,14 @@
     {
       "name": "part:@sanity/base/schema",
       "path": "./src/schemas/schema"
+    },
+    {
+      "name": "part:@sanity/desk-tool/structure",
+      "path": "./src/desk-structure/index.ts"
+    },
+    {
+      "name": "part:@sanity/language-filter/config",
+      "path": "./src/languageFilterConfig"
     }
   ]
 }
