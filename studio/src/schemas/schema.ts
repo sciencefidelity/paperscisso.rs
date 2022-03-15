@@ -3,8 +3,8 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 // objects
 import biography from './objects/biography'
-import localizedString from './objects/localizedString'
-import localizedText from './objects/localizedText'
+import localeString from './objects/localeString'
+import localeText from './objects/localeText'
 import portableText from './objects/portableText'
 
 // documements
@@ -20,8 +20,8 @@ export default createSchema({
   types: schemaTypes.concat([
     // objects
     biography,
-    localizedString,
-    localizedText,
+    localeString,
+    localeText,
     portableText,
 
     // documements

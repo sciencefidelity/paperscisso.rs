@@ -1,10 +1,7 @@
-import { i18n } from '../../languages'
-
 export default {
   name: 'post',
   title: 'Post',
   type: 'document',
-  i18n,
   fields: [
     {
       name: 'title',

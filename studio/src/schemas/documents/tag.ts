@@ -6,12 +6,12 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'localizedString'
+      type: 'string'
     },
     {
       name: 'description',
       title: 'Description',
-      type: 'localizedText'
+      type: 'text'
     }
   ],
   preview: {

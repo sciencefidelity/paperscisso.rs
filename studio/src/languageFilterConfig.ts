@@ -1,11 +1,10 @@
-import {i18n} from './languages'
-
-const supportedLanguages = i18n.languages.map(({id, title}) => ({id, title}))
-
 export default {
-  supportedLanguages,
-  defaultLanguages: [i18n.base],
-  documentTypes: ['author', 'settings', 'tag'],
+  supportedLanguages: [
+    {id: 'en', title: 'English'},
+    {id: 'cy', title: 'Welsh'}
+  ],
+  defaultLanguages: ['en'],
+  documentTypes: ['page'],
   filterField: (enclosingType, field, selectedLanguageIds) =>
-    !enclosingType.name.startsWith('localized') || selectedLanguageIds.includes(field.name),
+    !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name),
 }

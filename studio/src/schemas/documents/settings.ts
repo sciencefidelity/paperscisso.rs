@@ -7,13 +7,13 @@ export default {
     {
       name: 'siteName',
       title: 'Site name',
-      type: 'localizedString',
+      type: 'string',
       description: 'The name of your site'
     },
     {
       name: 'siteDescription',
       title: 'Site description',
-      type: 'localizedString',
+      type: 'string',
       description: 'Used in your theme, meta data and search results'
     },
     {
@@ -26,8 +26,8 @@ export default {
   ],
   preview: {
     select: {
-      title: 'siteName.en_GB',
-      subtitle: 'siteDescription.en_GB'
+      title: 'siteName',
+      // subtitle: 'siteDescription.en_GB'
     }
   }
 }
