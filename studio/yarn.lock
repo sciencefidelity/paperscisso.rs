@@ -1401,10 +1401,10 @@
   dependencies:
     diff-match-patch "^1.0.4"
 
-"@sanity/document-internationalization@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@sanity/document-internationalization/-/document-internationalization-0.1.1.tgz#5ee4fd7eda6c9c2ce091b5fa763b36b9d7e36074"
-  integrity sha512-WAyVhQg4sqngdX/jlR9wImpAjFH7ULx4g2+KJn2uQBbBsLeTCQcVEcwdCbzkJWg9HYOymx+QrzexCkggzF9YZQ==
+"@sanity/document-internationalization@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@sanity/document-internationalization/-/document-internationalization-0.1.2.tgz#ac177c6fdb7e76cda6bba8869ee5d3f5691730f7"
+  integrity sha512-z1HV7XSyZOrRCU/z/M7urqLLeN47NAkahSz7+4CpzcrE7bhxW0rI97o5zFBQ0oBt0E9g8jN4r/tAAlOmvORzGA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@cprecioso/country-flag-emoji" "^1.0.0"
