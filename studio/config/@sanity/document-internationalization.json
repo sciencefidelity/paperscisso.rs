@@ -14,7 +14,7 @@
   "referenceBehavior": "strong",
   "withTranslationsMaintenance": false,
   "fieldNames": {
-    "lang": "__i18n_lang",
+    "lang": "locale",
     "references": "__i18n_refs",
     "baseReference": "__i18n_base"
   }
