@@ -1,10 +1,12 @@
+import { i18n } from '../../languages'
+
 export default {
   name: 'post',
   title: 'Post',
   type: 'document',
-  i18n: true,
+  i18n,
   initialValue: {
-    __i18n_lang: 'en',
+    __i18n_lang: i18n.base,
     __i18n_refs: [],
   },
   fields: [
