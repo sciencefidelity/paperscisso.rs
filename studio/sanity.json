@@ -8,10 +8,7 @@
     "@sanity/default-layout",
     "@sanity/default-login",
     "@sanity/desk-tool",
-    "@sanity/document-internationalization",
-    "@sanity/language-filter",
-    "documents-pane",
-    "iframe-pane"
+    "@sanity/document-internationalization"
   ],
   "env": {
     "development": {
@@ -36,10 +33,6 @@
     {
       "implements": "part:@sanity/base/document-actions/resolver",
       "path": "./src/document-actions"
-    },
-    {
-      "name": "part:@sanity/language-filter/config",
-      "path": "./src/language-filter"
     }
   ]
 }

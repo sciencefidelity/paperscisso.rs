@@ -2,7 +2,19 @@ export default {
   name: 'settings',
   title: 'Settings',
   type: 'document',
-  // __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  i18n: {
+    languages: [
+      {
+        // title: 'Field Translation',
+        id: 'ft'
+      }
+    ]
+  },
+  // initialValue: {
+  //   __i18n_lang: null,
+  //   __i18n_refs: []
+  // },
   fields: [
     {
       name: 'siteName',
@@ -19,7 +31,8 @@ export default {
   ],
   preview: {
     select: {
-      title: 'siteName'
+      title: 'siteName.en',
+      subtitle: 'siteDescription.en'
     }
   }
 }

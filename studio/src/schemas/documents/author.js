@@ -2,6 +2,18 @@ export default {
   name: 'author',
   title: 'Author',
   type: 'document',
+  i18n: {
+    languages: [
+      {
+        // title: 'Field Translation',
+        id: 'ft'
+      }
+    ]
+  },
+  // initialValue: {
+  //   __i18n_lang: null,
+  //   __i18n_refs: []
+  // },
   fields: [
     {
       name: 'name',
