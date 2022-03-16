@@ -8,7 +8,8 @@
     "@sanity/default-layout",
     "@sanity/default-login",
     "@sanity/desk-tool",
-    "@sanity/document-internationalization"
+    "@sanity/document-internationalization",
+    "@sanity/language-filter"
   ],
   "env": {
     "development": {
@@ -32,7 +33,7 @@
     },
     {
       "name": "part:@sanity/language-filter/config",
-      "path": "./parts/languageFilterConfig.js"
+      "path": "./src/language-filter"
     }
   ]
 }
