@@ -2,18 +2,6 @@ export default {
   name: 'settings',
   title: 'Settings',
   type: 'document',
-  i18n: {
-    languages: [
-      {
-        title: 'Multi-language',
-        id: 'ml'
-      }
-    ]
-  },
-  initialValue: {
-    __i18n_lang: null,
-    __i18n_refs: []
-  },
   // __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
   fields: [
     {

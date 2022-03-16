@@ -1,21 +1,39 @@
 import S from '@sanity/desk-tool/structure-builder'
 import * as Structure from '@sanity/document-internationalization/lib/structure'
+import { i18n } from '../languages'
+import preview from './preview'
+
+export const getDefaultDocumentNode = ({ schemaType }) => {
+  if (schemaType === 'post') {
+    return S.document().views([
+      ...Structure.getDocumentNodeViewsForSchemaType(schemaType),
+      preview,
+    ])
+  }
+
+  return S.document()
+}
 
 const items = [
+  // Customised document-level translation structure
   S.listItem()
   .title('Post')
   .child(
-    S.documentTypeList('post')
+    S.documentList()
       .title('Post')
-      .filter('_type == "post" && __i18n_lang != "cy"')
-  ),
-  ...S.documentTypeListItems().filter(
-    item => !['post', 'settings'].includes(item.getId())
+      .schemaType('post')
+      .filter(`__i18n_lang == $baseLanguage`)
+      .params({baseLanguage: i18n.base})
+      .menuItems(S.documentTypeList('post').getMenuItems())
   ),
   S.divider(),
-  S.listItem()
-    .title('Settings')
-    .child(S.document().schemaType('settings').documentId('settings')),
+  // Field-level translations
+  S.documentTypeListItem('author').title('Author'),
+  S.documentTypeListItem('tag').title('Tag'),
+  S.divider(),
+  // Singleton, field-level translations
+  // S.documentListItem().schemaType(`labelGroup`).id(`labelGroup`).title(`Labels`),
+  S.documentTypeListItem('settings').title('Settings'),
   S.divider(),
   Structure.getMaintenanceListItem().serialize(),
 ]
