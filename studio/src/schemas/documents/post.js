@@ -2,6 +2,11 @@ export default {
   name: 'post',
   title: 'Post',
   type: 'document',
+  i18n: true,
+  initialValue: {
+    __i18n_lang: 'en',
+    __i18n_refs: [],
+  },
   fields: [
     {
       name: 'title',

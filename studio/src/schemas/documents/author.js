@@ -2,6 +2,7 @@ export default {
   name: 'author',
   title: 'Author',
   type: 'document',
+  i18n: null,
   fields: [
     {
       name: 'name',

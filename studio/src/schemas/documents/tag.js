@@ -16,8 +16,7 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title.en_GB',
-      subtitle: 'title.cy'
+      title: 'title'
     }
   }
 }
