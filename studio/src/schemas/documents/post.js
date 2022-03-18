@@ -8,6 +8,7 @@ export default {
   initialValue: {
     __i18n_lang: i18n.base,
     __i18n_refs: [],
+    publishedAt: new Date().toISOString()
   },
   fields: [
     {
