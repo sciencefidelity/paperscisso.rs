@@ -1,0 +1,35 @@
+---
+import Client from '../client.js';
+
+const data = await Client();
+console.log(data)
+const {MY_SERVER_VARIABLE, MY_CLIENT_VARIABLE, MY_FALLBACK_VARIABLE} = data;
+
+---
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>TEST</title>
+
+	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+	<style>
+		header {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			max-width: min(100%, 68ch);
+		}
+	</style>
+</head>
+<body>
+{MY_SERVER_VARIABLE}
+<br/>
+{MY_CLIENT_VARIABLE}
+<br/>
+{MY_FALLBACK_VARIABLE}
+
+	</main>
+</body>
+</html>
