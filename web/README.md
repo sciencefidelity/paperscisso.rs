@@ -1,5 +1,5 @@
-# Paperscissors
+# Welcome to eMpower
 
-This is a repo to experiment with making a [Svelte](https://svelte.dev) app.
+A resource to help everyone improve their wellbeing, self‑esteem and mental health through meditation.
 
-I hope this will become the site [paperscisso.rs](https://paperscisso.rs).
+The *Coming Soon* page build with [Astro](https://astro.build).

@@ -4,7 +4,7 @@
     "stylelint-config-standard",
     "stylelint-config-sass-guidelines",
     "stylelint-config-recess-order",
-    "stylelint-config-html/svelte"
+    "stylelint-config-html"
   ],
   "plugins": ["stylelint-scss", "stylelint-selector-bem-pattern"],
   "rules": {

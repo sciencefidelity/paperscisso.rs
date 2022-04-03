@@ -1,18 +1,7 @@
-<script context="module">
-  import { browser, dev } from "$app/env"
-  export const hydrate = dev
-  export const router = browser
-  export const prerender = true
-</script>
-
-<script lang="ts">
-</script>
-
-<svelte:head>
-  <title>Home</title>
-</svelte:head>
-
-<main>
+---
+import BaseLayout from "layouts/BaseLayout.astro"
+---
+<BaseLayout title="home">
   <div class="intro">
     <p>
       <span class="drop-cap">L</span>orem ipsum dolor sit amet, consectetur
@@ -24,9 +13,8 @@
       qui officia deserunt mollit anim id est laborum.
     </p>
   </div>
-</main>
+</BaseLayout>
 
-<!-- prettier-ignore -->
 <style lang="scss">
   .intro {
     width: 88%;

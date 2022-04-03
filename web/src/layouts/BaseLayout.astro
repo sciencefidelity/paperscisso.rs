@@ -1,0 +1,75 @@
+---
+import "styles/global.scss"
+import Header from "components/Header.astro"
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>PaperScissors</title>
+    <meta
+      name="Description"
+      content="Paper Scissors Stone."
+    />
+
+    <link
+      rel="preload"
+      href="/assets/fonts/infini-bold-latin.woff2" as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/menoe_grotesque_pro-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+    <link rel="mask-icon" href="/mask-icon.svg" color="#ff7a6b" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>
+        visit <a href="https://astro.build">astro.build</a> to learn Astro
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style lang="scss">
+  main {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1024px;
+    padding: 1rem;
+    margin: 0 auto;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  footer a {
+    font-weight: bold;
+  }
+
+  @media (min-width: 480px) {
+    footer {
+      padding: 40px 0;
+    }
+  }
+</style>
