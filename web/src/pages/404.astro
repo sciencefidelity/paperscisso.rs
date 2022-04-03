@@ -3,9 +3,19 @@ import BaseLayout from "layouts/BaseLayout.astro"
 const title = "404"
 ---
 <BaseLayout title={title}>
-  <div class="sans center">
+  <div class="not-found">
     <h1>not found</h1>
-    <p class="sacramento">this path does not exist</p>
+    <p>this path does not exist</p>
     <a href="/">home</a>
   </div>
 </BaseLayout>
+
+<style>
+  .not-found {
+    font-family: 'Menoe Grotesque Pro', monospace;
+    text-align: center;
+    font-size: 200%;
+    padding-top: 3rem;
+    line-height: 1.5;
+  }
+</style>
