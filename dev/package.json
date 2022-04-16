@@ -17,9 +17,11 @@
     "fix:styles": "stylelint --fix '**/*.{astro,scss}' --ignore-path .eslintignore"
   },
   "devDependencies": {
+    "@sanity/client": "^3.3.0",
     "astro": "^1.0.0-beta.12",
     "astro-control": "^0.0.1",
     "concurrently": "^7.1.0",
+    "groq": "^2.29.3",
     "postcss": "^8.4.12",
     "postcss-html": "^1.3.0",
     "postcss-scss": "^4.0.3",

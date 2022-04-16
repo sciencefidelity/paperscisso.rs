@@ -1,41 +1,51 @@
 ---
+import groq from "groq"
+import sanityClient from "lib/sanityClient"
+import { Show } from "astro-control"
 import BaseLayout from "layouts/BaseLayout.astro"
-import { capitalize } from "lib/utils.ts"
-import logo from "/assets/images/logo.svg"
-const title = "home"
+import { Post } from "lib/interfaces"
+
+const query = groq`{
+  "post": *[_type == "post"][0]{
+    body[]
+  }
+}`
+
+const response = await sanityClient.fetch(query)
+const data: {
+  post: Post
+} = await response
+const { post } = data as { post: Post }
 ---
-<BaseLayout title={title}>
-  <section class={title}>
-    <h1>{capitalize(title)}</h1>
-    <img src={logo} class="logo" alt="logo" />
-    <p>Page has been open for <code id="counter"></code> seconds.</p>
-    <a
-      class="App-link"
-      href="https://astro.build"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn Astro
-    </a>
+<BaseLayout title="Portable Text Component">
+  <section>
+    {post.body.map(block =>
+      <Show when={block.style === "h1"}>
+        <h1 class="h1">{block.children[0].text}</h1>
+      </Show>
+      <Show when={block.style === "h2"}>
+        <h2>{block.children[0].text}</h2>
+      </Show>
+      <Show when={block.style === "h3"}>
+        <h3>{block.children[0].text}</h3>
+      </Show>
+      <Show when={block.style === "h4"}>
+        <h4>{block.children[0].text}</h4>
+      </Show>
+      <Show when={block.style === "normal"}>
+        <p>
+          <Show when={block.children[0].marks[0] === "em"}>
+            <em>{block.children[0].text}</em>
+          </Show>
+          <Show when={block.children[0].marks[0] === "strong"}>
+            <strong>{block.children[0].text}</strong>
+          </Show>
+          <Show when={!block.children[0].marks[0]}>
+            {block.children[0].text}
+          </Show>
+        </p>
+      </Show>
+    )}
   </section>
-  <script src="/scripts/timer.ts" lang="ts" is:inline></script>
 </BaseLayout>
 
-<style lang="scss">
-  .home {
-    margin: 5rem 0;
-    text-align: center;
-    p {
-      margin: 0.4rem;
-    }
-  }
-
-  .logo {
-    height: 36vmin;
-    margin: 3rem;
-    pointer-events: none;
-    @media (prefers-reduced-motion: no-preference) {
-      animation: logo-pulse infinite 1.6s ease-in-out alternate;
-    }
-  }
-</style>

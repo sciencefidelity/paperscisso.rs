@@ -10,19 +10,10 @@
 }
 
 html {
-  font-size: 62.5%;
-  background-image: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: auto;
-  font-size: calc(10px + 2vmin);
-  color: var(--foreground);
-  background-color: var(--background);
-}
-
-a {
-  color: var(--accent);
+.h1 {
+  color: red;
 }
