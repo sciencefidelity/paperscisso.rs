@@ -4,9 +4,10 @@ export default {
     {id: 'cy', title: 'Welsh'},
     //...
   ],
-  // defaultLanguages: ['en'],
+  defaultLanguages: ['en'],
   // Only show language filter for document type `page` (schemaType.name)
   documentTypes: ['author', 'settings', 'tag'],
   filterField: (enclosingType, field, selectedLanguageIds) =>
-    !enclosingType.name.startsWith('locale') || selectedLanguageIds.includes(field.name),
+    !enclosingType.name.startsWith('locale') ||
+    selectedLanguageIds.includes(field.name),
 }
