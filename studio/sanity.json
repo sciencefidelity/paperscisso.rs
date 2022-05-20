@@ -9,7 +9,8 @@
     "@sanity/default-login",
     "@sanity/desk-tool",
     "@sanity/document-internationalization",
-    "@sanity/language-filter"
+    "@sanity/language-filter",
+    "@sanity/dashboard"
   ],
   "env": {
     "development": {
