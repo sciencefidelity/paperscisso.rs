@@ -1,7 +1,7 @@
 {
   "name": "paperscisso.rs",
   "version": "0.1.0",
-  "description": "This is a repo to experiment with making a [Svelte](https://svelte.dev) app.",
+  "description": "This is an experimental repo.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/sciencefidelity/paperscisso.rs#readme",
   "devDependencies": {
-    "@types/node": "^17.0.21",
     "eslint": "^8.11.0",
     "typescript": "^4.6.2"
   }
