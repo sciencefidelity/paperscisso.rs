@@ -1,9 +1,12 @@
 import { i18n } from '../../languages'
+import { isUniqueLocale } from '../../lib/isUniqueLocale'
+import { WritingHand } from '../../components/twemoji'
 
 export default {
   name: 'post',
   title: 'Post',
   type: 'document',
+  icon: WritingHand,
   i18n,
   initialValue: {
     __i18n_lang: i18n.base,
@@ -22,7 +25,8 @@ export default {
       type: 'slug',
       options: {
         source: 'title',
-        maxLength: 96
+        maxLength: 96,
+        isUnique: isUniqueLocale
       }
     },
     {
@@ -63,11 +67,12 @@ export default {
       author: 'author.name',
       media: 'mainImage'
     },
-    prepare(selection) {
-      const { author } = selection
-      return Object.assign({}, selection, {
-        subtitle: author && `by ${author}`
-      })
+    prepare: ({ title, author, media }) => {
+      return {
+        title,
+        subtitle: author && `by ${author}`,
+        media
+      }
     }
   }
 }

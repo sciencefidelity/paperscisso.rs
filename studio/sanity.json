@@ -29,6 +29,10 @@
       "path": "./src/styles/theme.css"
     },
     {
+      "implements": "part:@sanity/dashboard/config",
+      "path": "./src/dashboard"
+    },
+    {
       "name": "part:@sanity/desk-tool/structure",
       "path": "./src/desk-structure"
     },
