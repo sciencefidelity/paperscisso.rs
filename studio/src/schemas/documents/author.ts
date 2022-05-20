@@ -1,10 +1,10 @@
-import { WomanTeacher } from '../../components/twemoji'
+import { Artist } from '../../components/twemoji'
 
 export default {
   name: 'author',
   title: 'Author',
   type: 'document',
-  icon: WomanTeacher,
+  icon: Artist,
   fields: [
     {
       name: 'name',

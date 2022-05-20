@@ -1,6 +1,6 @@
 import S from '@sanity/desk-tool/structure-builder'
 import * as Structure from '@sanity/document-internationalization/lib/structure'
-import { Gear, Label, WritingHand, WomanTeacher } from '../components/twemoji'
+import { Gear, EarthAfrica, WritingHand } from '../components/twemoji'
 
 const items = [
   S.listItem()
@@ -20,7 +20,7 @@ const items = [
     .icon(Gear)
     .child(S.document().schemaType('settings').documentId('settings')),
   S.divider(),
-  Structure.getMaintenanceListItem().serialize()
+  Structure.getMaintenanceListItem().icon(EarthAfrica).serialize()
 ]
 
 export default () => {
