@@ -1,8 +1,10 @@
+import { Gear } from '../../components/twemoji'
+
 export default {
   name: 'settings',
   title: 'Settings',
   type: 'document',
-  __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  icon: Gear,
   fields: [
     {
       name: 'siteName',
