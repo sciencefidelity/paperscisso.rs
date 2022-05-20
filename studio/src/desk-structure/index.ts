@@ -3,6 +3,7 @@ import * as Structure from '@sanity/document-internationalization/lib/structure'
 import {
   Artist,
   Books,
+  Compass,
   EarthAfrica,
   Gear,
   Label,
@@ -44,13 +45,24 @@ const items = [
     ),
   S.divider(),
   S.listItem()
+    .title('Navigation')
+    .icon(Compass)
+    .child(S.document().schemaType('navigation').documentId('navigation')),
+  S.listItem()
     .title('Settings')
     .icon(Gear)
     .child(S.document().schemaType('settings').documentId('settings')),
   S.divider(),
   Structure.getMaintenanceListItem().icon(EarthAfrica).serialize(),
   ...S.documentTypeListItems().filter(
-    item => !['author', 'page', 'post', 'settings', 'tag'].includes(item.getId())
+    item => ![
+      'author',
+      'navigation',
+      'page',
+      'post',
+      'settings',
+      'tag'
+    ].includes(item.getId())
   )
 ]
 
