@@ -36,6 +36,10 @@
       "path": "./src/document-actions"
     },
     {
+      "implements": "part:@sanity/document-internationalization/ui/flags",
+      "path": "./src/document-internationalization/flags"
+    },
+    {
       "name": "part:@sanity/language-filter/config",
       "path": "./src/language-filter"
     }
