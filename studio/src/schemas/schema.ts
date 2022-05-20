@@ -9,6 +9,7 @@ import portableText from './objects/portableText'
 // documements
 import author from './documents/author'
 import post from './documents/post'
+import page from './documents/page'
 import settings from './documents/settings'
 
 // taxonomy
@@ -23,8 +24,9 @@ export default createSchema({
     portableText,
 
     // documements
-    post,
     author,
+    post,
+    page,
     settings,
 
     // taxonomy

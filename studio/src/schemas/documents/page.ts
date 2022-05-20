@@ -1,14 +1,14 @@
 import { i18n } from '../../languages'
 import { isUniqueLocale } from '../../lib/isUniqueLocale'
 import StringWithLimits from '../../components/StringWithLimits'
-import { WritingHand } from '../../components/twemoji'
+import { Books } from '../../components/twemoji'
 import { Rule } from '@sanity/types'
 
 export default {
-  name: 'post',
-  title: 'Post',
+  name: 'page',
+  title: 'Page',
   type: 'document',
-  icon: WritingHand,
+  icon: Books,
   i18n,
   initialValue: {
     __i18n_lang: i18n.base,
@@ -27,7 +27,7 @@ export default {
       type: 'image',
       options: {
         hotspot: true
-      }
+      },
     },
     {
       name: 'slug',
@@ -37,7 +37,7 @@ export default {
         source: 'title',
         maxLength: 96,
         isUnique: isUniqueLocale
-      }
+      },
     },
     {
       name: 'body',
