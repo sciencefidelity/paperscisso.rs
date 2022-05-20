@@ -12,14 +12,32 @@ export default {
   i18n,
   initialValue: {
     __i18n_lang: i18n.base,
-    __i18n_refs: [],
-    publishedAt: new Date().toISOString()
+    __i18n_refs: []
   },
+  groups: [
+    {
+      name: 'content',
+      title: 'Content'
+    },
+    {
+      name: 'settings',
+      title: 'Settings'
+    },
+    {
+      name: 'meta',
+      title: 'Meta'
+    },
+    {
+      name: 'social',
+      title: 'Social'
+    }
+  ],
   fields: [
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      group: 'content'
     },
     {
       name: 'image',
@@ -28,6 +46,13 @@ export default {
       options: {
         hotspot: true
       },
+      group: 'content'
+    },
+    {
+      name: 'body',
+      title: 'Body',
+      type: 'portableText',
+      group: 'content'
     },
     {
       name: 'slug',
@@ -38,35 +63,15 @@ export default {
         maxLength: 96,
         isUnique: isUniqueLocale
       },
-    },
-    {
-      name: 'body',
-      title: 'Body',
-      type: 'portableText'
-    },
-    {
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: { type: 'author' }
-    },
-    {
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{ type: 'reference', to: { type: 'tag' } }]
-    },
-    {
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime'
+      group: 'content'
     },
     {
       name: 'mataTitle',
       title: 'Meta Title',
       type: 'string',
       inputComponent: StringWithLimits,
-      validation: (Rule: Rule) => Rule.max(70).warning("Some text won't be visible.")
+      validation: (Rule: Rule) => Rule.max(70).warning("Some text won't be visible."),
+      group: 'meta'
     },
     {
       name: 'mataDescription',
@@ -74,12 +79,14 @@ export default {
       type: 'text',
       rows: 3,
       description: 'Recommended: 156 characters.', // You’ve used 0
-      validation: (Rule: Rule) => Rule.max(156).warning("Some text won't be visible.")
+      validation: (Rule: Rule) => Rule.max(156).warning("Some text won't be visible."),
+      group: 'meta'
     },
     {
       name: 'canonicalURL',
       title: 'Canonical URL',
-      type: 'url'
+      type: 'url',
+      group: 'meta'
     },
     {
       name: 'ogImage',
@@ -87,21 +94,24 @@ export default {
       type: 'image',
       options: {
         hotspot: true
-      }
+      },
+      group: 'social'
     },
     {
       name: 'ogTitle',
       title: 'Social title',
       type: 'string',
       inputComponent: StringWithLimits,
-      validation: (Rule: Rule) => Rule.max(70).warning("Some text won't be visible.")
+      validation: (Rule: Rule) => Rule.max(70).warning("Some text won't be visible."),
+      group: 'social'
     },
     {
       name: 'ogDescription',
       title: 'Social Description',
       type: 'text',
       rows: 3,
-      description: 'Recommended: 125 characters.' // You’ve used 0
+      description: 'Recommended: 125 characters.', // You’ve used 0
+      group: 'social'
     }
   ],
 
