@@ -137,20 +137,12 @@ export default {
       group: 'social'
     }
   ],
-  orderings: [
-    {
-      name: 'publishedDate',
-      title: 'Published date',
-      by: [
-        {field: 'publishedAt', direction: 'asc'}
-      ]
-    }
-  ],
+
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
-      media: 'mainImage'
+      author: 'author.title',
+      media: 'image'
     },
     prepare: ({ title, author, media }) => {
       return {
