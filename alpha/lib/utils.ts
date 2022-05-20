@@ -2,7 +2,6 @@ import imageUrlBuilder from "@sanity/image-url"
 import sanityClient from "lib/sanityClient"
 import { LocaleString } from "lib/interfaces"
 import { Image, Staff } from "lib/interfaces"
-import p from "styles/patterns.module.scss"
 
 export const acronym = (str: string): string => {
   return str.split(" ").map(e => /[A-Z]/.test(e) ? e[0] : "").join("")
@@ -35,62 +34,6 @@ export const localize = (
     : content.en
 }
 
-export const localizeRoles = (type: string): string => {
-  switch (type) {
-  case "Author":
-    return "Awdur"
-  case "Chair":
-    return "Cadeirydd"
-  case "Co-ordinator":
-    return "Cydlynydd"
-  case "Facilitator":
-    return "Hwylusydd"
-  case "Trustee":
-    return "Ymddiriedolwr"
-  default:
-    return ""
-  }
-}
-
-export const pattern = (pattern: string): string => {
-  switch (pattern) {
-  case "cubes":
-    return p.cubes
-  case "lines":
-    return p.lines
-  case "dots":
-    return p.dots
-  case "circles":
-    return p.circles
-  case "linesVertical":
-    return p.linesVertical
-  case "squares":
-    return p.squares
-  case "linesDiagonal":
-    return p.linesDiagonal
-  case "diagonal":
-    return p.diagonal
-  case "textbook":
-    return p.textbook
-  case "target":
-    return p.target
-  case "repeatingCircles":
-    return p.repeatingCircles
-  case "radial":
-    return p.radial
-  case "zigzag":
-    return p.zigzag
-  case "isometric":
-    return p.isometric
-  case "isometric3d":
-    return p.isometric3d
-  case "cross":
-    return p.cross
-  default:
-    return p.lines
-  }
-}
-
 export const sortNames = (names: Staff[]): Staff[] => {
   return names.sort((a, b) => {
     return a.title.split(" ").pop().localeCompare(b.title.split(" ").pop())
@@ -99,20 +42,16 @@ export const sortNames = (names: Staff[]): Staff[] => {
 
 export const subdir = (type: string): string => {
   switch (type) {
-  case "artform":
-    return "/artform"
-  case "event":
-    return "/event"
+  case "author":
+    return "/authors"
+  case "post":
+    return "/blog"
   case "keystage":
     return "/keystage"
-  case "post":
-    return "/news"
-  case "staff":
-    return "/staff"
   case "tag":
-    return "/tag"
-  case "video":
-    return "/video"
+    return "/tags"
+  case "page":
+    return ""
   default:
     return ""
   }
