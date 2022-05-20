@@ -12,12 +12,14 @@ export default {
     {
       title: 'English',
       name: 'en',
-      type: 'text'
+      type: 'text',
+      rows: 3
     },
     {
       title: 'Welsh',
       name: 'cy',
-      type: 'text'
+      type: 'text',
+      rows: 3
     }
   ]
 }

@@ -94,7 +94,7 @@ export default {
       type: 'string',
       inputComponent: StringWithLimits,
       validation: (Rule: Rule) => Rule.max(70).warning("Some text won't be visible."),
-      group: 'mata'
+      group: 'meta'
     },
     {
       name: 'mataDescription',
@@ -103,13 +103,13 @@ export default {
       rows: 3,
       description: 'Recommended: 156 characters.', // You’ve used 0
       validation: (Rule: Rule) => Rule.max(156).warning("Some text won't be visible."),
-      group: 'mata'
+      group: 'meta'
     },
     {
       name: 'canonicalURL',
       title: 'Canonical URL',
       type: 'url',
-      group: 'mata'
+      group: 'meta'
     },
     {
       name: 'ogImage',
