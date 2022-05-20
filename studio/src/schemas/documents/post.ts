@@ -137,7 +137,15 @@ export default {
       group: 'social'
     }
   ],
-
+  orderings: [
+    {
+      name: 'publishedDate',
+      title: 'Published date',
+      by: [
+        {field: 'publishedAt', direction: 'asc'}
+      ]
+    }
+  ],
   preview: {
     select: {
       title: 'title',

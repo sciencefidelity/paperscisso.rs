@@ -1,3 +1,5 @@
+import { i18n } from '../../languages'
+import { isUniqueLocale } from '../../lib/isUniqueLocale'
 import { Artist } from '../../components/twemoji'
 
 export default {
@@ -5,20 +7,16 @@ export default {
   title: 'Author',
   type: 'document',
   icon: Artist,
+  i18n,
+  initialValue: {
+    __i18n_lang: i18n.base,
+    __i18n_refs: []
+  },
   fields: [
     {
-      name: 'name',
+      name: 'title',
       title: 'Name',
       type: 'string'
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96
-      }
     },
     {
       name: 'image',
@@ -31,12 +29,22 @@ export default {
     {
       name: 'biography',
       title: 'Biography',
-      type: 'localeText',
+      type: 'text',
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+        isUnique: isUniqueLocale
+      }
     }
   ],
   preview: {
     select: {
-      title: 'name',
+      title: 'title',
       media: 'image'
     }
   }
