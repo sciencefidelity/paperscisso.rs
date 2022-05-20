@@ -1,8 +1,8 @@
 export interface Author extends SanityDocument {
   __i18n_refs: Author
-  _type: "staff"
-  avatar: Image
-  bio: string
+  _id: string
+  _type: "author"
+  biography: string
   posts: Post[]
   slug: string
   title: string
@@ -16,10 +16,6 @@ export interface HeadProps {
   ogTitle: string
   ogURL: string
   title: string
-  twitterCreator?: string
-  twitterDescription: string
-  twitterImage: Image
-  twitterTitle: string
 }
 
 export interface Image {
@@ -47,21 +43,20 @@ export interface LocaleText {
 }
 
 export interface Navigation {
-  primary: NavItem[]
-}
-
-export interface NavItem {
   _key: string
   label: LocaleString
-  url: URL
+  slug: string
 }
 
 export interface Page extends SanityDocument {
   __i18n_refs: Page
   _type: "page"
   body: PortableText
-  image: Image
-  slug: string
+  canonicalURL: string
+  mataDescription: string
+  mataTitle: string
+  ogDescription: string
+  ogTitle: string
   title: string
 }
 
@@ -74,9 +69,16 @@ export interface Path {
 export interface Post extends SanityDocument {
   __i18n_refs: Post
   _type: "post"
+  author: Author
   body: PortableText
-  image: Image
+  canonicalURL: string
+  mataDescription: string
+  mataTitle: string
+  ogDescription: string
+  ogTitle: string
+  publishedAt: String
   slug: string
+  tags: Tag[]
   title: string
 }
 
@@ -87,13 +89,6 @@ export interface Tag extends SanityDocument {
   slug: string
   title: string
 }
-
-interface URL {
-  _type: "author" | "page" | "post" | "tag"
-  slug: string
-  title: string
-}
-
 
 type PortableText = Array<
   | SanityKeyed<SanityBlock>
