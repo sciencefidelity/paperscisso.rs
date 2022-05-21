@@ -46,7 +46,7 @@ export interface Localization {
 export interface Navigation {
   _key: string
   label: LocaleString
-  slug: string
+  slug: LocaleString
 }
 
 export interface Settings {

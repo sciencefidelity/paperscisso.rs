@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { useRouter } from "next/router"
 import { LinkTo } from "components/linkTo"
 import { Language } from "components/language"
 import { Localize } from "components/localize"
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
+  const { locale } = useRouter()
   return (
     <header>
       <Localize data={settings.title} />
@@ -19,7 +21,7 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
           {navigation.map(item =>
             <li key={item._key}>
               <LinkTo
-                href={item.slug ? item.slug : ""}
+                href={locale === "cy" ? item.slug.cy : item.slug.en}
                 key={item._key}
                 locale={pageContext.locale}
               >

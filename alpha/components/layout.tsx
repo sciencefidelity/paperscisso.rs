@@ -28,20 +28,7 @@ export const Layout: FC<Props> = ({
   pageHead,
   settings
 }) => {
-  const router = useRouter()
-  const { locale, locales, defaultLocale, asPath } = router
   const page = pageContext
-    ? pageContext
-    : {
-      locale,
-      locales,
-      defaultLocale,
-      slug: formatSlug(asPath.slice(1), locale, defaultLocale),
-      localizedPaths: locales.map(loc => ({
-        locale: loc,
-        href: formatSlug(asPath.slice(1), loc, defaultLocale)
-      }))
-    }
   return (
     <>
       <BaseHead pageHead={pageHead} settings={settings} />

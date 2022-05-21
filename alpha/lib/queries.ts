@@ -18,14 +18,14 @@ const authorFields = `__i18n_lang, _id, _type, biography, ${slug}, title`
 const pageFields = `
   __i18n_lang, _id, _type, ${body}, canonicalURL,
   mataTitle, ogTitle, ${slug}, title,
-  "localizations": [select(
+  "localizations": select(
     defined(__i18n_refs[]) => __i18n_refs[]->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
     },
     defined(__i18n_base) => __i18n_base->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
     }
-  )]
+  )
 `
 
 const tagFields = `__i18n_lang, _id, _type, ${slug}, title`
@@ -38,7 +38,8 @@ const postFields = `
 
 const navigation = `
   "navigation": *[_type == "navigation"][0].primary[]{
-    _key, label{ cy, en }, "slug": url->.slug.current
+    _key, label{ cy, en },
+    "slug": { "en": url->.slug.current, "cy": url->.__i18n_refs[0]->.slug.current }
   }
 `
 
@@ -54,7 +55,7 @@ const page = `
     _type == "page"
     && slug.current == $slug
     && ${omitDrafts}
-  ][0]{ ${pageFields}, __i18n_refs[0]->{ ${pageFields} } }
+  ][0]{ ${pageFields} }
 `
 
 const post = `
