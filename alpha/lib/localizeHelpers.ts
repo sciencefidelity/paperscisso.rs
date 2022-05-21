@@ -7,7 +7,9 @@ export const formatSlug = (
   locale: string,
   defaultLocale: string
 ) => {
-  return locale === defaultLocale ? `/${slug}` : `/${locale}/${slug}`
+  return locale === defaultLocale
+    ? `/${slug === "index" ? "" : slug}`
+    : `/${locale}/${slug === "index" ? "" : slug}`
 }
 
 export const getLocalizedPaths = (pageContext: PageContext) => {

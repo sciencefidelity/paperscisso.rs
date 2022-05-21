@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async ({
   locales,
   params
 }) => {
-  const slug = params.slug[0] ?? ""
+  const slug = params.slug ? params.slug[0] : "index"
   const data = await sanityClient.fetch(pageQuery, { slug })
   const { navigation, page, settings } = data as Props
   const pageContext = {
@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async ({
     localization: page.localization,
     locales,
     defaultLocale,
-    slug: params.slug ? params.slug[0] : "",
+    slug: params.slug ? params.slug[0] : "index",
   }
   const localizedPaths = getLocalizedPaths(pageContext)
   return {
@@ -73,6 +73,8 @@ const PageComponent: NextPage<Props> = ({
       pageHead={pageHead}
     >
       <div>{page.title}</div>
+      <pre>{JSON.stringify(page, undefined, 2)}</pre>
+      <pre>{JSON.stringify(pageContext, undefined, 2)}</pre>
     </Layout>
   )
 }

@@ -110,8 +110,12 @@ export const pageQuery = groq`{
 // `
 
 export const pagePathQuery = groq`
-  *[_type == "page" && defined(slug) && ${omitDrafts}]{
-    "params": { "slug": [ slug.current ] }, "locale": __i18n_lang
+  *[_type == "page" && defined(slug)]{
+    "params": select(
+      slug.current != "index" => { "slug": [ slug.current ] },
+      slug.current == "index" => { "slug": false }
+    ),
+    "locale": __i18n_lang
   }
 `
 

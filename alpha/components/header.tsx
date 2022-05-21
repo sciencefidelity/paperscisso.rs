@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
-  const { defaultLocale, locale } = useRouter()
+  const { locale } = useRouter()
   return (
     <header>
       <Localize data={settings.title} />
@@ -22,13 +22,7 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
         <ul>
           {navigation.map(item =>
             <li key={item._key}>
-              <LinkTo
-                href={formatSlug(
-                  localize(item.slug, locale), locale, defaultLocale
-                )}
-                key={item._key}
-                locale={pageContext.locale}
-              >
+              <LinkTo href={localize(item.slug, locale)}>
                 <Localize data={item.label} />
               </LinkTo>
             </li>
