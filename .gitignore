@@ -8,6 +8,7 @@ node_modules
 *.log
 dist
 .svelte-kit
+.next
 build
 functions
 package

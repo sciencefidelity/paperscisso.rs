@@ -37,15 +37,18 @@ export interface LocaleString {
   en: string
 }
 
-export interface LocaleText {
-  cy: string
-  en: string
-}
-
 export interface Navigation {
   _key: string
   label: LocaleString
   slug: string
+}
+
+export interface Settings {
+  canonicalURL: string
+  description: LocaleString
+  ogDescription: LocaleString
+  ogTitle: LocaleString
+  title: LocaleString
 }
 
 export interface Page extends SanityDocument {

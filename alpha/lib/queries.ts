@@ -30,7 +30,7 @@ const navigation = `
 `
 
 const settings = `
-  *[_type == "settings"][0]{
+  "settings": *[_type == "settings"][0]{
     canonicalURL, description{ cy, en },
     ogDescription{ cy, en }, ogTitle{ cy, en }, title{ cy, en }
   }
@@ -82,7 +82,7 @@ export const authorPathQuery = groq`
 `
 
 
-export const fourohfourQuery = groq`{
+export const indexQuery = groq`{
   ${labels}, ${navigation}, ${settings}
 }`
 

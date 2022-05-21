@@ -1,7 +1,7 @@
 import imageUrlBuilder from "@sanity/image-url"
 import sanityClient from "lib/sanityClient"
 import { LocaleString } from "lib/interfaces"
-import { Image, Staff } from "lib/interfaces"
+import { Image, Author } from "lib/interfaces"
 
 export const acronym = (str: string): string => {
   return str.split(" ").map(e => /[A-Z]/.test(e) ? e[0] : "").join("")
@@ -34,7 +34,7 @@ export const localize = (
     : content.en
 }
 
-export const sortNames = (names: Staff[]): Staff[] => {
+export const sortNames = (names: Author[]): Author[] => {
   return names.sort((a, b) => {
     return a.title.split(" ").pop().localeCompare(b.title.split(" ").pop())
   })
