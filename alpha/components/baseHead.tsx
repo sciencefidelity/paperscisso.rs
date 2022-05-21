@@ -25,24 +25,6 @@ export const BaseHead: FC<Props> = ({ pageHead, settings }) => {
           : localize(settings.description, locale)}
       />
       <meta name="keywords" content="" />
-      <link
-        rel="preload"
-        href="/fonts/PitchSans-Bold.woff2"
-        as="font"
-        crossOrigin=""
-      />
-      <link
-        rel="preload"
-        href="/fonts/Calibre-Medium.woff2"
-        as="font"
-        crossOrigin=""
-      />
-      <link
-        rel="preload"
-        href="/fonts/Calibre-Bold.woff2"
-        as="font"
-        crossOrigin=""
-      />
       {/* Facebook */}
       <meta
         property="og:title"

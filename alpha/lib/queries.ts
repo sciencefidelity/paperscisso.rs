@@ -115,6 +115,21 @@ export const pagePathQuery = groq`
   }
 `
 
+export const localizePageQuery = groq`{
+  "page": *[_type == "page" && _id == $id]{
+    __i18n_lang, _id, _type, body, canonicalURL,
+    mataTitle, ogTitle, "slug": slug.current, title,
+    "localizations": [select(
+      defined(__i18n_refs[]) => __i18n_refs[]->{
+        "id": _id, "locale": __i18n_lang, "slug": slug.current
+      },
+      defined(__i18n_base) => [__i18n_base->{
+        "id": _id, "locale": __i18n_lang, "slug": slug.current
+      }]
+    )]
+  }
+}`
+
 export const postQuery = groq`{
   ${labels}, ${navigation}, ${post}, ${settings}
 }`

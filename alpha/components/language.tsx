@@ -1,9 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react"
-import Cookies from "js-cookie"
 import { useRouter } from "next/router"
-import Link from "next/link"
-import { getLocalizedPage, localizePath } from "lib/localizeHelpers"
-// import { capitalize } from "lib/utils"
+import { LinkTo } from "components/linkTo"
+import { formatSlug } from "lib/localizeHelpers"
 import { PageContext } from "lib/interfaces"
 
 interface Props {
@@ -13,39 +11,18 @@ interface Props {
 export const Language: FC<Props> = ({ pageContext }) => {
   const isMounted = useRef(false)
   const router = useRouter()
-  const [locale, setLocale] = useState()
-  // const languages = ["cymraeg", "english"]
+  const [locale, setLocale] = useState(router.locale)
+  const langs = ["Cymraeg", "English"]
 
-  const handleLocaleChange = async selectedLocale => {
-    Cookies.set("NEXT_LOCALE", selectedLocale)
-    setLocale(selectedLocale)
+  const handleLocaleChange = async (locale: string) => {
+    setLocale(locale)
   }
 
   const handleLocaleChangeRef = useRef(handleLocaleChange)
 
   useEffect(() => {
-    const localeCookie = Cookies.get("NEXT_LOCALE")
-    if (!localeCookie) {
-      handleLocaleChangeRef.current(router.locale)
-    }
-    const checkLocaleMismatch = async () => {
-      if (
-        !isMounted.current &&
-        localeCookie &&
-        localeCookie !== pageContext.locale
-      ) {
-        const localePage = await getLocalizedPage(localeCookie, pageContext)
-        router.push(
-          `${localizePath({ ...pageContext, ...localePage })}`,
-          `${localizePath({ ...pageContext, ...localePage })}`,
-          { locale: localePage.locale }
-        )
-      }
-    }
-
-    setLocale(localeCookie || router.locale)
-    checkLocaleMismatch()
-
+    handleLocaleChangeRef.current(router.locale)
+    setLocale(pageContext.localizations[0].locale)
     return () => {
       isMounted.current = true
     }
@@ -54,19 +31,21 @@ export const Language: FC<Props> = ({ pageContext }) => {
   return (
     <div>
       <ul>
-        {pageContext.localizedPaths.map(({ href, locale }) =>
-          <li key={locale}>
-            <Link
-              href={href}
-              locale={locale}
-              key={locale}
-              role={"option"}
-              passHref
-            >
-              <a onClick={() => handleLocaleChange(locale)}>{locale}</a>
-            </Link>
-          </li>
-        )}
+        <li key={locale}>
+          <LinkTo
+            href={formatSlug(
+              pageContext.localizations[0].slug,
+              pageContext.localizations[0].locale,
+              pageContext.defaultLocale
+            )}
+            locale={locale}
+            key={locale}
+            role={"option"}
+            onClick={() => handleLocaleChange(pageContext.localizations[0].locale)}
+          >
+            {router.locale === "cy" ? langs[1] : langs[0]}
+          </LinkTo>
+        </li>
       </ul>
     </div>
   )
