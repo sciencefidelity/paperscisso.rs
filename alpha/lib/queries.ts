@@ -22,9 +22,9 @@ const pageFields = `
     defined(__i18n_refs[]) => __i18n_refs[]->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
     },
-    defined(__i18n_base) => __i18n_base->{
+    defined(__i18n_base) => [__i18n_base->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
-    }
+    }]
   )
 `
 

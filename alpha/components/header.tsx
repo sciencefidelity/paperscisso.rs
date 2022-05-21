@@ -21,7 +21,7 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
           {navigation.map(item =>
             <li key={item._key}>
               <LinkTo
-                href={locale === "cy" ? item.slug.cy : item.slug.en}
+                href={locale === "cy" ? "cy/" + item.slug.cy : item.slug.en}
                 key={item._key}
                 locale={pageContext.locale}
               >

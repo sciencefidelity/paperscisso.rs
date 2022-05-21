@@ -30,7 +30,6 @@ export const getLocalizedPaths = (pageContext: PageContext) => {
 
 export const localizePath = (pageContext: PageContext) => {
   const { defaultLocale, locale, localizations, slug } = pageContext
-  console.log(localizations)
   const localeFound = localizations.find(a => a.locale === locale)
   if (localeFound) return formatSlug(localeFound.slug, locale, defaultLocale)
   else return formatSlug(slug, locale, defaultLocale)
@@ -44,9 +43,9 @@ const query = groq`{
       defined(__i18n_refs[]) => __i18n_refs[]->{
         "id": _id, "locale": __i18n_lang, "slug": slug.current
       },
-      defined(__i18n_base) => __i18n_base->{
+      defined(__i18n_base) => [__i18n_base->{
         "id": _id, "locale": __i18n_lang, "slug": slug.current
-      }
+      }]
     )]
   }
 }`
