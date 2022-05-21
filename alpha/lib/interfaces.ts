@@ -62,10 +62,11 @@ export interface Page extends SanityDocument {
   _type: "page"
   body: PortableText
   canonicalURL: string
-  localizations: Localization[]
+  localization: Localization
   mataDescription: string
   mataTitle: string
   ogDescription: string
+  ogImage: Image
   ogTitle: string
   title: string
 }
@@ -74,7 +75,7 @@ export interface PageContext {
   defaultLocale: string
   locale: string
   locales: string[]
-  localizations: Localization[]
+  localization: Localization
   slug: string | null
 }
 

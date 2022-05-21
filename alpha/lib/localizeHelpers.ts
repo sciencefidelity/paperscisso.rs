@@ -11,15 +11,7 @@ export const formatSlug = (
 }
 
 export const getLocalizedPaths = (pageContext: PageContext) => {
-  const { locales, defaultLocale, localizations, slug } = pageContext
-
-  const paths = locales.map(locale => {
-    if (localizations.length === 0) {
-      return {
-        locale,
-        href: formatSlug(slug, locale, defaultLocale)
-      }
-    }
+  const paths = pageContext.locales.map(locale => {
     return {
       locale,
       href: localizePath({ ...pageContext, locale })
@@ -29,16 +21,13 @@ export const getLocalizedPaths = (pageContext: PageContext) => {
 }
 
 export const localizePath = (pageContext: PageContext) => {
-  const { defaultLocale, locale, localizations, slug } = pageContext
-  const localeFound = localizations.find(a => a.locale === locale)
-  if (localeFound) return formatSlug(localeFound.slug, locale, defaultLocale)
-  else return formatSlug(slug, locale, defaultLocale)
+  const { defaultLocale, locale, localization } = pageContext
+  return formatSlug(localization.slug, locale, defaultLocale)
 }
 
-export const getLocalizedPage = async (targetLocale: string, pageContext: PageContext) => {
-  const localization = pageContext.localizations.find(
-    localization => localization.locale === targetLocale
+export const getLocalizedPage = async (pageContext: PageContext) => {
+  const { data } = await sanityClient.fetch(
+    localizePageQuery, { id: pageContext.localization.id }
   )
-  const { data } = await sanityClient.fetch(localizePageQuery, { id: localization.id })
   return data.page
 }

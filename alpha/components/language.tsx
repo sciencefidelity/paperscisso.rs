@@ -22,7 +22,7 @@ export const Language: FC<Props> = ({ pageContext }) => {
 
   useEffect(() => {
     handleLocaleChangeRef.current(router.locale)
-    setLocale(pageContext.localizations[0].locale)
+    setLocale(pageContext.localization.locale)
     return () => {
       isMounted.current = true
     }
@@ -34,14 +34,14 @@ export const Language: FC<Props> = ({ pageContext }) => {
         <li key={locale}>
           <LinkTo
             href={formatSlug(
-              pageContext.localizations[0].slug,
-              pageContext.localizations[0].locale,
+              pageContext.localization.slug,
+              pageContext.localization.locale,
               pageContext.defaultLocale
             )}
             locale={locale}
             key={locale}
             role={"option"}
-            onClick={() => handleLocaleChange(pageContext.localizations[0].locale)}
+            onClick={() => handleLocaleChange(pageContext.localization.locale)}
           >
             {router.locale === "cy" ? langs[1] : langs[0]}
           </LinkTo>

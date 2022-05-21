@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({
   const { navigation, page, settings } = data as Props
   const pageContext = {
     locale: page.__i18n_lang,
-    localizations: page.localizations,
+    localization: page.localization,
     locales,
     defaultLocale,
     slug: params.slug ? params.slug[0] : "",
@@ -55,11 +55,22 @@ const PageComponent: NextPage<Props> = ({
   pageContext,
   settings
 }) => {
+
+  const pageHead = {
+    title: page.title,
+    description: page.mataDescription,
+    ogTitle: page.ogTitle,
+    ogDescription: page.ogDescription,
+    ogURL: page.canonicalURL,
+    ogImage: page.ogImage
+  }
+
   return (
     <Layout
       navigation={navigation}
       pageContext={pageContext}
       settings={settings}
+      pageHead={pageHead}
     >
       <div>{page.title}</div>
     </Layout>

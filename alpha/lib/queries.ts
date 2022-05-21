@@ -18,13 +18,13 @@ const authorFields = `__i18n_lang, _id, _type, biography, ${slug}, title`
 const pageFields = `
   __i18n_lang, _id, _type, ${body}, canonicalURL,
   mataTitle, ogTitle, ${slug}, title,
-  "localizations": select(
-    defined(__i18n_refs[]) => __i18n_refs[]->{
+  "localization": select(
+    defined(__i18n_refs[]) => __i18n_refs[0]->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
     },
-    defined(__i18n_base) => [__i18n_base->{
+    defined(__i18n_base) => __i18n_base->{
       "id": _id, "locale": __i18n_lang, "slug": slug.current
-    }]
+    }
   )
 `
 
@@ -119,13 +119,13 @@ export const localizePageQuery = groq`{
   "page": *[_type == "page" && _id == $id]{
     __i18n_lang, _id, _type, body, canonicalURL,
     mataTitle, ogTitle, "slug": slug.current, title,
-    "localizations": [select(
-      defined(__i18n_refs[]) => __i18n_refs[]->{
+    "localization": [select(
+      defined(__i18n_refs[]) => __i18n_refs[0]->{
         "id": _id, "locale": __i18n_lang, "slug": slug.current
       },
-      defined(__i18n_base) => [__i18n_base->{
+      defined(__i18n_base) => __i18n_base->{
         "id": _id, "locale": __i18n_lang, "slug": slug.current
-      }]
+      }
     )]
   }
 }`
