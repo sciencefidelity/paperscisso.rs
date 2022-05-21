@@ -1,14 +1,16 @@
 import { FC } from "react"
+import { LinkTo } from "components/linkTo"
 import { Language } from "components/language"
 import { Localize } from "components/localize"
-import { Navigation, Settings } from "lib/interfaces"
+import { Navigation, PageContext, Settings } from "lib/interfaces"
 
 interface Props {
   navigation: Navigation[]
+  pageContext: PageContext
   settings: Settings
 }
 
-export const Header: FC<Props> = ({ navigation, settings }) => {
+export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
   return (
     <header>
       <Localize data={settings.title} />
@@ -16,14 +18,18 @@ export const Header: FC<Props> = ({ navigation, settings }) => {
         <ul>
           {navigation.map(item =>
             <li key={item._key}>
-              <a href={`/${item.slug ? item.slug : ""}`}>
+              <LinkTo
+                href={item.slug ? item.slug : ""}
+                key={item._key}
+                locale={pageContext.locale}
+              >
                 <Localize data={item.label} />
-              </a>
+              </LinkTo>
             </li>
           )}
         </ul>
       </nav>
-      <Language />
+      <Language pageContext={pageContext} />
     </header>
   )
 }

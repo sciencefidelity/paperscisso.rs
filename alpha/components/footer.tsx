@@ -7,7 +7,8 @@ interface Props {
 }
 
 export const Footer: FC<Props> = ({ settings }) => {
+  const year = new Date().getFullYear()
   return (
-    <div><Localize data={settings.title} /></div>
+    <div>&copy;{year}{" "}<Localize data={settings.title} /></div>
   )
 }

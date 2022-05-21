@@ -10,16 +10,29 @@ const labels = `"labels": *[_type == "labelGroup" && ${omitDrafts}][0].labels`
 
 const authorFields = `__i18n_lang, _id, _type, biography, ${slug}, title`
 
+// const pageFields = `
+//   __i18n_lang, _id, _type, ${body}, canonicalURL,
+//   mataTitle, ogTitle, ${slug}, title
+// `
+
 const pageFields = `
   __i18n_lang, _id, _type, ${body}, canonicalURL,
-  mataTitle, ogTitle, ${slug}, title
+  mataTitle, ogTitle, ${slug}, title,
+  "localizations": [select(
+    defined(__i18n_refs[]) => __i18n_refs[]->{
+      "id": _id, "locale": __i18n_lang, "slug": slug.current
+    },
+    defined(__i18n_base) => __i18n_base->{
+      "id": _id, "locale": __i18n_lang, "slug": slug.current
+    }
+  )]
 `
 
 const tagFields = `__i18n_lang, _id, _type, ${slug}, title`
 
 const postFields = `
   __i18n_lang, _id, _type, body, canonicalURL, mataDescription,
-  mataTitle, ogDescription, ogTitle, publishedAt, slug,
+  mataTitle, ogDescription, ogTitle, publishedAt, ${slug},
   author->{${authorFields}}, tags[]->{${tagFields}}
 `
 
@@ -96,7 +109,7 @@ export const pageQuery = groq`{
 // `
 
 export const pagePathQuery = groq`
-  *[_type == "page" && defined(slug) && __i18n_lang == "en" && ${omitDrafts}]{
+  *[_type == "page" && defined(slug) && ${omitDrafts}]{
     "params": { "slug": [ slug.current ] }, "locale": __i18n_lang
   }
 `

@@ -1,13 +1,15 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import sanityClient from "lib/sanityClient"
+import { getLocalizedPaths } from "lib/localizeHelpers"
 import { Layout } from "components/layout"
-import { Localize } from "components/localize"
+// import { Localize } from "components/localize"
 import { pageQuery, pagePathQuery } from "lib/queries"
-import { Navigation, Page, Settings } from "lib/interfaces"
+import { Navigation, Page, PageContext, Settings } from "lib/interfaces"
 
 interface Props {
   navigation: Navigation[]
   page: Page
+  pageContext: PageContext
   settings: Settings
 }
 
@@ -18,21 +20,48 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false
   }
 }
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({
+  defaultLocale,
+  locales,
+  params
+}) => {
   const slug = params.slug[0] ?? ""
   const data = await sanityClient.fetch(pageQuery, { slug })
-  console.log(data)
   const { navigation, page, settings } = data as Props
-  return { props: { navigation, page, settings } }
+  const pageContext = {
+    locale: page.__i18n_lang,
+    localizations: page.localizations,
+    locales,
+    defaultLocale,
+    slug: params.slug ? params.slug[0] : "",
+  }
+  const localizedPaths = getLocalizedPaths(pageContext)
+  return {
+    props: {
+      navigation,
+      page,
+      pageContext: {
+        ...pageContext,
+        localizedPaths
+      },
+      settings
+    }
+  }
 }
 
-const PageComponent: NextPage<Props> = ({ navigation, page, settings }) => {
+const PageComponent: NextPage<Props> = ({
+  navigation,
+  page,
+  pageContext,
+  settings
+}) => {
   return (
     <Layout
       navigation={navigation}
+      pageContext={pageContext}
       settings={settings}
     >
-      <div><Localize data={settings.title} /></div>
+      <div>{page.title}</div>
     </Layout>
   )
 }

@@ -37,6 +37,12 @@ export interface LocaleString {
   en: string
 }
 
+export interface Localization {
+  id: string
+  locale: "cy" | "en"
+  slug: string
+}
+
 export interface Navigation {
   _key: string
   label: LocaleString
@@ -56,11 +62,20 @@ export interface Page extends SanityDocument {
   _type: "page"
   body: PortableText
   canonicalURL: string
+  localizations: Localization[]
   mataDescription: string
   mataTitle: string
   ogDescription: string
   ogTitle: string
   title: string
+}
+
+export interface PageContext {
+  defaultLocale: string
+  locale: string
+  locales: string[]
+  localizations: Localization[]
+  slug: string | null
 }
 
 export interface Path {
