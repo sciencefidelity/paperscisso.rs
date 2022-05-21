@@ -3,6 +3,7 @@ import * as Structure from '@sanity/document-internationalization/lib/structure'
 import {
   Artist,
   Books,
+  Date,
   Compass,
   EarthAfrica,
   Gear,
@@ -26,6 +27,13 @@ const items = [
       S.documentTypeList('post')
         .title('Post')
         .filter('_type == "post" && __i18n_lang != "cy"')
+    ),
+  S.listItem()
+    .title('Event')
+    .icon(Date)
+    .child(
+      S.documentTypeList('event')
+        .title('Event')
     ),
   S.listItem()
     .title('Author')
@@ -57,6 +65,7 @@ const items = [
   ...S.documentTypeListItems().filter(
     item => ![
       'author',
+      'event',
       'navigation',
       'page',
       'post',

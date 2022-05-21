@@ -8,6 +8,7 @@ import portableText from './objects/portableText'
 
 // documements
 import author from './documents/author'
+import event from './documents/event'
 import navigation from './documents/navigation'
 import post from './documents/post'
 import page from './documents/page'
@@ -26,6 +27,7 @@ export default createSchema({
 
     // documements
     author,
+    event,
     navigation,
     post,
     page,
