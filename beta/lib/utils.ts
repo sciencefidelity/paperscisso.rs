@@ -3,28 +3,32 @@ import { Event } from "lib/interfaces"
 export const dayToNumber = (type: string): number => {
   switch (type) {
   case "Sunday":
-    return 1
+    return 0
   case "Monday":
-    return 2
+    return 1
   case "Tuesday":
-    return 3
+    return 2
   case "Wednesday":
-    return 4
+    return 3
   case "Thursday":
-    return 5
+    return 4
   case "Friday":
-    return 6
+    return 5
   case "Saturday":
-    return 7
+    return 6
   }
 }
 
 export const getNextDate = (day: number): Date => {
   const now = new Date()
   const dateCopy = new Date(now.getTime())
-  const nextDate = new Date(
+  let nextDate: Date
+  if (day  === now.getDay()) {
+    return nextDate = now
+  }
+  nextDate = new Date(
     dateCopy.setDate(
-      dateCopy.getDate() + ((7 - dateCopy.getDay() + day - 1) % 7 || 7)
+      dateCopy.getDate() + ((7 - dateCopy.getDay() + day) % 7 || 7)
     )
   )
   return nextDate
