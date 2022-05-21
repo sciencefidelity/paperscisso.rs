@@ -1,3 +1,5 @@
+import { Event } from "lib/interfaces"
+
 export const dayToNumber = (type: string): number => {
   switch (type) {
   case "Sunday":
@@ -17,12 +19,25 @@ export const dayToNumber = (type: string): number => {
   }
 }
 
-export function getNextMonday(dateNow: Date, day: number) {
-  const dateCopy = new Date(dateNow.getTime())
-  const nextMonday = new Date(
+export const getNextDate = (day: number): Date => {
+  const now = new Date()
+  const dateCopy = new Date(now.getTime())
+  const nextDate = new Date(
     dateCopy.setDate(
-      dateCopy.getDate() + ((7 - dateCopy.getDay() + day) % 7 || 7)
+      dateCopy.getDate() + ((7 - dateCopy.getDay() + day - 1) % 7 || 7)
     )
   )
-  return nextMonday
+  return nextDate
+}
+
+export const sortWorkshops = (events: Event[]): Event[] => {
+  return events.sort((a, b) => {
+    return getNextDate(dayToNumber(a.day)).toISOString() <
+      getNextDate(dayToNumber(b.day)).toISOString()
+      ? -1
+      : getNextDate(dayToNumber(a.day)).toISOString() >
+        getNextDate(dayToNumber(b.day)).toISOString()
+        ? 1
+        : 0
+  })
 }
