@@ -39,7 +39,6 @@ const settings = `
 const page = `
   "page": *[
     _type == "page"
-    && __i18n_lang == "en"
     && slug.current == $slug
     && ${omitDrafts}
   ][0]{ ${pageFields}, __i18n_refs[0]->{ ${pageFields} } }
@@ -87,12 +86,18 @@ export const indexQuery = groq`{
 }`
 
 export const pageQuery = groq`{
-  ${labels}, ${navigation}, ${page}, ${settings}
+  ${navigation}, ${page}, ${settings}
 }`
+
+// export const pagePathQuery = groq`
+//   *[_type == "page" && defined(slug) && __i18n_lang == "en" && ${omitDrafts}]{
+//     "params": { "slug": slug.current }
+//   }
+// `
 
 export const pagePathQuery = groq`
   *[_type == "page" && defined(slug) && __i18n_lang == "en" && ${omitDrafts}]{
-    "params": { "slug": slug.current }
+    "params": { "slug": [ slug.current ] }, "locale": __i18n_lang
   }
 `
 

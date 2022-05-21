@@ -16,7 +16,9 @@ export const Header: FC<Props> = ({ navigation, settings }) => {
         <ul>
           {navigation.map(item =>
             <li key={item._key}>
-              <a href={`/${item.slug}`}><Localize data={item.label} /></a>
+              <a href={`/${item.slug ? item.slug : ""}`}>
+                <Localize data={item.label} />
+              </a>
             </li>
           )}
         </ul>

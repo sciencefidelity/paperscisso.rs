@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode
   pageHead?: HeadProps
   labels?: Label[]
-  navigation: Navigation
+  navigation: Navigation[]
   settings: Settings
 }
 

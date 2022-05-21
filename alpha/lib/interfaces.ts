@@ -65,7 +65,8 @@ export interface Page extends SanityDocument {
 
 export interface Path {
   params: {
-    slug: string
+    slug: string[]
+    locale: string
   }
 }
 
