@@ -20,6 +20,9 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
       <Localize data={settings.title} />
       <nav>
         <ul>
+          <LinkTo href="/">
+            {locale === "cy" ? "Cartref" : "Home" }
+          </LinkTo>
           {navigation.map(item =>
             <li key={item._key}>
               <LinkTo href={localize(item.slug, locale)}>

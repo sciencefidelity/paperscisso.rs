@@ -11,42 +11,48 @@ interface Props {
 export const Language: FC<Props> = ({ pageContext }) => {
   const isMounted = useRef(false)
   const router = useRouter()
-  const [locale, setLocale] = useState(router.locale)
-  const langs = ["Cymraeg", "English"]
-
+  const { locale, locales } = router
+  const [currentLocale, setCurrentLocale] = useState(locale)
+  const langs = ["English", "Cymraeg"]
   const handleLocaleChange = async (locale: string) => {
-    setLocale(locale)
+    setCurrentLocale(locale)
   }
-
   const handleLocaleChangeRef = useRef(handleLocaleChange)
-
   useEffect(() => {
-    handleLocaleChangeRef.current(router.locale)
-    setLocale(pageContext.localization.locale)
+    handleLocaleChangeRef.current(locale)
+    setCurrentLocale(pageContext.localization.locale)
     return () => {
       isMounted.current = true
     }
-  }, [locale, router, pageContext])
-
+  }, [currentLocale, locale, pageContext])
   return (
     <div>
-      <ul>
-        <li key={locale}>
-          <LinkTo
-            href={formatSlug(
-              pageContext.localization.slug,
-              pageContext.localization.locale,
-              pageContext.defaultLocale
-            )}
-            locale={locale}
-            key={locale}
-            role={"option"}
-            onClick={() => handleLocaleChange(pageContext.localization.locale)}
-          >
-            {router.locale === "cy" ? langs[1] : langs[0]}
-          </LinkTo>
-        </li>
-      </ul>
+      {locale === "cy" ?
+        <LinkTo
+          href={formatSlug(
+            pageContext.localization.slug,
+            locales[0],
+            pageContext.defaultLocale
+          )}
+          locale={locales[0]}
+          key={locales[0]}
+          role={"option"}
+          onClick={() => handleLocaleChange(locales[0])}
+        >{langs[0]}{" "}(locale cy)</LinkTo>
+        :
+        <LinkTo
+          href={formatSlug(
+            pageContext.localization.slug,
+            locales[1],
+            pageContext.defaultLocale
+          )}
+          locale={locales[1]}
+          key={locales[1]}
+          role={"option"}
+          onClick={() => handleLocaleChange(locales[1])}
+        >{langs[1]}{" "}(locale en)</LinkTo>
+      }<br />
+      {locale}
     </div>
   )
 }

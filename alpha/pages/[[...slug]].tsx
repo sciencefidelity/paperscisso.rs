@@ -1,4 +1,5 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import { useRouter } from "next/router"
 import sanityClient from "lib/sanityClient"
 import { getLocalizedPaths } from "lib/localizeHelpers"
 import { Layout } from "components/layout"
@@ -55,7 +56,7 @@ const PageComponent: NextPage<Props> = ({
   pageContext,
   settings
 }) => {
-
+  const router = useRouter()
   const pageHead = {
     title: page.title,
     description: page.mataDescription,
@@ -72,9 +73,8 @@ const PageComponent: NextPage<Props> = ({
       settings={settings}
       pageHead={pageHead}
     >
-      <div>{page.title}</div>
-      <pre>{JSON.stringify(page, undefined, 2)}</pre>
-      <pre>{JSON.stringify(pageContext, undefined, 2)}</pre>
+      {page.slug === "index" ? <div>{router.locale === "cy" ? page.__i18n_refs.title : page.title}</div> : <div>{page.title}</div>}
+      {/* <pre>{JSON.stringify(router, undefined, 2)}</pre> */}
     </Layout>
   )
 }

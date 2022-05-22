@@ -68,6 +68,7 @@ export interface Page extends SanityDocument {
   ogDescription: string
   ogImage: Image
   ogTitle: string
+  slug: string
   title: string
 }
 

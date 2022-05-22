@@ -10,21 +10,19 @@ const labels = `"labels": *[_type == "labelGroup" && ${omitDrafts}][0].labels`
 
 const authorFields = `__i18n_lang, _id, _type, biography, ${slug}, title`
 
-// const pageFields = `
-//   __i18n_lang, _id, _type, ${body}, canonicalURL,
-//   mataTitle, ogTitle, ${slug}, title
-// `
-
 const pageFields = `
   __i18n_lang, _id, _type, ${body}, canonicalURL,
-  mataTitle, ogTitle, ${slug}, title,
+  mataTitle, ogTitle, ${slug}, title
+`
+
+const localizationFields = `"id": _id, "locale": __i18n_lang, ${slug}`
+
+
+const localizedPageFields = `
+  ${pageFields}, __i18n_refs[0]->{ ${pageFields} },
   "localization": select(
-    defined(__i18n_refs[]) => __i18n_refs[0]->{
-      "id": _id, "locale": __i18n_lang, "slug": slug.current
-    },
-    defined(__i18n_base) => __i18n_base->{
-      "id": _id, "locale": __i18n_lang, "slug": slug.current
-    }
+    defined(__i18n_refs[]) => __i18n_refs[0]->{ ${localizationFields} },
+    defined(__i18n_base) => __i18n_base->{ ${localizationFields} }
   )
 `
 
@@ -55,7 +53,7 @@ const page = `
     _type == "page"
     && slug.current == $slug
     && ${omitDrafts}
-  ][0]{ ${pageFields} }
+  ][0]{ ${localizedPageFields} }
 `
 
 const post = `
