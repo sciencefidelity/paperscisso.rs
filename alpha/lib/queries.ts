@@ -73,6 +73,17 @@ const posts = `
   }
 `
 
+const postsList = `
+  "postsList": {
+    "cy": *[_type == "post" && __i18n_lang == "cy"] | order(publishedAt desc){
+      title, "slug": slug.current, _id
+    },
+    "en": *[_type == "post" && __i18n_lang == "en"] | order(publishedAt desc){
+      title, "slug": slug.current, _id
+    }
+  }
+`
+
 const author = `
   "staff": *[
     _type == "staff"
@@ -98,7 +109,7 @@ export const indexQuery = groq`{
 }`
 
 export const pageQuery = groq`{
-  ${navigation}, ${page}, ${settings}
+  ${navigation}, ${page}, ${postsList}, ${settings}
 }`
 
 // export const pagePathQuery = groq`
@@ -108,10 +119,10 @@ export const pageQuery = groq`{
 // `
 
 export const pagePathQuery = groq`
-  *[_type == "page" && defined(slug)]{
+  *[_type in ["page", "post"] && defined(slug)]{
     "params": select(
-      slug.current != "index" => { "slug": [ slug.current ] },
-      slug.current == "index" => { "slug": false }
+      _type == "page" => select(slug.current != "index" => { "slug": [ slug.current ] }, slug.current == "index" => { "slug": false }),
+      _type == "post" => { "slug": [ select(__i18n_lang == "cy" => "newyddion", __i18n_lang == "en" => "news"), slug.current ] }
     ),
     "locale": __i18n_lang
   }

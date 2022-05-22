@@ -32,6 +32,11 @@ export interface Label {
   text: LocaleString
 }
 
+export interface LocalePosts {
+  cy: Post[]
+  en: Post[]
+}
+
 export interface LocaleString {
   cy: string
   en: string
@@ -48,6 +53,7 @@ export interface Navigation {
   label: LocaleString
   slug: LocaleString
 }
+
 
 export interface Settings {
   canonicalURL: string
@@ -77,7 +83,7 @@ export interface PageContext {
   locale: string
   locales: string[]
   localization: Localization
-  slug: string | null
+  slug: string[] | null
 }
 
 export interface Path {

@@ -4,13 +4,15 @@ import sanityClient from "lib/sanityClient"
 import { getLocalizedPaths } from "lib/localizeHelpers"
 import { Layout } from "components/layout"
 // import { Localize } from "components/localize"
+import { News } from "components/news"
 import { pageQuery, pagePathQuery } from "lib/queries"
-import { Navigation, Page, PageContext, Settings } from "lib/interfaces"
+import { Navigation, LocalePosts, Page, PageContext, Settings } from "lib/interfaces"
 
 interface Props {
   navigation: Navigation[]
   page: Page
   pageContext: PageContext
+  postsList?: LocalePosts
   settings: Settings
 }
 
@@ -28,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const slug = params.slug ? params.slug[0] : "index"
   const data = await sanityClient.fetch(pageQuery, { slug })
-  const { navigation, page, settings } = data as Props
+  const { navigation, page, postsList, settings } = data as Props
   const pageContext = {
     locale: page.__i18n_lang,
     localization: page.localization,
@@ -45,6 +47,7 @@ export const getStaticProps: GetStaticProps = async ({
         ...pageContext,
         localizedPaths
       },
+      postsList,
       settings
     }
   }
@@ -54,6 +57,7 @@ const PageComponent: NextPage<Props> = ({
   navigation,
   page,
   pageContext,
+  postsList,
   settings
 }) => {
   const router = useRouter()
@@ -73,8 +77,12 @@ const PageComponent: NextPage<Props> = ({
       settings={settings}
       pageHead={pageHead}
     >
-      {page.slug === "index" ? <div>{router.locale === "cy" ? page.__i18n_refs.title : page.title}</div> : <div>{page.title}</div>}
-      {/* <pre>{JSON.stringify(router, undefined, 2)}</pre> */}
+      {page.slug === "index" && <div>
+        {router.locale === "cy" ? page.__i18n_refs.title : page.title}
+      </div>}
+      {(page.slug === "news" || page.slug === "newyddion") &&
+        <News page={page} posts={router.locale === "cy" ? postsList.cy : postsList.en} />
+      }
     </Layout>
   )
 }

@@ -38,7 +38,7 @@ export const Language: FC<Props> = ({ pageContext }) => {
           key={locales[0]}
           role={"option"}
           onClick={() => handleLocaleChange(locales[0])}
-        >{langs[0]}{" "}(locale cy)</LinkTo>
+        >{langs[0]}</LinkTo>
         :
         <LinkTo
           href={formatSlug(
@@ -50,9 +50,8 @@ export const Language: FC<Props> = ({ pageContext }) => {
           key={locales[1]}
           role={"option"}
           onClick={() => handleLocaleChange(locales[1])}
-        >{langs[1]}{" "}(locale en)</LinkTo>
-      }<br />
-      {locale}
+        >{langs[1]}</LinkTo>
+      }
     </div>
   )
 }
