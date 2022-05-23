@@ -121,8 +121,17 @@ export const pageQuery = groq`{
 export const pagePathQuery = groq`
   *[_type in ["page", "post"] && defined(slug)]{
     "params": select(
-      _type == "page" => select(slug.current != "index" => { "slug": [ slug.current ] }, slug.current == "index" => { "slug": false }),
-      _type == "post" => { "slug": [ select(__i18n_lang == "cy" => "newyddion", __i18n_lang == "en" => "news"), slug.current ] }
+      _type == "page" => select(
+        template != "Index" => { "slug": [ slug.current ] },
+        template == "Index" => { "slug": false }
+      ),
+      _type == "post" => { "slug": [
+        select(
+          __i18n_lang == "cy" => *[_type == "page" && template == "News"][0].__i18n_refs[0]->.slug.current,
+          __i18n_lang == "en" => *[_type == "page" && template == "News"][0].slug.current
+        ),
+        slug.current
+      ] }
     ),
     "locale": __i18n_lang
   }

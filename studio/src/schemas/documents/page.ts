@@ -34,9 +34,36 @@ export default {
   ],
   fields: [
     {
+      name: 'template',
+      title: 'Page template',
+      type: 'string',
+      options: {
+        list: [
+          'Artists',
+          'Events',
+          'Exhibitions',
+          'Index',
+          'News',
+          'Page',
+          'Videos',
+          'Visit Us'
+        ]
+      },
+      initialValue: 'Page',
+      validation: (Rule: Rule) => Rule.required(),
+      group: 'settings'
+    },
+    {
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: 'content'
+    },
+    {
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string',
+      hidden: ({ document }) => document?.template !== 'Artists',
       group: 'content'
     },
     {
