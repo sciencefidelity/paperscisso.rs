@@ -45,7 +45,7 @@ export interface LocaleString {
 export interface Localization {
   id: string
   locale: "cy" | "en"
-  slug: string
+  slug: string[]
 }
 
 export interface Navigation {

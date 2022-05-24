@@ -15,7 +15,10 @@ const pageFields = `
   mataTitle, ogTitle, ${slug}, title
 `
 
-const localizationFields = `"id": _id, "locale": __i18n_lang, ${slug}`
+const localizationFields = `
+  "id": _id, "locale": __i18n_lang,
+  "slug": [slug.current]
+`
 
 
 const localizedPageFields = `
@@ -31,7 +34,7 @@ const tagFields = `__i18n_lang, _id, _type, ${slug}, title`
 const postFields = `
   __i18n_lang, _id, _type, body, canonicalURL, mataDescription,
   mataTitle, ogDescription, ogTitle, publishedAt, ${slug},
-  author->{${authorFields}}, tags[]->{${tagFields}}
+  author->{ ${authorFields} }, tags[]->{ ${tagFields} }
 `
 
 const navigation = `
@@ -50,7 +53,7 @@ const settings = `
 
 const page = `
   "page": *[
-    _type == "page"
+    _type in ["page", "post"]
     && slug.current == $slug
     && ${omitDrafts}
   ][0]{ ${localizedPageFields} }

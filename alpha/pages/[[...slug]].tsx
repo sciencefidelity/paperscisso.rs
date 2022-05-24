@@ -4,9 +4,16 @@ import sanityClient from "lib/sanityClient"
 import { getLocalizedPaths } from "lib/localizeHelpers"
 import { Layout } from "components/layout"
 // import { Localize } from "components/localize"
+import { Blog } from "components/blog"
 import { News } from "components/news"
 import { pageQuery, pagePathQuery } from "lib/queries"
-import { Navigation, LocalePosts, Page, PageContext, Settings } from "lib/interfaces"
+import {
+  Navigation,
+  LocalePosts,
+  Page,
+  PageContext,
+  Settings
+} from "lib/interfaces"
 
 interface Props {
   navigation: Navigation[]
@@ -28,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({
   locales,
   params
 }) => {
-  const slug = params.slug ? params.slug[0] : "index"
+  const slug = params.slug[params.slug.length - 1]
   const data = await sanityClient.fetch(pageQuery, { slug })
   const { navigation, page, postsList, settings } = data as Props
   const pageContext = {
@@ -36,8 +43,9 @@ export const getStaticProps: GetStaticProps = async ({
     localization: page.localization,
     locales,
     defaultLocale,
-    slug: params.slug ? params.slug[0] : "index",
+    slug: params.slug
   }
+  console.log(pageContext)
   const localizedPaths = getLocalizedPaths(pageContext)
   return {
     props: {
@@ -77,12 +85,27 @@ const PageComponent: NextPage<Props> = ({
       settings={settings}
       pageHead={pageHead}
     >
-      {page.slug === "index" && <div>
-        {router.locale === "cy" ? page.__i18n_refs.title : page.title}
-      </div>}
-      {(page.slug === "news" || page.slug === "newyddion") &&
-        <News page={page} posts={router.locale === "cy" ? postsList.cy : postsList.en} />
-      }
+      {page.slug === "index" && (
+        <div>
+          {router.locale === "cy" ? page.__i18n_refs.title : page.title}
+        </div>
+      )}
+      {pageContext.slug.length < 2 &&
+        (pageContext.slug[0] === "news" ||
+          pageContext.slug[0] === "newyddion") && (
+        <News
+          page={page}
+          posts={router.locale === "cy" ? postsList.cy : postsList.en}
+        />
+      )}
+      {pageContext.slug.length > 1 &&
+        (pageContext.slug[0] === "news" ||
+          pageContext.slug[0] === "newyddion") && (
+        <Blog
+          page={page}
+          posts={router.locale === "cy" ? postsList.cy : postsList.en}
+        />
+      )}
     </Layout>
   )
 }

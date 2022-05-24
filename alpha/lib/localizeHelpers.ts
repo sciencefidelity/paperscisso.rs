@@ -3,13 +3,13 @@ import { localizePageQuery } from "lib/queries"
 import { PageContext } from "lib/interfaces"
 
 export const formatSlug = (
-  slug: string,
+  slug: string[],
   locale: string,
   defaultLocale: string
 ) => {
   return locale === defaultLocale
-    ? `/${slug === "index" ? "" : slug}`
-    : `/${locale}/${slug === "index" ? "" : slug}`
+    ? `/${slug}`
+    : `/${locale}/${slug.join("/")}`
 }
 
 export const getLocalizedPaths = (pageContext: PageContext) => {
