@@ -3,7 +3,18 @@ const nextConfig = {
   reactStrictMode: true,
   i18n: {
     locales: ["en", "cy"],
-    defaultLocale: "en"
+    defaultLocale: "en",
+    localeDetection: false,
+    domains: [
+      {
+        domain: "artsed.wales",
+        defaultLocale: "en",
+      },
+      {
+        domain: "celfadd.cymru",
+        defaultLocale: "cy",
+      }
+    ]
   },
   images: {
     domains: ["cdn.sanity.io"]
