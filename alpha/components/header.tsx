@@ -1,7 +1,6 @@
 import { FC } from "react"
 import { useRouter } from "next/router"
 import { localize } from "lib/utils"
-import { formatSlug } from "../lib/localizeHelpers"
 import { LinkTo } from "components/linkTo"
 import { Language } from "components/language"
 import { Localize } from "components/localize"
@@ -32,7 +31,7 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
           )}
         </ul>
       </nav>
-      <Language pageContext={pageContext} />
+      {pageContext.localization && <Language pageContext={pageContext} />}
     </header>
   )
 }

@@ -8,7 +8,7 @@ export const formatSlug = (
   defaultLocale: string
 ) => {
   return locale === defaultLocale
-    ? `/${slug}`
+    ? `/${slug.join("/")}`
     : `/${locale}/${slug.join("/")}`
 }
 

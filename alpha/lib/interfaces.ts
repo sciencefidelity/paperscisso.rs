@@ -83,7 +83,7 @@ export interface PageContext {
   locale: string
   locales: string[]
   localization: Localization
-  slug: string[] | null
+  slug: string[] | string
 }
 
 export interface Path {

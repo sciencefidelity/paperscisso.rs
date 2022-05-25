@@ -8,7 +8,7 @@ interface Props {
   posts: Post[]
 }
 
-export const Blog: FC<Props> = ({ page, posts }) => {
+export const Blog: FC<Props> = ({ page }) => {
   return (
     <div>
       <p>{page.title}</p>

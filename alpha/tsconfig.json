@@ -18,7 +18,6 @@
     "baseUrl": "./",
     "typeRoots": ["node_modules/@types", "types"],
     "types": [
-      "mailchimp__mailchimp_marketing",
       "node",
       "react",
       "react-dom"

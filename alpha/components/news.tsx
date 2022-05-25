@@ -13,7 +13,7 @@ export const News: FC<Props> = ({ page, posts }) => {
       <p>{page.title}</p>
       <ul>
         {posts && posts.map(post =>
-          <LinkTo href={`/news/${post.slug}`} key={post._id}>
+          <LinkTo href={`/${page.slug}/${post.slug}`} key={post._id}>
             <li>{post.title}</li>
           </LinkTo>
         )}

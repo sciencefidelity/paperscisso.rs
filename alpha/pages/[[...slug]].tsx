@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({
   locales,
   params
 }) => {
-  const slug = params.slug[params.slug.length - 1]
+  const slug = params.slug ? params.slug[params?.slug?.length - 1] : "index"
   const data = await sanityClient.fetch(pageQuery, { slug })
   const { navigation, page, postsList, settings } = data as Props
   const pageContext = {
@@ -43,10 +43,9 @@ export const getStaticProps: GetStaticProps = async ({
     localization: page.localization,
     locales,
     defaultLocale,
-    slug: params.slug
+    slug: params.slug ? params.slug : ""
   }
-  console.log(pageContext)
-  const localizedPaths = getLocalizedPaths(pageContext)
+  const localizedPaths = pageContext.localization ? getLocalizedPaths(pageContext) : ""
   return {
     props: {
       navigation,
@@ -77,7 +76,6 @@ const PageComponent: NextPage<Props> = ({
     ogURL: page.canonicalURL,
     ogImage: page.ogImage
   }
-
   return (
     <Layout
       navigation={navigation}
@@ -91,13 +89,17 @@ const PageComponent: NextPage<Props> = ({
         </div>
       )}
       {pageContext.slug.length < 2 &&
-        (pageContext.slug[0] === "news" ||
-          pageContext.slug[0] === "newyddion") && (
-        <News
-          page={page}
-          posts={router.locale === "cy" ? postsList.cy : postsList.en}
-        />
-      )}
+        (pageContext.slug[0] === "news" || pageContext.slug[0] === "newyddion") &&
+          <News
+            page={page}
+            posts={router.locale === "cy" ? postsList.cy : postsList.en}
+          />
+      }
+      {pageContext.slug.length < 2 && pageContext.slug[0] &&
+        (pageContext.slug[0] !== ["news", "newyddion"].find(e => e) &&
+          <div>{page.title}</div>
+        )
+      }
       {pageContext.slug.length > 1 &&
         (pageContext.slug[0] === "news" ||
           pageContext.slug[0] === "newyddion") && (
