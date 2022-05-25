@@ -7,11 +7,11 @@ const nextConfig = {
     localeDetection: false,
     domains: [
       {
-        domain: "artsed.wales",
+        domain: "dystopias.dev",
         defaultLocale: "en",
       },
       {
-        domain: "celfadd.cymru",
+        domain: "utopias.dev",
         defaultLocale: "cy",
       }
     ]
