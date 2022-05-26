@@ -8,7 +8,7 @@ const body = `body[]{ ..., markDefs[]{ ..., item->{ _type, ${slug} } } }`
 
 const pageFields = `
   __i18n_lang, _id, _type, ${body}, canonicalURL,
-  mataTitle, ogTitle, ${slug}, title
+  mataTitle, ogTitle, ${slug}, template, title
 `
 
 const localizationFields = `
@@ -88,27 +88,6 @@ export const pagePathQuery = groq`
     "locale": __i18n_lang
   }
 `
-
-/*
-export const pagePathQuery = groq`
-  *[_type in ["page", "post"] && defined(slug)]{
-    "params": select(
-      _type == "page" => select(
-        template != "Index" => { "slug": [ slug.current ], "locale": __i18n_lang },
-        template == "Index" => { "slug": false, "locale": __i18n_lang },
-      ),
-      _type == "post" => { "slug": [
-        select(
-          __i18n_lang == "cy" => *[_type == "page" && template == "News"][0].__i18n_refs[0]->.slug.current,
-          __i18n_lang == "en" => *[_type == "page" && template == "News"][0].slug.current
-        ),
-        slug.current
-      ], "locale": __i18n_lang }
-    ),
-    "locale": __i18n_lang
-  }
-`
-*/
 
 export const localizePageQuery = groq`{
   "page": *[_type == "page" && _id == $id]{

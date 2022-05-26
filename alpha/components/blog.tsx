@@ -1,11 +1,10 @@
 import { FC } from "react"
 import { PortableText } from "@portabletext/react"
 // import { LinkTo } from "components/linkTo"
-import { Page, Post } from "lib/interfaces"
+import { Page } from "lib/interfaces"
 
 interface Props {
   page: Page
-  posts: Post[]
 }
 
 export const Blog: FC<Props> = ({ page }) => {

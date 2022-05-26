@@ -84,29 +84,23 @@ const PageComponent: NextPage<Props> = ({
       settings={settings}
       pageHead={pageHead}
     >
-      {page.slug === "index" && (
-        <div>{page.title}</div>
+      {page.template === "Index" && (
+        <div><p>{page.title}</p></div>
       )}
-      {pageContext.slug.length < 2 &&
-        (pageContext.slug[0] === "news" || pageContext.slug[0] === "newyddion") &&
-          <News
-            page={page}
-            posts={router.locale === "cy" ? postsList.cy : postsList.en}
-          />
-      }
-      {pageContext.slug.length < 2 && pageContext.slug[0] &&
-        (pageContext.slug[0] !== ["news", "newyddion"].find(e => e) &&
-          <div>{page.title}</div>
-        )
-      }
-      {pageContext.slug.length > 1 &&
-        (pageContext.slug[0] === "news" ||
-          pageContext.slug[0] === "newyddion") && (
-        <Blog
+      {page.template === "News" &&
+        <News
           page={page}
           posts={router.locale === "cy" ? postsList.cy : postsList.en}
         />
-      )}
+      }
+      {page.template === "Page" &&
+        <div><p>{page.title}</p></div>
+      }
+      {page._type === "post" &&
+        <Blog
+          page={page}
+        />
+      }
     </Layout>
   )
 }

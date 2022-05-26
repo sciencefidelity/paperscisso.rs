@@ -65,7 +65,7 @@ export interface Settings {
 
 export interface Page extends SanityDocument {
   __i18n_refs: Page
-  _type: "page"
+  _type: "page" | "post"
   body: PortableText
   canonicalURL: string
   localization: Localization
@@ -75,6 +75,7 @@ export interface Page extends SanityDocument {
   ogImage: Image
   ogTitle: string
   slug: string
+  template: string
   title: string
 }
 
