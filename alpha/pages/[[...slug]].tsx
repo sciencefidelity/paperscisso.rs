@@ -33,10 +33,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   defaultLocale,
   locales,
+  locale,
   params
 }) => {
   const slug = params.slug ? params.slug[params?.slug?.length - 1] : "index"
-  const data = await sanityClient.fetch(pageQuery, { slug })
+  const data = await sanityClient.fetch(pageQuery, { slug, locale })
   const { navigation, page, postsList, settings } = data as Props
   const pageContext = {
     locale: page.__i18n_lang,
@@ -84,9 +85,7 @@ const PageComponent: NextPage<Props> = ({
       pageHead={pageHead}
     >
       {page.slug === "index" && (
-        <div>
-          {router.locale === "cy" ? page.__i18n_refs.title : page.title}
-        </div>
+        <div>{page.title}</div>
       )}
       {pageContext.slug.length < 2 &&
         (pageContext.slug[0] === "news" || pageContext.slug[0] === "newyddion") &&
