@@ -31,7 +31,10 @@ export const Header: FC<Props> = ({ navigation, pageContext, settings }) => {
           )}
         </ul>
       </nav>
-      {pageContext.localization && <Language pageContext={pageContext} />}
+      {pageContext.localization
+        ? <Language pageContext={pageContext} />
+        : <div>{locale === "cy" ? "English" : "Cymraeg" }</div>
+      }
     </header>
   )
 }

@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { LinkTo } from "components/linkTo"
-import { formatSlug } from "lib/localizeHelpers"
 import { PageContext } from "lib/interfaces"
 
 interface Props {
@@ -29,26 +28,14 @@ export const Language: FC<Props> = ({ pageContext }) => {
     <div>
       {locale === "cy" ?
         <LinkTo
-          href={formatSlug(
-            pageContext.localization.slug,
-            locales[0],
-            pageContext.defaultLocale
-          )}
+          href={`/${pageContext.localization.slug.join("/")}`}
           locale={locales[0]}
-          key={locales[0]}
-          role={"option"}
           onClick={() => handleLocaleChange(locales[0])}
         >{langs[0]}</LinkTo>
         :
         <LinkTo
-          href={formatSlug(
-            pageContext.localization.slug,
-            locales[1],
-            pageContext.defaultLocale
-          )}
+          href={`/${pageContext.localization.slug.join("/")}`}
           locale={locales[1]}
-          key={locales[1]}
-          role={"option"}
           onClick={() => handleLocaleChange(locales[1])}
         >{langs[1]}</LinkTo>
       }
