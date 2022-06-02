@@ -1,7 +1,13 @@
+import GoogleTranslateInput from 'sanity-plugin-google-translate'
+
 export default {
   name: 'localeText',
   title: 'Locale Text',
   type: 'object',
+  inputComponent: GoogleTranslateInput,
+  options: {
+    apiKey: process.env.SANITY_STUDIO_GOOGLE_TRANSLATE_API_KEY,
+  },
   fieldsets: [
     {
       title: 'Translations',

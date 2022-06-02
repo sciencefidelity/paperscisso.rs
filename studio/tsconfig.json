@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "lib": ["dom", "esnext"],
     "jsx": "react",
-    "types": ["@sanity/types"]
+    "types": ["@sanity/types", "node"]
   },
   "include": [
     "./node_modules/@sanity/base/types/**/*.ts",

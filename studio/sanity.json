@@ -10,7 +10,8 @@
     "@sanity/desk-tool",
     "@sanity/dashboard",
     "@sanity/document-internationalization",
-    "@sanity/language-filter"
+    "@sanity/language-filter",
+    "google-translate"
   ],
   "env": {
     "development": {
