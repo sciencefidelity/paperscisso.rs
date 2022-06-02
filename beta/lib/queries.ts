@@ -14,7 +14,7 @@ export const event = `{
 
 export const events = `{
   "events": *[_type == "event" && ${omitDrafts}]{
-    _id, _type, day, ${slug}, title
+    _id, _type, day, frequency, ${slug}, title
   }
 }`
 
