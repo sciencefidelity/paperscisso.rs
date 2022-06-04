@@ -1,3 +1,5 @@
+import TimeInput from "../../components/TimeInput"
+import TwitterUrl from "../../components/TwitterUrl"
 import { Date } from '../../components/twemoji'
 
 export default {
@@ -42,6 +44,18 @@ export default {
           {title: 'Monthly, fourth week', value: '7'}
         ]
       }
+    },
+    {
+      name: 'twitter',
+      title: 'Twitter Url',
+      type: 'string',
+      imputComponent: TwitterUrl
+    },
+    {
+      name: 'time',
+      title: 'Time',
+      type: 'number',
+      imputComponent: TimeInput
     },
     {
       name: 'slug',
