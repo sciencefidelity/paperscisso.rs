@@ -19,13 +19,13 @@ export default {
       type: 'string',
       options: {
         list: [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday'
+          {title: 'Sunday', value: '0'},
+          {title: 'Monday', value: '1'},
+          {title: 'Tuesday', value: '2'},
+          {title: 'Wednesday', value: '3'},
+          {title: 'Thursday', value: '4'},
+          {title: 'Friday', value: '5'},
+          {title: 'Saturday', value: '6'}
         ]
       }
     },
