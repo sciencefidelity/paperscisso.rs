@@ -19,69 +19,62 @@ export const dayToNumber = (type: string): number => {
   }
 }
 
-export const getNextDate = (day: number): Date => {
-  const now = new Date()
-  const dateCopy = new Date(now.getTime())
-  let nextDate: Date
-  if (day === now.getDay()) {
-    return (nextDate = now)
+export const frequency = (pos: number) => {
+  switch (pos) {
+  case 1: return [0, 1, 2, 3, 4, 5, 6, 7]
+  case 2: return [0, 2, 4, 6]
+  case 3: return [1, 3, 5, 7]
+  case 4: return [0, 4]
+  case 5: return [1, 5]
+  case 6: return [2, 6]
+  case 7: return [3, 7]
+  default: return [0, 1, 2, 3, 4, 5, 6, 7]
   }
-  nextDate = new Date(
-    dateCopy.setDate(
-      dateCopy.getDate() + ((7 - dateCopy.getDay() + day) % 7 || 7)
-    )
-  )
-  return nextDate
+}
+
+export const nextMonth = () => {
+  const first = new Date(new Date().setDate(1))
+  if (first.getMonth() === 11) {
+    return new Date(first.getFullYear() + 1, 0, 1)
+  } else {
+    return new Date(first.getFullYear(), first.getMonth() + 1, 1)
+  }
+}
+
+export const getDates = (day: number, freq: number[]): Date[] => {
+  const first = new Date(new Date().setDate(1))
+  const days = []
+  while (first.getDay() !== day) {
+    first.setDate(first.getDate() + 1)
+  }
+  while (days.length < 4) {
+    days.push(new Date(first.getTime()))
+    first.setDate(first.getDate() + 7)
+  }
+  const next = nextMonth()
+  while (next.getDay() !== day) {
+    next.setDate(next.getDate() + 1)
+  }
+  while (days.length < 8) {
+    days.push(new Date(next.getTime()))
+    next.setDate(next.getDate() + 7)
+  }
+  return days.filter((_, idx) => freq.some(p => idx === p))
+}
+
+export const nextDate = (day: number, freq: string): Date => {
+  const dates = getDates(day, frequency(Number(freq)))
+  return dates.filter(e => e >= new Date())[0]
 }
 
 export const sortWorkshops = (events: Event[]): Event[] => {
   return events.sort((a, b) => {
-    return getNextDate(dayToNumber(a.day)).toISOString() <
-      getNextDate(dayToNumber(b.day)).toISOString()
+    return nextDate(dayToNumber(a.day), a.frequency).toISOString() <
+      nextDate(dayToNumber(b.day), b.frequency).toISOString()
       ? -1
-      : getNextDate(dayToNumber(a.day)).toISOString() >
-        getNextDate(dayToNumber(b.day)).toISOString()
+      : nextDate(dayToNumber(a.day), a.frequency).toISOString() >
+        nextDate(dayToNumber(b.day), a.frequency).toISOString()
         ? 1
         : 0
   })
 }
-
-// 1 = weekly
-// 2 = first and third
-// 3 = second and fourth
-// 4 = first
-// 5 = second
-// 6 = third
-// 7 = fourth
-
-export const getDates = (day: number): Date => {
-  const d = new Date()
-  // const month = d.getMonth()
-  // const days = []
-  while (d.getDay() !== day) {
-    d.setDate(d.getDate() + 1)
-  }
-  // while (days.length < 4) {
-  //   days.push(new Date(d.getTime()))
-  //   d.setDate(d.getDate() + 7)
-  // }
-  // return days.filter((_, idx) => !(idx % 2))
-  return d
-}
-
-// export const getMondays = () => {
-//   const d = new Date(),
-//     month = d.getMonth(),
-//     days = []
-//   d.setDate(1)
-//   // Get the first Monday in the month
-//   while (d.getDay() !== 1) {
-//     d.setDate(d.getDate() + 1)
-//   }
-//   // Get all the other Mondays in the month
-//   while (d.getMonth() === month) {
-//     days.push(new Date(d.getTime()))
-//     d.setDate(d.getDate() + 7)
-//   }
-//   return days
-// }
