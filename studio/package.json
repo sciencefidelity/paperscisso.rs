@@ -15,6 +15,22 @@
   "keywords": [
     "sanity"
   ],
+  "yarn-upgrade-all": {
+    "ignore": [
+      "@sanity/base",
+      "@sanity/core",
+      "@sanity/dashboard",
+      "@sanity/default-layout",
+      "@sanity/default-login",
+      "@sanity/desk-tool",
+      "@sanity/document-internationalization",
+      "@sanity/eslint-config-studio",
+      "@sanity/language-filter",
+      "@sanity/vision",
+      "react",
+      "react-dom"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -27,7 +43,6 @@
     "@sanity/default-login": "^2.30.1",
     "@sanity/desk-tool": "^2.30.1",
     "@sanity/document-internationalization": "^0.3.2",
-    "@sanity/eslint-config-studio": "^2.0.0",
     "@sanity/language-filter": "^2.29.8",
     "@sanity/vision": "^2.30.1",
     "html-react-parser": "^1.4.12",
@@ -40,6 +55,7 @@
     "twemoji": "^14.0.2"
   },
   "devDependencies": {
+    "@sanity/eslint-config-studio": "^2.0.0",
     "@types/node": "^17.0.38",
     "@types/styled-components": "^5.1.25",
     "eslint": "^8.15.0",
