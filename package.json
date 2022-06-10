@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/sciencefidelity/paperscisso.rs#readme",
   "devDependencies": {
-    "eslint": "^8.11.0",
-    "typescript": "^4.6.2"
+    "eslint": "^8.17.0",
+    "typescript": "^4.7.3"
   },
   "dependencies": {
     "js-cookie": "^3.0.1"
