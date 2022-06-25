@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "description": "This is an experimental repo.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sciencefidelity/paperscisso.rs.git"
@@ -19,8 +16,5 @@
   "devDependencies": {
     "eslint": "^8.17.0",
     "typescript": "^4.7.3"
-  },
-  "dependencies": {
-    "js-cookie": "^3.0.1"
   }
 }

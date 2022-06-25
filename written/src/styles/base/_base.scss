@@ -1,21 +1,80 @@
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   font-size: 200%;
+}
+
+::selection {
+  background: rgb(0, 68, 65);
+  color: rgb(204, 204, 204);
+}
+
+*:focus,
+*:focus-visible,
+*:focus-within {
+  outline: none;
 }
 
 body {
   margin: auto;
-  font-family: var(--font-sans-serif);
+  // font-family: var(--font-sans-serif);
+  font-family: 'iA Writer Mono S';
   font-size: calc(10px + 2vmin);
-  color: var(--grey-850);
+  color: rgb(204, 204, 204);
+  background-color: rgb(26, 26, 26);
+  // line-height: 1.4;
+}
+
+p,
+h1,
+ul,
+ol {
+  margin-bottom: 0.7em !important;
+  line-height: 1.74;
+}
+
+blockquote {
+  line-height: 1.35; 
+}
+
+blockquote:last-of-type {
+  margin-bottom: 0.7em !important;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+a {
+  color: rgb(0, 195, 255);
+  // color: #FF1A75;
+}
+
+.container {
+  padding-top: 2rem;
+  padding-bottom: 10rem;
+  // max-width: 850px;
+  width: 850px;
+  margin: auto;
 }
 
 .ql-container {
   box-sizing: border-box;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 21.2px;
   height: 100%;
   margin: 0px;
   position: relative;
+  line-height: 1.4 !important;
+  font-family: 'iA Writer Mono S';
+  // font-family: 'New York', serif;
 }
+
+.ql-editor > * {
+  cursor: text;
+  caret-color: rgb(0, 195, 255);
+}
+
+.ql-bubble .ql-editor blockquote {
+  border-left: 4px solid #ccc;
+  padding-block: 5px;
+  padding-left: 16px;
+}
+
