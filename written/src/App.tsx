@@ -1,6 +1,10 @@
-import { FC } from "react"
+import { useState } from "react"
+import ReactQuill from "react-quill"
+import "react-quill/dist/quill.snow.css"
 
-const App: FC = () => {
-  return <div>Hello world!</div>
+const App = () => {
+  const [value, setValue] = useState("")
+
+  return <ReactQuill theme="snow" value={value} onChange={setValue} />
 }
 export default App
