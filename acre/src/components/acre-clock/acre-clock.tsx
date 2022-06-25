@@ -23,6 +23,10 @@ export class AcreClock {
   render() {
     const time = new Date(this.currentTime).toLocaleTimeString();
 
-    return <div>{time}</div>;
+    return (
+      <div class="clock">
+        <code class="time">{time}</code>
+      </div>
+    );
   }
 }

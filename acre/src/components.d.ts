@@ -6,10 +6,18 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AcreCard {
+    }
     interface AcreClock {
     }
 }
 declare global {
+    interface HTMLAcreCardElement extends Components.AcreCard, HTMLStencilElement {
+    }
+    var HTMLAcreCardElement: {
+        prototype: HTMLAcreCardElement;
+        new (): HTMLAcreCardElement;
+    };
     interface HTMLAcreClockElement extends Components.AcreClock, HTMLStencilElement {
     }
     var HTMLAcreClockElement: {
@@ -17,13 +25,17 @@ declare global {
         new (): HTMLAcreClockElement;
     };
     interface HTMLElementTagNameMap {
+        "acre-card": HTMLAcreCardElement;
         "acre-clock": HTMLAcreClockElement;
     }
 }
 declare namespace LocalJSX {
+    interface AcreCard {
+    }
     interface AcreClock {
     }
     interface IntrinsicElements {
+        "acre-card": AcreCard;
         "acre-clock": AcreClock;
     }
 }
@@ -31,6 +43,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "acre-card": LocalJSX.AcreCard & JSXBase.HTMLAttributes<HTMLAcreCardElement>;
             "acre-clock": LocalJSX.AcreClock & JSXBase.HTMLAttributes<HTMLAcreClockElement>;
         }
     }

@@ -10,7 +10,9 @@ export class AcreCard {
   render() {
     return (
       <Host>
-        <slot></slot>
+        <div class="card">
+          <slot></slot>
+        </div>
       </Host>
     );
   }
