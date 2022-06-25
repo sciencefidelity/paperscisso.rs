@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 
 @Component({
   tag: 'acre-clock',
@@ -6,13 +6,23 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class AcreClock {
+  timer: number;
 
-  render() {
-    return (
-      <div>
-        Hi Matt!
-      </div>
-    );
+  @State() currentTime: number = Date.now();
+
+  connectedCallback() {
+    this.timer = window.setInterval(() => {
+      this.currentTime = Date.now();
+    }, 1000);
   }
 
+  disconnectedCallback() {
+    window.clearInterval(this.timer);
+  }
+
+  render() {
+    const time = new Date(this.currentTime).toLocaleTimeString();
+
+    return <div>{time}</div>;
+  }
 }
