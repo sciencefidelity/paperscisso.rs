@@ -10,6 +10,8 @@
   "author": "Matt Cook <matt@sciencefidelity.co.uk>",
   "license": "MIT",
   "dependencies": {
+    "eslint": "^8.18.0",
+    "markdown-json": "^1.6.1",
     "rehype-document": "^6.0.1",
     "rehype-format": "^4.0.1",
     "rehype-stringify": "^9.0.3",
