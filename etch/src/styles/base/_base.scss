@@ -106,6 +106,13 @@ a::selection {
   color: hsl(194, 100%, 50%);
 }
 
+code {
+  font-family: 'MonoLisa', ui-monospace, 'SF Mono', menlo, monospace;
+  color: rgb(204, 204, 204) !important;
+  // background-color: rgb(36, 36, 36) !important;
+  background-color: #22272e !important;
+}
+
 img {
   margin-block: 1.5rem;
 }
@@ -153,7 +160,7 @@ img {
   margin-block: 1.5rem !important;
   padding: 0.7rem !important;
   font-family: 'MonoLisa', ui-monospace, 'SF Mono', menlo, monospace;
-  color: rgb(204, 204, 204) !important;; 
+  color: rgb(204, 204, 204) !important;
   // background-color: rgb(36, 36, 36) !important;
   background-color: #22272e !important;
   font-size:0.5rem;
