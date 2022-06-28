@@ -4,6 +4,7 @@ import {
   BaseEditor,
   BaseText,
   Descendant,
+  Text,
   Transforms,
   Editor
 } from "slate"
@@ -100,10 +101,6 @@ const App = () => {
       ? JSON.parse(localContent)
       : [{ type: "paragraph", children: [{ text: "Write something..." }] }]
   ), [])
-  // const initialValue = useMemo(() => 
-  //   JSON.parse(localStorage.getItem("content")) ||
-  //   [{ type: "paragraph", children: [{ text: "Write something..." }] }]
-  // , [])
 
   const renderElement = useCallback(props => {
     switch (props.element.type) {
