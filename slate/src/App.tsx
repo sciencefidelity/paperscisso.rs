@@ -89,10 +89,21 @@ const CustomEditor = {
 // ]
 
 const App = () => {
-  const editor = useMemo(() => withReact(createEditor()), [])
-  const [value, setValue] = useState<Descendant[]>([
-    { type: "paragraph", children: [{ text: "Write something..." }] }
-  ])
+  const [editor] = useState(() => withReact(createEditor()) as Editor)
+  // const [value, setValue] = useState<Descendant[]>([
+  //   { type: "paragraph", children: [{ text: "Write something..." }] }
+  // ])
+
+  const initialValue = useMemo(
+    () => 
+      JSON.parse(localStorage.getItem("content")) || [
+        {
+          type: "paragraph", 
+          children: [{ text: "Write something..." }] 
+        }
+      ],
+    []
+  )
 
   const renderElement = useCallback(props => {
     switch (props.element.type) {
@@ -110,8 +121,16 @@ const App = () => {
   return (
     <Slate
       editor={editor}
-      value={value}
-      onChange={newValue => setValue(newValue)}
+      value={initialValue}
+      onChange={newValue => {
+        const isAstChange = editor.operations.some(
+          op => "set_selection" !== op.type
+        )
+        if (isAstChange) {
+          const content = JSON.stringify(newValue)
+          localStorage.setItem("content", content)
+        }
+      }}
     >
       <div>
         <button 
