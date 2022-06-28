@@ -1,18 +1,17 @@
-import { FC, ReactNode, useCallback, useMemo, useState } from "react"
+import { FC, ReactElement, useCallback, useMemo, useState } from "react"
 import {
   createEditor,
   BaseEditor,
   BaseText,
   Descendant,
+  Editor,
+  EditorInterface,
+  Element as SlateElement,
   Text,
-  Transforms,
-  Editor
+  Transforms
 } from "slate"
-import { Slate, Editable, withReact, ReactEditor } from "slate-react"
+import { Slate, Editable, withReact, ReactEditor, RenderLeafProps, RenderElementProps } from "slate-react"
 import { HistoryEditor } from "slate-history"
-
-type CustomElement = { type: "paragraph"; children: CustomText[] }
-// type CustomText = { text: string }
 
 declare module "slate" {
   interface CustomTypes {
@@ -22,31 +21,51 @@ declare module "slate" {
   }
 }
 
-interface CodeProps {
-  attributes: any
-  children: ReactNode
+export type BoldElement = {
+  children: CustomText[]
+  type: "bold"
 }
 
-interface DefaultProps {
-  attributes: any
-  children: ReactNode
+export type CodeElement = {
+  children: CustomText[]
+  type: "code"
 }
 
-interface LeafProps {
-  attributes: any
-  children: ReactNode
-  leaf: any
+export type HeadingElement = {
+  children: CustomText[]
+  level: number
+  type: "heading"
 }
 
-export interface CustomText extends BaseText {
-  bold?: boolean
-  code?: boolean
+export type ParagraphElement = {
+  children: CustomText[]
+  type: "paragraph"
+}
+
+
+
+type CustomElement = BoldElement | CodeElement | HeadingElement | ParagraphElement
+export type FormattedText = { 
+  bold?: boolean 
   italic?: boolean
+  text: string
   underlined?: boolean
 }
+export type CustomText = FormattedText
+
+// interface LeafProps {
+//   attributes: any
+//   children: ReactElement
+//   leaf: SlateElement
+// }
+
+// interface ElementProps {
+//   attributes: any
+//   children: ReactElement
+// }
 
 const CustomEditor = {
-  isBoldMarkActive(editor) {
+  isBoldMarkActive(editor: Editor) {
     const [match] = Editor.nodes(editor, {
       match: n => n.bold === true,
       universal: true
@@ -55,7 +74,7 @@ const CustomEditor = {
     return !!match
   },
 
-  isCodeBlockActive(editor) {
+  isCodeBlockActive(editor: Editor) {
     const [match] = Editor.nodes(editor, {
       match: n => n.type === "code"
     })
@@ -63,7 +82,7 @@ const CustomEditor = {
     return !!match
   },
 
-  toggleBoldMark(editor) {
+  toggleBoldMark(editor: Editor) {
     const isActive = CustomEditor.isBoldMarkActive(editor)
     Transforms.setNodes(
       editor,
@@ -72,7 +91,7 @@ const CustomEditor = {
     )
   },
 
-  toggleCodeBlock(editor) {
+  toggleCodeBlock(editor: Editor) {
     const isActive = CustomEditor.isCodeBlockActive(editor)
     Transforms.setNodes(
       editor,
@@ -82,27 +101,17 @@ const CustomEditor = {
   }
 }
 
-// const initialValue = [
-//   {
-//     type: "paragraph",
-//     children: [{ text: "Write something..." }],
-//   }
-// ]
-
 const App = () => {
   const [editor] = useState(() => withReact(createEditor()) as Editor)
-  // const [value, setValue] = useState<Descendant[]>([
-  //   { type: "paragraph", children: [{ text: "Write something..." }] }
-  // ])
 
   const localContent = localStorage.getItem("content")
-  const initialValue = useMemo(() => (
+  const initialValue: Descendant[] = useMemo(() => (
     localContent
       ? JSON.parse(localContent)
       : [{ type: "paragraph", children: [{ text: "Write something..." }] }]
   ), [])
 
-  const renderElement = useCallback(props => {
+  const renderElement = useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
       case "code":
         return <CodeElement {...props} />
@@ -111,7 +120,7 @@ const App = () => {
     }
   }, [])
 
-  const renderLeaf = useCallback(props => {
+  const renderLeaf = useCallback((props: RenderLeafProps) => {
     return <Leaf {...props} />
   }, [])
 
@@ -175,25 +184,25 @@ const App = () => {
 }
 export default App
 
-const Leaf: FC<LeafProps> = props => {
+const Leaf: FC<RenderLeafProps> = ({attributes, children, leaf}) => {
   return (
     <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.bold ? "bold" : "normal" }}
+      {...attributes}
+      style={{ fontWeight: leaf.bold ? "bold" : "normal" }}
     >
-      {props.children}
+      {children}
     </span>
   )
 }
 
-const CodeElement: FC<CodeProps> = props => {
+const CodeElement: FC<RenderElementProps> = ({attributes, children}) => {
   return (
-    <pre {...props.attributes}>
-      <code style={{ backgroundColor: "lightgray" }}>{props.children}</code>
+    <pre {...attributes}>
+      <code style={{ backgroundColor: "lightgray" }}>{children}</code>
     </pre>
   )
 }
 
-const DefaultElement: FC<DefaultProps> = props => {
-  return <p {...props.attributes}>{props.children}</p>
+const DefaultElement: FC<RenderElementProps> = ({attributes, children}) => {
+  return <p {...attributes}>{children}</p>
 }
