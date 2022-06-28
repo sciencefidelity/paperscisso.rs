@@ -1,11 +1,9 @@
-import { FC, ReactElement, useCallback, useMemo, useState } from "react"
+import { FC, useCallback, useMemo, useState } from "react"
 import {
   createEditor,
   BaseEditor,
-  BaseText,
   Descendant,
   Editor,
-  EditorInterface,
   Element as SlateElement,
   Text,
   Transforms
@@ -28,7 +26,7 @@ export type BoldElement = {
 
 export type CodeElement = {
   children: CustomText[]
-  type: "code"
+  type: "code" | null
 }
 
 export type HeadingElement = {
@@ -39,50 +37,37 @@ export type HeadingElement = {
 
 export type ParagraphElement = {
   children: CustomText[]
-  type: "paragraph"
+  type: "paragraph" | undefined
 }
-
-
 
 type CustomElement = BoldElement | CodeElement | HeadingElement | ParagraphElement
 export type FormattedText = { 
-  bold?: boolean 
-  italic?: boolean
+  bold?: true | null
+  italic?: true | null
   text: string
-  underlined?: boolean
+  underlined?: true | null
 }
 export type CustomText = FormattedText
 
-// interface LeafProps {
-//   attributes: any
-//   children: ReactElement
-//   leaf: SlateElement
-// }
-
-// interface ElementProps {
-//   attributes: any
-//   children: ReactElement
-// }
-
 const CustomEditor = {
-  isBoldMarkActive(editor: Editor) {
+  isBoldMarkActive(editor: Editor): boolean {
     const [match] = Editor.nodes(editor, {
-      match: n => n.bold === true,
+      match: n => Text.isText(n) && n.bold === true,
       universal: true
     })
 
     return !!match
   },
 
-  isCodeBlockActive(editor: Editor) {
+  isCodeBlockActive(editor: Editor): boolean {
     const [match] = Editor.nodes(editor, {
-      match: n => n.type === "code"
+      match: n => SlateElement.isElement(n) && n.type === "code"
     })
 
     return !!match
   },
 
-  toggleBoldMark(editor: Editor) {
+  toggleBoldMark(editor: Editor): void {
     const isActive = CustomEditor.isBoldMarkActive(editor)
     Transforms.setNodes(
       editor,
@@ -91,7 +76,7 @@ const CustomEditor = {
     )
   },
 
-  toggleCodeBlock(editor: Editor) {
+  toggleCodeBlock(editor: Editor): void {
     const isActive = CustomEditor.isCodeBlockActive(editor)
     Transforms.setNodes(
       editor,
