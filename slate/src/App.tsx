@@ -56,7 +56,7 @@ const CustomEditor = {
 
   isCodeBlockActive(editor) {
     const [match] = Editor.nodes(editor, {
-      match: n => n.type === "code",
+      match: n => n.type === "code"
     })
 
     return !!match
@@ -68,7 +68,7 @@ const CustomEditor = {
       editor,
       { bold: isActive ? null : true },
       { match: n => Text.isText(n), split: true }
-    ) 
+    )
   },
 
   toggleCodeBlock(editor) {
@@ -94,16 +94,16 @@ const App = () => {
   //   { type: "paragraph", children: [{ text: "Write something..." }] }
   // ])
 
-  const initialValue = useMemo(
-    () => 
-      JSON.parse(localStorage.getItem("content")) || [
-        {
-          type: "paragraph", 
-          children: [{ text: "Write something..." }] 
-        }
-      ],
-    []
-  )
+  const localContent = localStorage.getItem("content")
+  const initialValue = useMemo(() => (
+    localContent
+      ? JSON.parse(localContent)
+      : [{ type: "paragraph", children: [{ text: "Write something..." }] }]
+  ), [])
+  // const initialValue = useMemo(() => 
+  //   JSON.parse(localStorage.getItem("content")) ||
+  //   [{ type: "paragraph", children: [{ text: "Write something..." }] }]
+  // , [])
 
   const renderElement = useCallback(props => {
     switch (props.element.type) {
@@ -133,11 +133,11 @@ const App = () => {
       }}
     >
       <div>
-        <button 
-          onMouseDown={event =>{
+        <button
+          onMouseDown={event => {
             event.preventDefault()
-            CustomEditor.toggleBoldMark(editor)}
-          }
+            CustomEditor.toggleBoldMark(editor)
+          }}
         >
           Bold
         </button>
