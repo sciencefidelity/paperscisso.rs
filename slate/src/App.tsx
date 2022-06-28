@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { createEditor, BaseEditor, Descendant } from "slate"
+import { FC, ReactNode, useCallback, useState } from "react"
+import { createEditor, BaseEditor, Descendant, Transforms, Editor } from "slate"
 import { Slate, Editable, withReact, ReactEditor } from "slate-react"
 
 type CustomElement = { type: "paragraph"; children: CustomText[] }
@@ -13,6 +13,16 @@ declare module "slate" {
   }
 }
 
+interface CodeProps {
+  attributes: any
+  children: ReactNode
+}
+
+interface DefaultProps {
+  attributes: any
+  children: ReactNode
+}
+
 const initailValue = [
   {
     type: "paragraph",
@@ -22,13 +32,51 @@ const initailValue = [
 
 const App = () => {
   const [editor] = useState(() => withReact(createEditor()))
+
+  const renderElement = useCallback(props => {
+    switch (props.element.type) {
+      case "code":
+        return <CodeElement {...props} />
+      default:
+        return <DefaultElement {...props} />
+    }
+  }, [])
+
+  const renderLeaf = useCallback(props => {
+    return <Leaf {...props} />
+  }, [])
+
   return (
     <Slate editor={editor} value={initailValue}>
       <Editable 
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
         onKeyDown={event => {
-          if (event.key === "&") {
-            event.preventDefault()
-            editor.insertText("and")
+          if (!event.ctrlKey) {
+            return
+          }
+          switch (event.key) {
+            case "`": {
+              event.preventDefault()
+              const [match] = Editor.nodes(editor, {
+                match: n => n.type === "code"
+              })
+              Transforms.setNodes(
+                editor, 
+                { type: match ? "paragraph" : "code" },
+                { match: n => Editor.isBlock(editor, n) }
+              )
+              break
+            }
+            case "b": {
+              event.preventDefault()
+              Transforms.setNodes(
+                editor,
+                { bold: true },
+                { match: n => Text.isText(n), split: true }
+              )
+              break
+            }
           }
         }}
       />
@@ -36,3 +84,26 @@ const App = () => {
   )
 }
 export default App
+
+const Leaf = props => {
+  return (
+    <span 
+      {...props.attributes}
+      style={{ fontWeight: props.leaf.bold ? "bold" : "normal" }}
+    >
+      {props.children}
+    </span>
+  )
+}
+
+const CodeElement: FC<CodeProps> = props => {
+  return (
+    <pre {...props.attributes}>
+      <code style={{backgroundColor: "lightgray"}}>{props.children}</code>
+    </pre>
+  )
+}
+
+const DefaultElement: FC<DefaultProps> = props => {
+  return <p {...props.attributes}>{props.children}</p>
+}
