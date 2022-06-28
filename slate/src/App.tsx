@@ -1,13 +1,21 @@
-import { FC, ReactNode, useCallback, useState } from "react"
-import { createEditor, BaseEditor, Descendant, Transforms, Editor } from "slate"
+import { FC, ReactNode, useCallback, useMemo, useState } from "react"
+import {
+  createEditor,
+  BaseEditor,
+  BaseText,
+  Descendant,
+  Transforms,
+  Editor
+} from "slate"
 import { Slate, Editable, withReact, ReactEditor } from "slate-react"
+import { HistoryEditor } from "slate-history"
 
 type CustomElement = { type: "paragraph"; children: CustomText[] }
-type CustomText = { text: string }
+// type CustomText = { text: string }
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor
+    Editor: BaseEditor & ReactEditor & HistoryEditor
     Element: CustomElement
     Text: CustomText
   }
@@ -23,15 +31,68 @@ interface DefaultProps {
   children: ReactNode
 }
 
-const initailValue = [
-  {
-    type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
+interface LeafProps {
+  attributes: any
+  children: ReactNode
+  leaf: any
+}
+
+export interface CustomText extends BaseText {
+  bold?: boolean
+  code?: boolean
+  italic?: boolean
+  underlined?: boolean
+}
+
+const CustomEditor = {
+  isBoldMarkActive(editor) {
+    const [match] = Editor.nodes(editor, {
+      match: n => n.bold === true,
+      universal: true
+    })
+
+    return !!match
+  },
+
+  isCodeBlockActive(editor) {
+    const [match] = Editor.nodes(editor, {
+      match: n => n.type === "code",
+    })
+
+    return !!match
+  },
+
+  toggleBoldMark(editor) {
+    const isActive = CustomEditor.isBoldMarkActive(editor)
+    Transforms.setNodes(
+      editor,
+      { bold: isActive ? null : true },
+      { match: n => Text.isText(n), split: true }
+    ) 
+  },
+
+  toggleCodeBlock(editor) {
+    const isActive = CustomEditor.isCodeBlockActive(editor)
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? null : "code" },
+      { match: n => Editor.isBlock(editor, n) }
+    )
   }
-]
+}
+
+// const initialValue = [
+//   {
+//     type: "paragraph",
+//     children: [{ text: "Write something..." }],
+//   }
+// ]
 
 const App = () => {
-  const [editor] = useState(() => withReact(createEditor()))
+  const editor = useMemo(() => withReact(createEditor()), [])
+  const [value, setValue] = useState<Descendant[]>([
+    { type: "paragraph", children: [{ text: "Write something..." }] }
+  ])
 
   const renderElement = useCallback(props => {
     switch (props.element.type) {
@@ -47,34 +108,47 @@ const App = () => {
   }, [])
 
   return (
-    <Slate editor={editor} value={initailValue}>
-      <Editable 
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={newValue => setValue(newValue)}
+    >
+      <div>
+        <button 
+          onMouseDown={event =>{
+            event.preventDefault()
+            CustomEditor.toggleBoldMark(editor)}
+          }
+        >
+          Bold
+        </button>
+        <button
+          onMouseDown={event => {
+            event.preventDefault()
+            CustomEditor.toggleCodeBlock(editor)
+          }}
+        >
+          Code Block
+        </button>
+      </div>
+      <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={event => {
           if (!event.ctrlKey) {
             return
           }
+
           switch (event.key) {
             case "`": {
               event.preventDefault()
-              const [match] = Editor.nodes(editor, {
-                match: n => n.type === "code"
-              })
-              Transforms.setNodes(
-                editor, 
-                { type: match ? "paragraph" : "code" },
-                { match: n => Editor.isBlock(editor, n) }
-              )
+              CustomEditor.toggleCodeBlock(editor)
               break
             }
+
             case "b": {
               event.preventDefault()
-              Transforms.setNodes(
-                editor,
-                { bold: true },
-                { match: n => Text.isText(n), split: true }
-              )
+              CustomEditor.toggleBoldMark(editor)
               break
             }
           }
@@ -85,9 +159,9 @@ const App = () => {
 }
 export default App
 
-const Leaf = props => {
+const Leaf: FC<LeafProps> = props => {
   return (
-    <span 
+    <span
       {...props.attributes}
       style={{ fontWeight: props.leaf.bold ? "bold" : "normal" }}
     >
@@ -99,7 +173,7 @@ const Leaf = props => {
 const CodeElement: FC<CodeProps> = props => {
   return (
     <pre {...props.attributes}>
-      <code style={{backgroundColor: "lightgray"}}>{props.children}</code>
+      <code style={{ backgroundColor: "lightgray" }}>{props.children}</code>
     </pre>
   )
 }
