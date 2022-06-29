@@ -1,7 +1,18 @@
 import MarkdownIt from "markdown-it"
+import fs from "fs"
 
 const md = new MarkdownIt();
+let result = {}
 
-const result = md.parse("Hello *world*!")
+try {
+  const data = fs.readFileSync("./src/fastify.md", "utf-8")
+  result = md.parse(data)
+} catch (err) {
+  console.log(err)
+}
 
-console.log(result[1])
+try {
+  fs.writeFileSync("./src/parsed.json", JSON.stringify(result, undefined, 2))
+} catch (err) {
+  console.log(err)
+}
