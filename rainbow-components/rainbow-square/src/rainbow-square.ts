@@ -13,7 +13,7 @@ export class RainbowSquare extends LitElement {
         (square) => html` <div
           class="square-${square}"
           style=${`
-            width: ${square * 10}%;
+            width: ${square * 11.111111}%;
             background: var(--color-${square});
             z-index: ${-square};
           `}
@@ -25,8 +25,8 @@ export class RainbowSquare extends LitElement {
   static styles = css`
     #canvas {
       display: grid;
-      width: 500px;
-      height: 500px;
+      height: 60vh;
+      aspect-ratio: 1;
       position: relative;
     }
     #canvas > div {
