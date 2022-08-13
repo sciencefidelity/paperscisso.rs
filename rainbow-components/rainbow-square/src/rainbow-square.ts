@@ -10,7 +10,7 @@ export class RainbowSquare extends LitElement {
     return html`<div id="canvas">
       ${map(
         this.squares,
-        (square) => html` <div
+        (square) => html`<div
           class="square-${square}"
           style=${`
             width: ${square * 11.111111}%;
