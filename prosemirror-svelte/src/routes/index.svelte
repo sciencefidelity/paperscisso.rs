@@ -27,7 +27,5 @@
   .editor {
     width: 85%;
     height: 30rem;
-    border: 1px solid #ccc;
-    padding: 1rem;
   }
 </style>
