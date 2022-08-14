@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+  import '../app.css';
   import EditorView from '$lib/EditorView.svelte';
 </script>
 
