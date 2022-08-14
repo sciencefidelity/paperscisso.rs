@@ -6,6 +6,7 @@
   import { undo, redo, history } from 'prosemirror-history';
   import { keymap } from 'prosemirror-keymap';
   import { baseKeymap } from 'prosemirror-commands';
+  import { DOMParser } from 'prosemirror-model';
 
   // const dispatch = createEventDispatcher();
 
@@ -13,6 +14,12 @@
   let view: EditorView;
   let state: EditorState;
   let editor: HTMLElement;
+  // (The null arguments are where you can specify attributes, if necessary.)
+  let doc = schema.node('doc', null, [
+    schema.node('paragraph', null, [schema.text('One.')]),
+    schema.node('horizontal_rule'),
+    schema.node('paragraph', null, [schema.text('Two!')])
+  ]);
 
   // export function focus() {
   // 	view && view.focus();
@@ -23,8 +30,11 @@
   // }
 
   onMount(() => {
+    let content = document.getElementById('content');
     state = EditorState.create({
       schema,
+      // doc: DOMParser.fromSchema(schema).parse(content!),
+      doc,
       plugins: [
         history(),
         keymap({ 'Mod-z': undo, 'Mod-y': redo }),
@@ -55,6 +65,13 @@
 </script>
 
 <div class="prosemirror" bind:this={editor} on:focus on:blur on:keydown />
+<div id="content">
+  <p>First paragraph</p>
+  <p>Second</p>
+  <p>Third</p>
+  <p>Forth</p>
+  <p>Fifth</p>
+</div>
 
 <style lang="postcss" global>
   .prosemirror {

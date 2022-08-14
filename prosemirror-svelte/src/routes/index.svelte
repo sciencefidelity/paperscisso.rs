@@ -20,11 +20,13 @@
 <style>
   .main {
     display: grid;
-    place-items: center;
-    height: 100vh;
+    align-items: start;
+    /* justify-content: center; */
+    /* height: 100vh; */
   }
 
   .editor {
+    margin: 0 auto;
     width: 85%;
     height: 30rem;
   }
