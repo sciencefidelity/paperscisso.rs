@@ -10,7 +10,8 @@ const config = {
   preprocess: preprocess({
     postcss: {
       plugins: [autoprefixer, cssnano({ preset: 'default' }), cssImport, nested]
-    }
+    },
+    typescript: true
   }),
 
   kit: {
