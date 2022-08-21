@@ -46,15 +46,17 @@
   }
 
   .menu {
-    display: inline-block;
+    /* display: inline-block; */
     border-bottom: 1px solid hsla(0, 0%, 0%, 0.5);
     padding-bottom: 0.3rem;
+    text-align: center;
   }
 
   .plus-icon {
+    font-size: 1rem;
     display: inline-block;
     margin-inline: 0.5rem;
-    /* user-select: none; */
+    user-select: none;
     opacity: 0.5;
     padding: 0.25rem 0.225rem 0.15rem 0.225rem;
     line-height: 1.05;

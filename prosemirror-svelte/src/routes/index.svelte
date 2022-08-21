@@ -23,4 +23,7 @@
   p {
     margin-block: 0.75rem;
   }
+  .editor {
+    border: 1px solid hsla(0, 0%, 0%, 0.5);
+  }
 </style>
