@@ -1,130 +1,24 @@
 <script lang="ts">
-  import {
-    baseKeymap,
-    chainCommands,
-    createParagraphNear,
-    liftEmptyBlock,
-    newlineInCode,
-    splitBlock
-  } from 'prosemirror-commands'
-  import { history, redo, undo } from 'prosemirror-history'
-  import { keymap } from 'prosemirror-keymap'
-  import { Node, Schema, type NodeSpec } from 'prosemirror-model'
-  import { EditorState, Plugin, PluginKey } from 'prosemirror-state'
-  import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
+  import { history } from 'prosemirror-history'
+  import { EditorState } from 'prosemirror-state'
+  import { EditorView } from 'prosemirror-view'
   import 'prosemirror-view/style/prosemirror.css'
+  import { plus } from '../plugins/plus'
   import { onDestroy, onMount } from 'svelte'
+  import { doc } from '../doc'
+  import { hotkeys } from '../plugins/hotkeys'
+  import { schema } from '../schema'
+  import Menu from './Menu.svelte'
 
   let view: EditorView
   let editor: HTMLElement
   let state: EditorState
 
-  const nodes = {
-    doc: {
-      content: 'block+'
-    } as NodeSpec,
-
-    paragraph: {
-      content: 'inline*',
-      group: 'block',
-      parseDOM: [{ tag: 'p' }],
-      toDOM() {
-        return ['div', 0]
-      }
-    } as NodeSpec,
-
-    text: {
-      group: 'inline'
-    } as NodeSpec
-  }
-
-  const schema = new Schema({ nodes })
-
-  let doc = schema.node('doc', null, [
-    schema.node('paragraph', null, [
-      schema.text('This is the first paragraph.')
-    ]),
-    schema.node('paragraph', null, [
-      schema.text('This is the second paragraph.')
-    ]),
-    schema.node('paragraph', null, [
-      schema.text('This is the third paragraph.')
-    ])
-  ])
-
-  // const grabHandle = () => {
-  //   return new Plugin({
-  //     key: new PluginKey('grabHandle'),
-  //     state: {
-  //       init: (_, { doc }) => grabHandleDecoration(doc),
-  //       apply: (tr, old) => (tr.docChanged ? grabHandleDecoration(tr.doc) : old)
-  //     },
-  //     props: {
-  //       decorations() {
-  //         return this.getState(doc)
-  //       }
-  //     }
-  //   })
-  // }
-
-  const grabHandleIcon = () => {
-    const element = document.createElement('div')
-    element.className = 'grab-handle'
-    element.innerHTML = '🌕'
-    return element
-  }
-
-  const foldableIcon = () => {
-    const element = document.createElement('div')
-    element.className = 'foldable'
-    element.innerHTML = '🌍'
-    return element
-  }
-
-  const bulletIcon = () => {
-    const element = document.createElement('div')
-    element.className = 'bullet'
-    element.innerHTML = '🪐'
-    return element
-  }
-
-  const emojiPlugin = new Plugin({
-    props: {
-      decorations() {
-        const decorators: Decoration[] = []
-        doc.descendants((node, pos) => {
-          if (!node.isBlock) return
-          decorators.push(Decoration.widget(pos + 1, grabHandleIcon()))
-          decorators.push(Decoration.widget(pos + 1, foldableIcon()))
-          decorators.push(Decoration.widget(pos + 1, bulletIcon()))
-        })
-        return DecorationSet.create(doc, decorators)
-      }
-    }
-  })
-
   onMount(() => {
-    // const content = document.querySelector('#content') as HTMLDivElement
-
     state = EditorState.create({
       schema,
-      // doc: DOMParser.fromSchema(schema).parse(content!),
       doc,
-      plugins: [
-        history(),
-        keymap({
-          Enter: chainCommands(
-            newlineInCode,
-            createParagraphNear,
-            liftEmptyBlock,
-            splitBlock
-          ),
-          'Mod-z': undo,
-          'Mod-y': redo
-        }),
-        keymap(baseKeymap),
-        emojiPlugin
-      ]
+      plugins: [history(), hotkeys(schema), plus]
     })
     view = new EditorView({ mount: editor }, { state })
   })
@@ -134,26 +28,42 @@
   })
 </script>
 
+<Menu {view} />
 <div bind:this={editor} />
 
-<div id="content" class="output">
-  <p>This is the first paragraph.</p>
-  <p>This is the second paragraph.</p>
-  <p>This is the third paragraph.</p>
-</div>
-
 <style global lang="postcss">
-  .output {
-    display: none;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    padding: 0.5rem 1.5rem;
-    background-color: hsl(0, 0%, 97%);
+  button {
+    border: none;
+    background-color: transparent;
   }
 
-  .grab-handle,
-  .foldable,
-  .bullet {
+  code {
+    font-family: monospace;
+    font-size: 1rem;
+    background-color: hsl(0, 0%, 90%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.2rem;
+  }
+
+  .menu {
     display: inline-block;
-    margin-inline: 0.25rem;
+    border-bottom: 1px solid hsla(0, 0%, 0%, 0.5);
+    padding-bottom: 0.3rem;
+  }
+
+  .plus-icon {
+    display: inline-block;
+    margin-inline: 0.5rem;
+    /* user-select: none; */
+    opacity: 0.5;
+    padding: 0.25rem 0.225rem 0.15rem 0.225rem;
+    line-height: 1.05;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      background-color: hsl(0, 0%, 90%);
+      opacity: 0.7;
+    }
   }
 </style>

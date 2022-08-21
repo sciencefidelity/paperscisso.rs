@@ -19,22 +19,8 @@
   </section>
 </main>
 
-<!-- <style global>
-  .main {
-    display: grid;
-    align-items: start;
+<style global>
+  p {
+    margin-block: 0.75rem;
   }
-
-  .editor {
-    margin: 0 auto;
-    width: 85%;
-    height: 30rem;
-    background: white;
-    color: black;
-    background-clip: padding-box;
-    border-radius: 4px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    padding: 5px 0;
-    margin-bottom: 23px;
-  }
-</style> -->
+</style>
