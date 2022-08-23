@@ -45,6 +45,10 @@
     border-radius: 0.2rem;
   }
 
+  /* p {
+    display: inline-block;
+  } */
+
   .menu {
     /* display: inline-block; */
     border-bottom: 1px solid hsla(0, 0%, 0%, 0.5);
@@ -54,7 +58,7 @@
 
   .plus-icon {
     font-size: 1rem;
-    display: inline-block;
+    /* display: inline-block; */
     margin-inline: 0.5rem;
     user-select: none;
     opacity: 0.5;
