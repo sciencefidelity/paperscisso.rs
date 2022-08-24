@@ -5,7 +5,11 @@ import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 // let _schema: Schema
 // let _view: EditorView
 const plusIcon = () => {
-  const element = document.createElement('button')
+  // const element = document.createElement('button')
+  const element = document.getElementById('plus')
+  if (!element) {
+    throw new Error('plusIcon: element not found')
+  }
   element.className = 'plus-icon'
   element.innerHTML = '➕'
   element.onclick = createNewNode
@@ -29,7 +33,8 @@ const plusDecoration = (doc: Node) => {
   const decorators: Decoration[] = []
   doc.descendants((node, pos) => {
     if (!node.isBlock) return
-    decorators.push(Decoration.widget(pos + 1, plusIcon(), { side: -1 }))
+    decorators.push(Decoration.widget(pos + 1, plusIcon()))
+    // decorators.push(Decoration.widget(pos + 1, grabberIcon(), { side: -1 }))
   })
   return DecorationSet.create(doc, decorators)
 }

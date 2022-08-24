@@ -30,6 +30,7 @@
 
 <Menu {view} />
 <div bind:this={editor} />
+<button id="plus">➕</button>
 
 <style global lang="postcss">
   button {
