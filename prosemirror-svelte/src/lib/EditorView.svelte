@@ -18,7 +18,7 @@
     state = EditorState.create({
       schema,
       doc,
-      plugins: [history(), hotkeys(schema), plus]
+      plugins: [history(), hotkeys(schema) /* plus */]
     })
     view = new EditorView({ mount: editor }, { state })
   })
@@ -30,8 +30,8 @@
 
 <Menu {view} />
 <div bind:this={editor} />
-<button id="plus">➕</button>
 
+<!-- <button id="plus">➕</button> -->
 <style global lang="postcss">
   button {
     border: none;

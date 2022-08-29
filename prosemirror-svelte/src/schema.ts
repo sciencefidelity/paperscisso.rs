@@ -8,6 +8,7 @@ const nodes = {
   paragraph: {
     content: 'inline*',
     group: 'block',
+    draggable: true,
     parseDOM: [{ tag: 'p' }],
     toDOM() {
       return ['p', 0]
@@ -18,6 +19,7 @@ const nodes = {
     content: 'block+',
     group: 'block',
     defining: true,
+    draggable: true,
     parseDOM: [{ tag: 'blockquote' }],
     toDOM() {
       return ['blockquote', 0]
@@ -26,6 +28,7 @@ const nodes = {
 
   horizontal_rule: {
     group: 'block',
+    draggable: true,
     parseDOM: [{ tag: 'hr' }],
     toDOM() {
       return ['hr']
@@ -37,6 +40,7 @@ const nodes = {
     content: 'inline*',
     group: 'block',
     defining: true,
+    draggable: true,
     parseDOM: [
       { tag: 'h1', attrs: { level: 1 } },
       { tag: 'h2', attrs: { level: 2 } },
@@ -56,6 +60,7 @@ const nodes = {
     group: 'block',
     code: true,
     defining: true,
+    draggable: true,
     parseDOM: [{ tag: 'pre', preserveWhitespace: 'full' }],
     toDOM() {
       return ['pre', ['code', 0]]
