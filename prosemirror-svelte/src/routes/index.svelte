@@ -25,5 +25,10 @@
   }
   .editor {
     border: 1px solid hsla(0, 0%, 0%, 0.5);
+    min-height: 96vh;
+  }
+  .ProseMirror {
+    margin: auto;
+    max-width: 400px;
   }
 </style>
