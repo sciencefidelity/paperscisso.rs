@@ -9,8 +9,6 @@
   import { hotkeys } from '../plugins/hotkeys'
   import { schema } from '../schema'
   import Menu from './Menu.svelte'
-  // import { NodeSelectPlugin } from '../plugins/nodeSelect'
-  import { boxSelectPlugin } from '../plugins/BoxSelectNode'
 
   let view: EditorView
   let editor: HTMLElement
