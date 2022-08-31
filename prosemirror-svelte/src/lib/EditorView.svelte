@@ -9,6 +9,8 @@
   import { hotkeys } from '../plugins/hotkeys'
   import { schema } from '../schema'
   import Menu from './Menu.svelte'
+  // import { NodeSelectPlugin } from '../plugins/nodeSelect'
+  import { boxSelectPlugin } from '../plugins/BoxSelectNode'
 
   let view: EditorView
   let editor: HTMLElement
@@ -18,7 +20,7 @@
     state = EditorState.create({
       schema,
       doc,
-      plugins: [history(), hotkeys(schema) /* plus */]
+      plugins: [history(), hotkeys(schema)]
     })
     view = new EditorView({ mount: editor }, { state })
   })
@@ -28,10 +30,9 @@
   })
 </script>
 
-<Menu {view} />
+<!-- <Menu {view} /> -->
 <div bind:this={editor} />
 
-<!-- <button id="plus">➕</button> -->
 <style global lang="postcss">
   button {
     border: none;
@@ -44,6 +45,22 @@
     background-color: hsl(0, 0%, 90%);
     padding: 0.1rem 0.3rem;
     border-radius: 0.2rem;
+  }
+
+  .ProseMirror-selectednode {
+    position: relative;
+    outline: none;
+    /* background-color: rgba(45, 170, 219, 0.3); */
+
+    &::after {
+      content: '';
+      display: block;
+      inset: 0;
+      position: absolute;
+      background-color: rgba(45, 170, 219, 0.3);
+      z-index: 1000;
+      border-radius: 0.125rem;
+    }
   }
 
   /* p {
