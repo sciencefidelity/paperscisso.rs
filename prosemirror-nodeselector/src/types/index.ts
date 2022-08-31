@@ -1,6 +1,6 @@
 import type { Node, NodeSpec, Schema as ProseMirrorSchema } from 'prosemirror-model'
 import type { Transaction, EditorState } from 'prosemirror-state'
-import type { NodeCommandsMap } from '@/nodes'
+import type { NodeCommandsMap } from '/nodes'
 import type { MarkCommandMap } from '@/marks'
 import type { CSSProperties } from 'jsx-dom'
 

@@ -1,14 +1,15 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte'
+  import { dropCursor } from 'prosemirror-dropcursor'
+  import { gapCursor } from 'prosemirror-gapcursor'
   import { history } from 'prosemirror-history'
   import { EditorState } from 'prosemirror-state'
   import { EditorView } from 'prosemirror-view'
   import 'prosemirror-view/style/prosemirror.css'
-  import { plus } from '../plugins/plus'
-  import { onDestroy, onMount } from 'svelte'
-  import { doc } from '../doc'
+  import { getNodeSelection } from '../plugins/getNodeSelection'
   import { hotkeys } from '../plugins/hotkeys'
+  import { doc } from '../doc'
   import { schema } from '../schema'
-  import Menu from './Menu.svelte'
 
   let view: EditorView
   let editor: HTMLElement
@@ -18,7 +19,7 @@
     state = EditorState.create({
       schema,
       doc,
-      plugins: [history(), hotkeys(schema)]
+      plugins: [history(), hotkeys(schema), dropCursor(), gapCursor(), getNodeSelection()]
     })
     view = new EditorView({ mount: editor }, { state })
   })
@@ -28,7 +29,6 @@
   })
 </script>
 
-<!-- <Menu {view} /> -->
 <div bind:this={editor} />
 
 <style global lang="postcss">
@@ -57,7 +57,7 @@
       position: absolute;
       background-color: rgba(45, 170, 219, 0.3);
       z-index: 1000;
-      border-radius: 0.125rem;
+      border-radius: 0.25rem;
     }
   }
 
