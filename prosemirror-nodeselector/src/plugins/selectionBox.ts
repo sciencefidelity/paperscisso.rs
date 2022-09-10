@@ -74,8 +74,6 @@ export class SelectionBoxPlugin implements PluginView {
   }
 
   constructor(readonly view: EditorView) {
-    // this.container = document.getElementById('editor-container') as HTMLDivElement
-    // this.wrapper = document.getElementById('editor-wrapper') as HTMLDivElement
     this.shell = document.getElementById('editor-shell') as HTMLDivElement
     this.onMousedown = this.onMousedown.bind(this)
     this.onMousemove = this.onMousemove.bind(this)
