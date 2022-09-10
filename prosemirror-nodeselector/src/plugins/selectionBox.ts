@@ -43,14 +43,14 @@ export class SelectionBoxPlugin implements PluginView {
   showSelectBox = false
   shell: HTMLDivElement | null
   throttleSelectNode = throttle(this.selectNode, 100)
-  selectBox!: { show: () => void; hide: () => void; update: () => void }
+  selectBox: { show: () => void; hide: () => void; update: () => void } | null | undefined
 
-  get container() {
-    return document.getElementById('editor') as HTMLDivElement
+  get container(): HTMLDivElement | null {
+    return document.querySelector('#container')
   }
 
-  get wrapper() {
-    return document.getElementById('editor-wrapper') as HTMLDivElement
+  get wrapper(): HTMLDivElement | null {
+    return document.querySelector('#wrapper')
   }
 
   get startPos(): Position {
@@ -70,27 +70,28 @@ export class SelectionBoxPlugin implements PluginView {
   }
 
   get scrollTop() {
-    return this.container?.scrollTop
+    if (!this.container) return
+    return this.container.scrollTop
   }
 
   constructor(readonly view: EditorView) {
-    this.shell = document.getElementById('editor-shell') as HTMLDivElement
+    this.shell = document.querySelector('#shell')
     this.onMousedown = this.onMousedown.bind(this)
     this.onMousemove = this.onMousemove.bind(this)
     this.onMouseup = this.onMouseup.bind(this)
     this.onClick = this.onClick.bind(this)
-    this.wrapper.addEventListener('mousedown', this.onMousedown)
-    this.wrapper.addEventListener('contextmenu', this.onContextmenu)
-    this.selectBox = this.createSelectionBox(this.wrapper)
+    this.wrapper && this.wrapper.addEventListener('mousedown', this.onMousedown)
+    this.wrapper && this.wrapper.addEventListener('contextmenu', this.onContextmenu)
+    this.selectBox = this.wrapper && this.createSelectionBox(this.wrapper)
   }
 
   destroy() {
-    this.wrapper?.removeEventListener('mousedown', this.onMousedown)
+    this.wrapper && this.wrapper.removeEventListener('mousedown', this.onMousedown)
   }
 
   createSelectionBox(wrapper: HTMLDivElement) {
-    const element = document.createElement('div')
-    element.classList.add('editor-selectbox')
+    const element: HTMLDivElement | null = document.querySelector('#selectbox')
+    if (!element) return
     wrapper.appendChild(element)
     return {
       show() {
@@ -117,26 +118,31 @@ export class SelectionBoxPlugin implements PluginView {
   }
 
   onMousedown(e: MouseEvent) {
-    if (e.target === this.shell || this.shell?.contains(e.target as HTMLElement)) return
-    timeoutHandler = setTimeout(() => {
-      clearTimeout(timeoutHandler)
-      this.showSelectBox = true
-      this.selectBox.show()
-      this.wrapper?.addEventListener('click', this.onClick)
-    }, 200)
-    this.anchor = this.getRelativePosition({ left: e.clientX, top: e.clientY })
-    const conatiner = this.wrapper as HTMLElement
-    document.addEventListener('mouseup', this.onMouseup)
-    conatiner.addEventListener('mousemove', this.onMousemove)
-    e.preventDefault()
+    if (e.target instanceof HTMLElement) {
+      if (!this.shell) return
+      if (e.target === this.shell || this.shell.contains(e.target)) return
+      timeoutHandler = setTimeout(() => {
+        if (!this.wrapper || !this.selectBox) return
+        clearTimeout(timeoutHandler)
+        this.showSelectBox = true
+        this.selectBox.show()
+        this.wrapper.addEventListener('click', this.onClick)
+      }, 200)
+      this.anchor = this.getRelativePosition({ left: e.clientX, top: e.clientY }) || { left: 0, top: 0 }
+      const wrapper: HTMLDivElement | null = this.wrapper
+      document.addEventListener('mouseup', this.onMouseup)
+      wrapper && wrapper.addEventListener('mousemove', this.onMousemove)
+      e.preventDefault()
+    }
   }
 
   onMousemove(e: MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    this.head = this.getRelativePosition({ left: e.clientX, top: e.clientY })
+    this.head = this.getRelativePosition({ left: e.clientX, top: e.clientY }) || { left: 0, top: 0 }
     this.throttleSelectNode()
-    this.selectBox.update()
+    this.selectBox && this.selectBox.update()
+    if (!this.container) return
     if (e.clientY + 50 > window.innerHeight) {
       this.container.scrollTop += 5
     } else if (e.clientY < 50) {
@@ -147,10 +153,11 @@ export class SelectionBoxPlugin implements PluginView {
   onMouseup() {
     clearTimeout(timeoutHandler)
     this.showSelectBox = false
+    const wrapper: HTMLDivElement | null = this.wrapper
+    if (!this.selectBox || !wrapper) return
     this.selectBox.hide()
-    const conatiner = this.wrapper as HTMLElement
     document.removeEventListener('mouseup', this.onMouseup)
-    conatiner.removeEventListener('mousemove', this.onMousemove)
+    wrapper.removeEventListener('mousemove', this.onMousemove)
     const { selection } = this.view.state
     if (selection instanceof NodeRangeSelection && selection.from !== selection.to) {
       this.view.focus()
@@ -158,20 +165,24 @@ export class SelectionBoxPlugin implements PluginView {
   }
 
   getRelativePosition(pos: Position) {
-    return getRelativePosition(this.wrapper as HTMLElement, pos)
+    if (!this.wrapper) return
+    return getRelativePosition(this.wrapper, pos)
   }
 
   onClick(e: Event) {
-    this.wrapper?.removeEventListener('click', this.onClick)
+    if (!this.wrapper) return
+    this.wrapper.removeEventListener('click', this.onClick)
     e.stopPropagation()
   }
 
   getRangePos() {
+    if (!this.wrapper) return
     const { view, shell, startPos, endPos } = this
-    const relative = getRelativePosition(document.body, this.wrapper as HTMLElement)
+    const relative = getRelativePosition(document.body, this.wrapper)
     const absoluteStartPos = { left: relative.left + startPos.left, top: startPos.top + relative.top }
     const absoluteEndPos = { left: relative.left + endPos.left, top: endPos.top + relative.top }
-    const rect = shell?.getBoundingClientRect()
+    if (!shell) return
+    const rect = shell.getBoundingClientRect()
     if (!rect) return { from: 0, to: 0 }
     if (
       (absoluteStartPos.left < rect.left && absoluteEndPos.left < rect.left) ||
@@ -206,15 +217,17 @@ export class SelectionBoxPlugin implements PluginView {
     let currentNode = null
     let currentNodePos = -1
     if (isLeftToRight) {
-      currentNode = startResolvedPos?.nodeAfter as Node
+      currentNode = startResolvedPos.nodeAfter
+      if (!currentNode) return
       currentNodePos = startResolvedPos.pos
       isInContainer =
         currentNode &&
         currentNode.isBlock &&
         getCommonParent(view.state.doc.resolve(startResolvedPos.pos + 1), endResolvedPos).node === currentNode
     } else {
-      currentNode = endResolvedPos.nodeBefore as Node
-      currentNodePos = endResolvedPos.pos - currentNode?.nodeSize
+      currentNode = endResolvedPos.nodeBefore
+      if (!currentNode) return
+      currentNodePos = endResolvedPos.pos - currentNode.nodeSize
       isInContainer =
         currentNode &&
         currentNode.isBlock &&
@@ -235,6 +248,7 @@ export class SelectionBoxPlugin implements PluginView {
   selectNode() {
     const { state } = this.view
     const range = this.getRangePos()
+    if (!range) return
     const { from, to } = range
     if (this.showSelectBox) {
       this.view.dispatch(state.tr.setSelection(NodeRangeSelection.create(state.tr.doc, from, to)))
@@ -253,23 +267,25 @@ const getRangeInContainer = (
   let to = -1
   nodePos.node.forEach((node, offset) => {
     const pos = nodePos.pos + offset + 1
-    const dom = view.nodeDOM(pos) as HTMLElement
-    const rect = dom.getBoundingClientRect()
-    if (!rect) return false
-    const isIntersact = node.isBlock
-      ? hasIntersectWithContainer(view, { node, pos }, boxRect, from !== -1 && isLeftToRight)
-      : boxIsIntersecting(boxRect, rect)
-    if (isIntersact) {
-      if (from === -1) {
-        from = pos
-        if (!isLeftToRight && newNodePositions.length) {
-          const lastNodePos = newNodePositions[newNodePositions.length - 1]
-          if (hasIntersectWithContainer(view, lastNodePos, boxRect)) from = lastNodePos.pos
+    const dom = view.nodeDOM(pos)
+    if (dom instanceof HTMLElement) {
+      const rect = dom.getBoundingClientRect()
+      if (!rect) return false
+      const isIntersact = node.isBlock
+        ? hasIntersectWithContainer(view, { node, pos }, boxRect, from !== -1 && isLeftToRight)
+        : boxIsIntersecting(boxRect, rect)
+      if (isIntersact) {
+        if (from === -1) {
+          from = pos
+          if (!isLeftToRight && newNodePositions.length) {
+            const lastNodePos = newNodePositions[newNodePositions.length - 1]
+            if (hasIntersectWithContainer(view, lastNodePos, boxRect)) from = lastNodePos.pos
+          }
         }
+        to = pos + node.nodeSize
       }
-      to = pos + node.nodeSize
+      if (node.isBlock) newNodePositions.push({ node, pos })
     }
-    if (node.isBlock) newNodePositions.push({ node, pos })
   })
   if (from !== -1) return { from, to }
   for (const sonNodePos of newNodePositions) {
@@ -280,22 +296,27 @@ const getRangeInContainer = (
 }
 
 const hasIntersectWithContainer = (view: EditorView, nodePos: NodePos, boxRect: BoxRect, checkSon = true) => {
-  const dom = view.nodeDOM(nodePos.pos) as HTMLElement
-  const rect = dom?.getBoundingClientRect()
-  if (rect && boxHasTwoSideIntersection(boxRect, rect)) return true
-  if (!checkSon) return false
-
-  let hasIntersect = false
-
-  nodePos.node.descendants((node, pos) => {
-    if (hasIntersect || node.isText) return false
-    pos = pos + nodePos.pos + 1
-    const dom = view.nodeDOM(pos) as HTMLElement
+  const dom = view.nodeDOM(nodePos.pos)
+  if (dom instanceof HTMLElement) {
     const rect = dom.getBoundingClientRect()
-    if (!rect) return false
-    hasIntersect = node.isBlock ? boxHasTwoSideIntersection(boxRect, rect) : boxIsIntersecting(boxRect, rect)
-  })
-  return hasIntersect
+    if (rect && boxHasTwoSideIntersection(boxRect, rect)) return true
+    if (!checkSon) return false
+
+    let hasIntersect = false
+
+    nodePos.node.descendants((node, pos) => {
+      if (hasIntersect || node.isText) return false
+      pos = pos + nodePos.pos + 1
+      const dom = view.nodeDOM(pos)
+      if (dom instanceof HTMLElement) {
+        const rect = dom.getBoundingClientRect()
+        if (!rect) return false
+        hasIntersect = node.isBlock ? boxHasTwoSideIntersection(boxRect, rect) : boxIsIntersecting(boxRect, rect)
+      }
+    })
+    return hasIntersect
+  }
+  return false
 }
 
 const getRange = (view: EditorView, boxRect: BoxRect): Range | null => {
@@ -306,9 +327,11 @@ const getRange = (view: EditorView, boxRect: BoxRect): Range | null => {
     if (node.isBlock) {
       isIntersecting = hasIntersectWithContainer(view, { node, pos }, boxRect, false)
     } else {
-      const dom = view.nodeDOM(pos) as HTMLElement
-      const rect = dom.getBoundingClientRect()
-      isIntersecting = rect && boxIsIntersecting(boxRect, rect)
+      const dom = view.nodeDOM(pos)
+      if (dom instanceof HTMLElement) {
+        const rect = dom.getBoundingClientRect()
+        isIntersecting = rect && boxIsIntersecting(boxRect, rect)
+      }
     }
     if (isIntersecting) {
       if (from === -1) from = pos
