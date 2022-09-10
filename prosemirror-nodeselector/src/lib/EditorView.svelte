@@ -6,7 +6,8 @@
   import { EditorState } from 'prosemirror-state'
   import { EditorView } from 'prosemirror-view'
   import 'prosemirror-view/style/prosemirror.css'
-  import { getNodeSelection } from '../plugins/getNodeSelection'
+  import { selectionBox } from '../plugins/selectionBox'
+  import { selectedNode } from '../plugins/selectedNode'
   import { hotkeys } from '../plugins/hotkeys'
   import { doc } from '../doc'
   import { schema } from '../schema'
@@ -19,7 +20,7 @@
     state = EditorState.create({
       schema,
       doc,
-      plugins: [history(), hotkeys(schema), dropCursor(), gapCursor(), getNodeSelection()]
+      plugins: [history(), hotkeys(schema), dropCursor(), gapCursor(), selectionBox(), selectedNode()]
     })
     view = new EditorView({ mount: editor }, { state })
   })
@@ -29,20 +30,62 @@
   })
 </script>
 
-<div bind:this={editor} />
+<div id="editor-container">
+  <div id="editor-wrapper">
+    <div id="editor-shell">
+      <div bind:this={editor} id="editor-canvas" />
+    </div>
+    <div id="editor-selectbox" />
+  </div>
+</div>
 
 <style global lang="postcss">
-  button {
-    border: none;
-    background-color: transparent;
-  }
+  #editor-container {
+    font-family: Avenir, sans-serif;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow: auto;
+    background-color: hsl(223, 28%, 95%);
 
-  code {
-    font-family: monospace;
-    font-size: 1rem;
-    background-color: hsl(0, 0%, 90%);
-    padding: 0.1rem 0.3rem;
-    border-radius: 0.2rem;
+    #editor-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      .editor-selectbox {
+        background-color: hsla(197, 71%, 52%, 0.3);
+        position: absolute;
+        z-index: 1000;
+      }
+    }
+
+    #editor-shell {
+      margin: 20px 80px 80px 80px;
+      min-width: 700px;
+      display: inline-block;
+      box-sizing: border-box;
+      position: relative;
+      background-color: hsl(0, 0%, 100%);
+    }
+
+    #editor-canvas {
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 10px 20px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .start-editor-focused {
+      .start-editor-node {
+        &::selection {
+          background: hsla(197, 71%, 52%, 0.2);
+        }
+      }
+    }
   }
 
   .ProseMirror-selectednode {
@@ -58,34 +101,6 @@
       background-color: rgba(45, 170, 219, 0.3);
       z-index: 1000;
       border-radius: 0.25rem;
-    }
-  }
-
-  /* p {
-    display: inline-block;
-  } */
-
-  .menu {
-    /* display: inline-block; */
-    border-bottom: 1px solid hsla(0, 0%, 0%, 0.5);
-    padding-bottom: 0.3rem;
-    text-align: center;
-  }
-
-  .plus-icon {
-    font-size: 1rem;
-    /* display: inline-block; */
-    margin-inline: 0.5rem;
-    user-select: none;
-    opacity: 0.5;
-    padding: 0.25rem 0.225rem 0.15rem 0.225rem;
-    line-height: 1.05;
-    border-radius: 0.25rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    &:hover {
-      background-color: hsl(0, 0%, 90%);
-      opacity: 0.7;
     }
   }
 </style>

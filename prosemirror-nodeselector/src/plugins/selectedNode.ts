@@ -1,7 +1,8 @@
 import { NodeSelection, Plugin, EditorState } from 'prosemirror-state'
 import { DecorationSet, Decoration, EditorView } from 'prosemirror-view'
+import NodeRangeSelection from './NodeRangeSelection'
 
-export const getNodeSelection = () =>
+export const selectedNode = () =>
   new Plugin({
     props: {
       decorations: state => getFocusNodeDecorationSet(state),
@@ -22,7 +23,7 @@ export const getNodeSelection = () =>
 
 const getFocusNodeDecorationSet = (state: EditorState) => {
   const { selection } = state
-  // if (!(selection instanceof NodeRangeSelection)) return DecorationSet.empty
+  if (!(selection instanceof NodeRangeSelection)) return DecorationSet.empty
   const decorations: Decoration[] = []
   const parent = selection.$from.parent
   const parentPos = selection.$from.start(selection.$from.depth)
