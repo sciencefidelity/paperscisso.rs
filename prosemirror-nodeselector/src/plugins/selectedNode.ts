@@ -10,7 +10,7 @@ export const selectedNode = () =>
         const clickedNode = getNodeByEvent(view, event)
         if (clickedNode === null) return false
         const { node, pos } = clickedNode
-        if (!event.shiftKey && node.isBlock && !node.isTextblock && !node.isAtom) {
+        if (!event.shiftKey && node.isBlock) {
           const tr = view.state.tr
           tr.setSelection(NodeSelection.create(view.state.doc, pos))
           view.dispatch(tr)

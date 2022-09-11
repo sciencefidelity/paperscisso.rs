@@ -81,7 +81,7 @@ export class SelectionBoxPlugin implements PluginView {
     this.onMouseup = this.onMouseup.bind(this)
     this.onClick = this.onClick.bind(this)
     this.wrapper && this.wrapper.addEventListener('mousedown', this.onMousedown)
-    this.wrapper && this.wrapper.addEventListener('contextmenu', this.onContextmenu)
+    this.wrapper && this.wrapper.addEventListener('contextmenu', e => e.preventDefault())
     this.selectBox = this.wrapper && this.createSelectionBox(this.wrapper)
   }
 
@@ -97,7 +97,6 @@ export class SelectionBoxPlugin implements PluginView {
       show() {
         this.update()
         element.style.display = 'block'
-        wrapper.classList.add('editor-is_box_selecting')
       },
       update: () => {
         const { startPos, endPos } = this
@@ -108,13 +107,8 @@ export class SelectionBoxPlugin implements PluginView {
       },
       hide() {
         element.style.display = 'none'
-        wrapper.classList.remove('editor-is_box_selecting')
       }
     }
-  }
-
-  onContextmenu(e: Event) {
-    e.preventDefault()
   }
 
   onMousedown(e: MouseEvent) {
@@ -152,8 +146,8 @@ export class SelectionBoxPlugin implements PluginView {
 
   onMouseup() {
     clearTimeout(timeoutHandler)
-    this.showSelectBox = false
     const wrapper: HTMLDivElement | null = this.wrapper
+    this.showSelectBox = false
     if (!this.selectBox || !wrapper) return
     this.selectBox.hide()
     document.removeEventListener('mouseup', this.onMouseup)
@@ -164,24 +158,23 @@ export class SelectionBoxPlugin implements PluginView {
     }
   }
 
-  getRelativePosition(pos: Position) {
-    if (!this.wrapper) return
-    return getRelativePosition(this.wrapper, pos)
-  }
-
   onClick(e: Event) {
     if (!this.wrapper) return
     this.wrapper.removeEventListener('click', this.onClick)
     e.stopPropagation()
   }
 
-  getRangePos() {
+  getRelativePosition(pos: Position) {
     if (!this.wrapper) return
-    const { view, shell, startPos, endPos } = this
-    const relative = getRelativePosition(document.body, this.wrapper)
+    return getRelativePosition(this.wrapper, pos)
+  }
+
+  getRangePos() {
+    const { view, shell, startPos, endPos, wrapper } = this
+    if (!wrapper || !shell) return
+    const relative = getRelativePosition(document.body, wrapper)
     const absoluteStartPos = { left: relative.left + startPos.left, top: startPos.top + relative.top }
     const absoluteEndPos = { left: relative.left + endPos.left, top: endPos.top + relative.top }
-    if (!shell) return
     const rect = shell.getBoundingClientRect()
     if (!rect) return { from: 0, to: 0 }
     if (

@@ -22,7 +22,22 @@
       doc,
       plugins: [history(), hotkeys(schema), dropCursor(), gapCursor(), selectionBox(), selectedNode()]
     })
-    view = new EditorView({ mount: editor }, { state })
+    view = new EditorView(
+      { mount: editor },
+      {
+        handleDOMEvents: {
+          blur: () => {
+            editor.classList.remove('editor-focused')
+            return false
+          },
+          focus: () => {
+            editor.classList.add('editor-focused')
+            return false
+          }
+        },
+        state
+      }
+    )
   })
 
   onDestroy(() => {
@@ -90,17 +105,7 @@
       .ProseMirror-selectednode {
         position: relative;
         outline: none;
-        /* background-color: rgba(45, 170, 219, 0.3); */
-
-        &::after {
-          content: '';
-          display: block;
-          inset: 0;
-          position: absolute;
-          background-color: rgba(45, 170, 219, 0.3);
-          z-index: 1000;
-          border-radius: 0.25rem;
-        }
+        background-color: rgba(45, 170, 219, 0.3);
       }
     }
   }
