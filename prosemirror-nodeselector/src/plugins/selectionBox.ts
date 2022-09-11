@@ -27,13 +27,12 @@ interface Rect {
   bottom: number
 }
 
-export function selectionBox(): Plugin {
-  return new Plugin({
+export const selectionBox = () =>
+  new Plugin({
     view(view) {
       return new SelectionBoxPlugin(view)
     }
   })
-}
 
 let timeoutHandler: NodeJS.Timeout
 
@@ -48,11 +47,9 @@ export class SelectionBoxPlugin implements PluginView {
   get container(): HTMLDivElement | null {
     return document.querySelector('#container')
   }
-
   get wrapper(): HTMLDivElement | null {
     return document.querySelector('#wrapper')
   }
-
   get startPos(): Position {
     const { anchor, head } = this
     return {
@@ -60,7 +57,6 @@ export class SelectionBoxPlugin implements PluginView {
       top: Math.min(anchor.top, head.top)
     }
   }
-
   get endPos(): Position {
     const { anchor, head } = this
     return {
@@ -68,12 +64,10 @@ export class SelectionBoxPlugin implements PluginView {
       top: Math.max(anchor.top, head.top)
     }
   }
-
   get scrollTop() {
     if (!this.container) return
     return this.container.scrollTop
   }
-
   constructor(readonly view: EditorView) {
     this.shell = document.querySelector('#shell')
     this.onMousedown = this.onMousedown.bind(this)
@@ -84,11 +78,9 @@ export class SelectionBoxPlugin implements PluginView {
     this.wrapper && this.wrapper.addEventListener('contextmenu', e => e.preventDefault())
     this.selectBox = this.wrapper && this.createSelectionBox(this.wrapper)
   }
-
   destroy() {
     this.wrapper && this.wrapper.removeEventListener('mousedown', this.onMousedown)
   }
-
   createSelectionBox(wrapper: HTMLDivElement) {
     const element: HTMLDivElement | null = document.querySelector('#selectbox')
     if (!element) return
@@ -110,11 +102,9 @@ export class SelectionBoxPlugin implements PluginView {
       }
     }
   }
-
   onMousedown(e: MouseEvent) {
     if (e.target instanceof HTMLElement) {
-      if (!this.shell) return
-      if (e.target === this.shell || this.shell.contains(e.target)) return
+      if (!this.shell || e.target === this.shell || this.shell.contains(e.target)) return
       timeoutHandler = setTimeout(() => {
         if (!this.wrapper || !this.selectBox) return
         clearTimeout(timeoutHandler)
@@ -123,13 +113,11 @@ export class SelectionBoxPlugin implements PluginView {
         this.wrapper.addEventListener('click', this.onClick)
       }, 200)
       this.anchor = this.getRelativePosition({ left: e.clientX, top: e.clientY }) || { left: 0, top: 0 }
-      const wrapper: HTMLDivElement | null = this.wrapper
       document.addEventListener('mouseup', this.onMouseup)
-      wrapper && wrapper.addEventListener('mousemove', this.onMousemove)
+      this.wrapper && this.wrapper.addEventListener('mousemove', this.onMousemove)
       e.preventDefault()
     }
   }
-
   onMousemove(e: MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
@@ -143,109 +131,108 @@ export class SelectionBoxPlugin implements PluginView {
       this.container.scrollTop -= 5
     }
   }
-
   onMouseup() {
     clearTimeout(timeoutHandler)
-    const wrapper: HTMLDivElement | null = this.wrapper
     this.showSelectBox = false
-    if (!this.selectBox || !wrapper) return
+    if (!this.selectBox || !this.wrapper) return
     this.selectBox.hide()
     document.removeEventListener('mouseup', this.onMouseup)
-    wrapper.removeEventListener('mousemove', this.onMousemove)
+    this.wrapper.removeEventListener('mousemove', this.onMousemove)
     const { selection } = this.view.state
     if (selection instanceof NodeRangeSelection && selection.from !== selection.to) {
       this.view.focus()
     }
   }
-
   onClick(e: Event) {
     if (!this.wrapper) return
     this.wrapper.removeEventListener('click', this.onClick)
     e.stopPropagation()
   }
-
   getRelativePosition(pos: Position) {
     if (!this.wrapper) return
     return getRelativePosition(this.wrapper, pos)
   }
-
-  getRangePos() {
-    const { view, shell, startPos, endPos, wrapper } = this
-    if (!wrapper || !shell) return
-    const relative = getRelativePosition(document.body, wrapper)
-    const absoluteStartPos = { left: relative.left + startPos.left, top: startPos.top + relative.top }
-    const absoluteEndPos = { left: relative.left + endPos.left, top: endPos.top + relative.top }
-    const rect = shell.getBoundingClientRect()
-    if (!rect) return { from: 0, to: 0 }
-    if (
-      (absoluteStartPos.left < rect.left && absoluteEndPos.left < rect.left) ||
-      (absoluteStartPos.left > rect.right && absoluteEndPos.left > rect.right)
-    ) {
-      return { from: 0, to: 0 }
-    }
-    const boxRect = {
-      left: absoluteStartPos.left,
-      right: absoluteEndPos.left,
-      top: absoluteStartPos.top,
-      bottom: absoluteEndPos.top
-    }
-    const startInfo = view.posAtCoords({
-      left: Math.max(rect.left, absoluteStartPos.left),
-      top: Math.max(absoluteStartPos.top, rect.top)
-    })
-    const endInfo = view.posAtCoords({
-      left: Math.min(absoluteEndPos.left, rect.right),
-      top: Math.min(absoluteEndPos.top, rect.bottom)
-    })
-    if (!startInfo || !endInfo) return { from: 0, to: 0 }
-    if (boxRect.left <= rect.left && boxRect.right >= rect.right) {
-      return { from: startInfo.pos, to: endInfo.pos }
-    }
-
-    const startResolvedPos = view.state.doc.resolve(startInfo.pos)
-    const endResolvedPos = view.state.doc.resolve(endInfo.pos)
-
-    const isLeftToRight = absoluteStartPos.left < rect.left
-    let isInContainer = false
-    let currentNode = null
-    let currentNodePos = -1
-    if (isLeftToRight) {
-      currentNode = startResolvedPos.nodeAfter
-      if (!currentNode) return
-      currentNodePos = startResolvedPos.pos
-      isInContainer =
-        currentNode &&
-        currentNode.isBlock &&
-        getCommonParent(view.state.doc.resolve(startResolvedPos.pos + 1), endResolvedPos).node === currentNode
-    } else {
-      currentNode = endResolvedPos.nodeBefore
-      if (!currentNode) return
-      currentNodePos = endResolvedPos.pos - currentNode.nodeSize
-      isInContainer =
-        currentNode &&
-        currentNode.isBlock &&
-        getCommonParent(startResolvedPos, view.state.doc.resolve(endResolvedPos.pos - 1)).node === currentNode
-    }
-    if (isInContainer) {
-      return (
-        getRangeInContainer(view, { node: currentNode, pos: currentNodePos }, boxRect, isLeftToRight) || {
-          from: 0,
-          to: 0
-        }
-      )
-    } else {
-      return getRange(view, boxRect) || { from: 0, to: 0 }
-    }
-  }
-
   selectNode() {
     const { state } = this.view
-    const range = this.getRangePos()
+    if (!this.wrapper || !this.shell) return
+    const range = getRangePos(this.view, this.shell, this.startPos, this.endPos, this.wrapper)
     if (!range) return
     const { from, to } = range
     if (this.showSelectBox) {
       this.view.dispatch(state.tr.setSelection(NodeRangeSelection.create(state.tr.doc, from, to)))
     }
+  }
+}
+
+const getRangePos = (
+  view: EditorView,
+  shell: HTMLDivElement,
+  startPos: Position,
+  endPos: Position,
+  wrapper: HTMLDivElement
+) => {
+  if (!wrapper || !shell) return
+  const relative = getRelativePosition(document.body, wrapper)
+  const absoluteStartPos = { left: relative.left + startPos.left, top: startPos.top + relative.top }
+  const absoluteEndPos = { left: relative.left + endPos.left, top: endPos.top + relative.top }
+  const rect = shell.getBoundingClientRect()
+  if (!rect) return { from: 0, to: 0 }
+  if (
+    (absoluteStartPos.left < rect.left && absoluteEndPos.left < rect.left) ||
+    (absoluteStartPos.left > rect.right && absoluteEndPos.left > rect.right)
+  ) {
+    return { from: 0, to: 0 }
+  }
+  const boxRect = {
+    left: absoluteStartPos.left,
+    right: absoluteEndPos.left,
+    top: absoluteStartPos.top,
+    bottom: absoluteEndPos.top
+  }
+  const startInfo = view.posAtCoords({
+    left: Math.max(rect.left, absoluteStartPos.left),
+    top: Math.max(absoluteStartPos.top, rect.top)
+  })
+  const endInfo = view.posAtCoords({
+    left: Math.min(absoluteEndPos.left, rect.right),
+    top: Math.min(absoluteEndPos.top, rect.bottom)
+  })
+  if (!startInfo || !endInfo) return { from: 0, to: 0 }
+  if (boxRect.left <= rect.left && boxRect.right >= rect.right) {
+    return { from: startInfo.pos, to: endInfo.pos }
+  }
+  const startResolvedPos = view.state.doc.resolve(startInfo.pos)
+  const endResolvedPos = view.state.doc.resolve(endInfo.pos)
+  const isLeftToRight = absoluteStartPos.left < rect.left
+  let isInContainer = false
+  let currentNode = null
+  let currentNodePos = -1
+  if (isLeftToRight) {
+    currentNode = startResolvedPos.nodeAfter
+    if (!currentNode) return
+    currentNodePos = startResolvedPos.pos
+    isInContainer =
+      currentNode &&
+      currentNode.isBlock &&
+      getCommonParent(view.state.doc.resolve(startResolvedPos.pos + 1), endResolvedPos).node === currentNode
+  } else {
+    currentNode = endResolvedPos.nodeBefore
+    if (!currentNode) return
+    currentNodePos = endResolvedPos.pos - currentNode.nodeSize
+    isInContainer =
+      currentNode &&
+      currentNode.isBlock &&
+      getCommonParent(startResolvedPos, view.state.doc.resolve(endResolvedPos.pos - 1)).node === currentNode
+  }
+  if (isInContainer) {
+    return (
+      getRangeInContainer(view, { node: currentNode, pos: currentNodePos }, boxRect, isLeftToRight) || {
+        from: 0,
+        to: 0
+      }
+    )
+  } else {
+    return getRange(view, boxRect) || { from: 0, to: 0 }
   }
 }
 
@@ -294,9 +281,7 @@ const hasIntersectWithContainer = (view: EditorView, nodePos: NodePos, boxRect: 
     const rect = dom.getBoundingClientRect()
     if (rect && boxHasTwoSideIntersection(boxRect, rect)) return true
     if (!checkSon) return false
-
     let hasIntersect = false
-
     nodePos.node.descendants((node, pos) => {
       if (hasIntersect || node.isText) return false
       pos = pos + nodePos.pos + 1
