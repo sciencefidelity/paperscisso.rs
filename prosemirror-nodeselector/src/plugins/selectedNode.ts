@@ -5,12 +5,14 @@ import NodeRangeSelection from './NodeRangeSelection'
 export const selectedNode = () =>
   new Plugin({
     props: {
-      decorations: state => getFocusNodeDecorationSet(state),
+      decorations: state => {
+        return getFocusNodeDecorationSet(state)
+      },
       handleClick(view, _pos, event) {
         const clickedNode = getNodeByEvent(view, event)
         if (clickedNode === null) return false
         const { node, pos } = clickedNode
-        if (!event.shiftKey && node.isBlock) {
+        if (!event.shiftKey && node.isBlock && !node.isTextblock && !node.isAtom) {
           const tr = view.state.tr
           tr.setSelection(NodeSelection.create(view.state.doc, pos))
           view.dispatch(tr)
@@ -22,14 +24,14 @@ export const selectedNode = () =>
   })
 
 const getFocusNodeDecorationSet = (state: EditorState) => {
-  const { selection } = state
-  if (!(selection instanceof NodeRangeSelection)) return DecorationSet.empty
+  const sel = state.selection
+  if (!(sel instanceof NodeRangeSelection)) return DecorationSet.empty
   const decorations: Decoration[] = []
-  const parent = selection.$from.parent
-  const parentPos = selection.$from.start(selection.$from.depth)
+  const parent = sel.$from.parent
+  const parentPos = sel.$from.start(sel.$from.depth)
   parent.descendants((node, pos) => {
     pos += parentPos
-    if (!node.isText && pos >= selection.from && pos + node.nodeSize <= selection.to) {
+    if (!node.isText && pos >= sel.from && pos + node.nodeSize <= sel.to) {
       decorations.push(Decoration.node(pos, pos + node.nodeSize, { class: 'ProseMirror-selectednode' }))
     }
     return false

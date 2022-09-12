@@ -1,8 +1,10 @@
 import { throttle } from 'lodash'
+import { get } from 'svelte/store'
 import type { Node, ResolvedPos } from 'prosemirror-model'
-import { Plugin, type PluginView } from 'prosemirror-state'
+import { Plugin, TextSelection, type PluginView } from 'prosemirror-state'
 import type { EditorView } from 'prosemirror-view'
 import NodeRangeSelection from './NodeRangeSelection'
+import { isFocused } from '../lib/stores'
 
 type BoxRect = Omit<Rect, 'width' | 'height'>
 
@@ -39,16 +41,21 @@ let timeoutHandler: NodeJS.Timeout
 export class SelectionBoxPlugin implements PluginView {
   anchor = { left: 0, top: 0 }
   head = { left: 0, top: 0 }
-  showSelectBox = false
-  shell: HTMLDivElement | null
-  throttleSelectNode = throttle(this.selectNode, 100)
   selectBox: { show: () => void; hide: () => void; update: () => void } | null | undefined
+  showSelectBox = false
+  throttleSelectNode = throttle(this.selectNode, 100)
 
   get container(): HTMLDivElement | null {
     return document.querySelector('#container')
   }
   get wrapper(): HTMLDivElement | null {
     return document.querySelector('#wrapper')
+  }
+  get shell(): HTMLDivElement | null {
+    return document.querySelector('#shell')
+  }
+  get editor(): HTMLDivElement | null {
+    return document.querySelector('#editor')
   }
   get startPos(): Position {
     const { anchor, head } = this
@@ -69,26 +76,27 @@ export class SelectionBoxPlugin implements PluginView {
     return this.container.scrollTop
   }
   constructor(readonly view: EditorView) {
-    this.shell = document.querySelector('#shell')
     this.onMousedown = this.onMousedown.bind(this)
     this.onMousemove = this.onMousemove.bind(this)
     this.onMouseup = this.onMouseup.bind(this)
+    this.onContainerClick = this.onContainerClick.bind(this)
     this.onClick = this.onClick.bind(this)
+    this.container && this.container.addEventListener('click', this.onContainerClick)
     this.wrapper && this.wrapper.addEventListener('mousedown', this.onMousedown)
-    this.wrapper && this.wrapper.addEventListener('contextmenu', e => e.preventDefault())
     this.selectBox = this.wrapper && this.createSelectionBox(this.wrapper)
   }
   destroy() {
+    this.container && this.container.removeEventListener('click', this.onContainerClick)
     this.wrapper && this.wrapper.removeEventListener('mousedown', this.onMousedown)
   }
   createSelectionBox(wrapper: HTMLDivElement) {
     const element: HTMLDivElement | null = document.querySelector('#selectbox')
     if (!element) return
-    wrapper.appendChild(element)
     return {
       show() {
         this.update()
         element.style.display = 'block'
+        wrapper.classList.add('is-box-selecting')
       },
       update: () => {
         const { startPos, endPos } = this
@@ -99,6 +107,7 @@ export class SelectionBoxPlugin implements PluginView {
       },
       hide() {
         element.style.display = 'none'
+        wrapper.classList.remove('is-box-selecting')
       }
     }
   }
@@ -136,17 +145,35 @@ export class SelectionBoxPlugin implements PluginView {
     this.showSelectBox = false
     if (!this.selectBox || !this.wrapper) return
     this.selectBox.hide()
-    document.removeEventListener('mouseup', this.onMouseup)
+    this.wrapper.removeEventListener('mouseup', this.onMouseup)
     this.wrapper.removeEventListener('mousemove', this.onMousemove)
     const { selection } = this.view.state
     if (selection instanceof NodeRangeSelection && selection.from !== selection.to) {
-      this.view.focus()
+      isFocused.set(true)
     }
   }
   onClick(e: Event) {
     if (!this.wrapper) return
     this.wrapper.removeEventListener('click', this.onClick)
     e.stopPropagation()
+  }
+  onContainerClick(e: Event) {
+    console.log('onContainerClick')
+    const oldFocus = get(isFocused)
+    const { state } = this.view
+    if (!this.shell || !this.editor || !(e.target instanceof HTMLElement)) return
+    isFocused.set(e.target === this.shell || this.shell.contains(e.target))
+    if (oldFocus !== get(isFocused)) {
+      const tr = state.tr
+      if (!get(isFocused) && !(state.selection instanceof TextSelection)) {
+        tr.setSelection(TextSelection.create(state.doc, 0))
+      }
+      this.view.dispatch(tr)
+    }
+    if (!get(isFocused)) {
+      this.editor.classList.remove('start-editor-focused')
+      this.editor.blur()
+    }
   }
   getRelativePosition(pos: Position) {
     if (!this.wrapper) return
