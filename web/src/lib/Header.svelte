@@ -1,6 +1,12 @@
+<script>
+	import Scissors from './Scissors.svelte';
+</script>
+
 <header>
 	<div class="container">
-		<div class="scissors noselect">&#9985;</div>
+		<div class="scissors">
+			<Scissors />
+		</div>
 		<div class="logo noselect">Paper<br />Scissors</div>
 	</div>
 </header>
@@ -15,13 +21,11 @@
 
 	.scissors {
 		position: absolute;
-		top: 30rem;
-		left: 50%;
-		font-family: STIXGeneral, serif;
-		font-size: 50rem;
-		line-height: 0;
-		opacity: 0.2;
+		top: 27.2rem;
+		left: 47%;
+		width: 46rem;
 		transform: rotate(12deg) translate(-50%, -50%);
+		opacity: 0.2;
 	}
 
 	.logo {

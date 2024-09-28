@@ -245,17 +245,7 @@
 	}
 	/* !RESET */
 
-	* {
-		box-sizing: border-box;
-		margin: 0;
-		::before,
-		::after {
-			box-sizing: border-box;
-		}
-	}
-
 	html {
-		font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 		font-size: 62.5%;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
@@ -271,19 +261,6 @@
 	a {
 		color: hsl(28, 51%, 93%);
 		text-decoration: underline;
-	}
-
-	#site-main::after {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 201;
-		width: 100%;
-		height: 100%;
-		pointer-events: none;
-		content: '';
-		background: url('./images/noise.jpg');
-		opacity: 0.02;
 	}
 
 	.noselect {

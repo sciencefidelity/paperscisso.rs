@@ -11,6 +11,7 @@
 		align-items: center;
 		justify-content: center;
 		padding: 40px;
+		z-index: 10;
 	}
 
 	footer a {
