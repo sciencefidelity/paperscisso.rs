@@ -1,3 +1,9 @@
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	const { children }: { children: Snippet } = $props();
+</script>
+
 <svelte:head>
 	<link
 		rel="preload"
@@ -15,7 +21,7 @@
 	/>
 </svelte:head>
 
-<slot />
+{@render children()}
 
 <style global>
 	@font-face {
